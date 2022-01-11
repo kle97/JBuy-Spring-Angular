@@ -1,0 +1,53 @@
+### miscellaneous ###
+.env
+src/main/java/io/spring/jbuy/common/bootstrap
+src/main/resources/static
+src/main/resources/application-prod.properties
+src/main/resources/hotswap-agent.properties
+src/main/java/io/spring/jbuy/Main.java
+src/main/resources/db/changelog/versions
+src/main/resources/db/changelog/liquibase.properties
+src/main/resources/*.sql
+src/main/resources/*.p12
+/lucene/
+*.sql
+
+### Telosys tool ###
+TelosysTools
+
+
+### General ###
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+/webapp/.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

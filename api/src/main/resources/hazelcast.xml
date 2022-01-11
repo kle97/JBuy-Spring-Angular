@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast xmlns="http://www.hazelcast.com/schema/config"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.hazelcast.com/schema/config
+           https://www.hazelcast.com/schema/config/hazelcast-config-3.12.xsd">
+
+    <!--    <instance-name>jbuy-hazelcast1</instance-name>-->
+
+    <!--    <management-center enabled="true">-->
+    <!--        <url>http://localhost:8081/hazelcast-mancenter/</url>-->
+    <!--    </management-center>-->
+
+    <!--    <network>-->
+    <!--        <port>5701</port>-->
+    <!--        <join>-->
+    <!--            <multicast enabled="false"/>-->
+    <!--            <tcp-ip enabled="true">-->
+    <!--                <member-list>-->
+    <!--                    <member>127.0.0.1:5701</member>-->
+    <!--                </member-list>-->
+    <!--            </tcp-ip>-->
+    <!--        </join>-->
+    <!--    </network>-->
+
+    <!--    &lt;!&ndash;     Entity-specific cache configuration    &ndash;&gt;-->
+    <!--    &lt;!&ndash; User&ndash;&gt;-->
+    <!--    <map name="io.spring.jbuy.features.user.User">-->
+    <!--        <time-to-live-seconds>300</time-to-live-seconds>-->
+    <!--        <eviction-policy>LRU</eviction-policy>-->
+    <!--        <max-size>100</max-size>-->
+    <!--    </map>-->
+    <!--    <map name="io.spring.jbuy.features.user.User.authorities">-->
+    <!--        <time-to-live-seconds>300</time-to-live-seconds>-->
+    <!--        <eviction-policy>LRU</eviction-policy>-->
+    <!--        <max-size>300</max-size>-->
+    <!--    </map>-->
+    <!--    <map name="io.spring.jbuy.features.user.UserProfile">-->
+    <!--        <time-to-live-seconds>300</time-to-live-seconds>-->
+    <!--        <eviction-policy>LRU</eviction-policy>-->
+    <!--        <max-size>100</max-size>-->
+    <!--    </map>-->
+
+    <!--    &lt;!&ndash; Authority&ndash;&gt;-->
+    <!--    <map name="io.spring.jbuy.features.authority.Authority">-->
+    <!--        <time-to-live-seconds>300</time-to-live-seconds>-->
+    <!--        <eviction-policy>LRU</eviction-policy>-->
+    <!--        <max-size>100</max-size>-->
+    <!--    </map>-->
+    <!--    <map name="io.spring.jbuy.features.authority.Authority.users">-->
+    <!--        <time-to-live-seconds>300</time-to-live-seconds>-->
+    <!--        <eviction-policy>LRU</eviction-policy>-->
+    <!--        <max-size>100</max-size>-->
+    <!--    </map>-->
+
+</hazelcast>

@@ -1,0 +1,24 @@
+<rapi-doc #theDoc id="the-doc"
+          render-style="focused"
+          sort-endpoints-by="method"
+          sort-tags="true"
+          use-path-in-nav-bar="true"
+          default-schema-tab="example"
+>
+  <div slot="nav-logo">
+    <div class="group-bar"> Select a definition</div>
+    <div class="button-group">
+      <button class="btn medium" (click)="onBtn1()">User</button>
+      <button class="btn medium" (click)="onBtn2()">Admin</button>
+      <button class="btn medium" (click)="onBtn3()">All</button>
+    </div>
+    <br>
+    <div class="group-bar"> Utility</div>
+    <div class="button-group">
+      <button class="btn medium" (click)="onBtn4()">Path</button>
+      <button class="btn medium" (click)="onBtn5()">Summary</button>
+      <button class="btn medium" (click)="onBtn6()">Set Auth</button>
+      <button class="btn medium" (click)="onBtn7()">No Auth</button>
+    </div>
+  </div>
+</rapi-doc>
