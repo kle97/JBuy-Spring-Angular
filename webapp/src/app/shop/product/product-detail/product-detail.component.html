@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="left">
+    <div class="keen-slider" #sliderRef>
+      <img *ngFor="let imageUrl of imageUrls; let i = index"
+           class="keen-slider__slide number-slide{{i + 1}}" src="{{imageUrl}}" alt="image-{{i + 1}}"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider thumbnail" #thumbnailRef>
+      <ng-container *ngFor="let thumbnailUrl of thumbnailUrls; let i = index">
+        <img class="keen-slider__slide number-slide{{i + 1}}" src="{{thumbnailUrl}}" alt="thumbnail-{{i + 1}}"
+             onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+      </ng-container>
+    </div>
+  </div>
+  <div class="center">
+    <h1>{{name}}</h1>
+    <h3>{{subName}}</h3>
+    <div class="rating">
+      <app-rating [averageRating]="product.averageRating"></app-rating>
+      <a class="rating-text" (click)="clickRating()" href="javascript:void(0)">
+        <sup>
+          {{product.averageRating | number: '1.1-2'}} ({{product.ratingCount}}
+          <ng-container *ngIf="product.ratingCount !== 1; else single">
+            ratings)
+          </ng-container>
+          <ng-template #single>rating)</ng-template>
+        </sup>
+      </a>
+    </div>
+    <h1 class="in-stock" *ngIf="product.stock > 1">
+      In Stock
+    </h1>
+    <h1 class="last-one" *ngIf="product.stock === 1">
+      Last One In Stock
+    </h1>
+    <h1 class="out-stock" *ngIf="product.stock === 0">
+      Out of Stock
+    </h1>
+    <div class="regular-price"
+         *ngIf="product.regularPrice > 0 && product.discountPrice > 0 && product.regularPrice > product.discountPrice">
+      <s>{{product.regularPrice | currency}}</s>
+      <span> SAVE {{product.regularPrice - product.discountPrice | currency}}</span>
+    </div>
+    <div class="discount-price" *ngIf="product.discountPrice > 0">
+      <h1>{{product.discountPrice | currency}}</h1>
+    </div>
+    <div class="description">
+      {{product.description}}
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="quantity">
+      <mat-form-field appearance="outline">
+        <mat-label>Quantity</mat-label>
+        <mat-select [(value)]="selectedQuantity">
+          <mat-option [value]="quantity" *ngFor="let quantity of quantities">{{ quantity }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="button-section">
+      <button *ngIf="product.stock > 0" class="action-button"
+              mat-raised-button color="primary"
+              (click)="addToCart(product)">
+        Add to Cart
+      </button>
+      <button *ngIf="product.stock === 0" class="action-button"
+              mat-flat-button color="primary" disabled>
+        Out of Stock
+      </button>
+    </div>
+    <div class="button-section">
+      <button *ngIf="product.stock > 0" class="action-button"
+              mat-raised-button color="accent"
+              (click)="buyNow(product)">
+        Buy It Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-similar-product [searchText]="similarProductSearchText" [productId]="productId">
+</app-similar-product>
+
+<div id="product-info" class="product-info">
+  <mat-tab-group mat-align-tabs="start" color="accent"
+                 [(selectedIndex)]="selectedInfoTab"
+                 (selectedIndexChange)="tabChange($event)">
+    <mat-tab label="Overview">
+      <mat-card class="mat-elevation-z0 overview">
+        <mat-card-content>
+          <h2>{{product.description}}</h2>
+          <div class="rating">
+            <app-rating [averageRating]="product.averageRating"></app-rating>
+            <span class="rating-text">
+              <sup>
+                {{product.averageRating | number: '1.1-1'}} ({{product.ratingCount}} ratings)
+              </sup>
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Specs">
+      <ng-container *ngIf="loadSpec">
+        <div class="specs-container" *ngFor="let productAttribute of productAttributes | keyvalue:onCompare">
+          <div class="specs-left"><h2>{{productAttribute.key}}</h2></div>
+          <div class="specs-right">
+            <table>
+              <ng-container *ngFor="let attribute of productAttribute.value">
+                <tr>
+                  <td class="attribute-name">
+                    {{attribute.name}}
+                  </td>
+                  <td class="attribute-value">
+                    {{attribute.value}}
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="Reviews">
+      <div *ngIf="loadReview">
+        <app-product-review [productId]="product.id"
+                            [ratingCount]="product.ratingCount"
+                            [averageRating]="product.averageRating">
+        </app-product-review>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<app-recently-visited [productId]="productId"></app-recently-visited>

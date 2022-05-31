@@ -1,0 +1,67 @@
+<div class="container">
+  <app-navigation-bar></app-navigation-bar>
+
+  <ng-container *ngIf="true | isLoading | async">
+    <mat-progress-bar
+      class="login-loading"
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-bar>
+  </ng-container>
+
+  <div class="card-container">
+    <mat-card class="login-card outline">
+      <mat-card-header class="login-card-header">
+        <mat-card-title>Welcome</mat-card-title>
+        <mat-card-subtitle>
+          Sign in to JBuy or <a routerLink="/signup">create an account</a>
+          <ng-container *ngIf="(errorMessage$ | async) as errorMessage">
+            <div class="error-message" *ngIf="errorMessage.length > 0">
+              {{errorMessage}}
+            </div>
+          </ng-container>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="login-card-content">
+        <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="login-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.errors?.['required']">Please enter your email</div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="login-form-field"
+                          (mouseenter)="mouseIn = true"
+                          (mouseleave)="mouseIn = false"
+                          (focus)="mouseIn = true"
+                          (blur)="mouseIn = false"
+                          (focusout)="hideVisibilityIcon = !mouseIn && hidePassword && passwordInput.value===''"
+                          (focusin)="hideVisibilityIcon = false">
+            <mat-label>Password</mat-label>
+            <input matInput #passwordInput formControlName="password"
+                   [type]="hidePassword ? 'password' : 'text'" required>
+            <button *ngIf="!hideVisibilityIcon"
+                    type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+              <mat-icon>{{hidePassword ? "visibility_off" : "visibility"}}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+              <div *ngIf="password.errors?.['required']">Please enter your password</div>
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit"
+                class="login-button" form="loginForm"
+                [disabled]="!loginForm.valid">Login
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+

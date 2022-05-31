@@ -1,0 +1,64 @@
+<ng-container>
+  <h2 mat-dialog-title>Create New Address</h2>
+  <mat-dialog-content>
+    <form id="addressForm" [formGroup]="addressForm">
+      <div class="address-row">
+        <mat-form-field appearance="outline" class="address-form-field form-field-margin">
+          <mat-label>Street Address</mat-label>
+          <input matInput formControlName="addressLine1" required>
+          <mat-error
+            *ngIf="addressLine1.invalid && (addressLine1.dirty || addressLine1.touched)">
+            <div *ngIf="addressLine1.errors?.['required']">Please enter a street address.</div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="address-form-field">
+          <mat-label>Street Address 2 (optional)</mat-label>
+          <input matInput formControlName="addressLine2">
+        </mat-form-field>
+      </div>
+
+      <div class="address-row">
+        <mat-form-field appearance="outline" class="city-state-form-field form-field-margin">
+          <mat-label>City</mat-label>
+          <input matInput formControlName="city" required>
+          <mat-error *ngIf="city.invalid && (city.dirty || city.touched)">
+            <div *ngIf="city.errors?.['required']">Please enter a city.</div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="city-state-form-field form-field-margin">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let stateName of stateNames; let i = index" [value]="stateValues[i]">
+              {{stateName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="state.invalid && (state.dirty || state.touched)">
+            <div *ngIf="state.errors?.['required']">Please choose a state.</div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="city-state-form-field">
+          <mat-label>Zip Code</mat-label>
+          <input matInput formControlName="postalCode" required>
+          <mat-error *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)">
+            <div *ngIf="postalCode.errors?.['required']">Please enter a zip code.</div>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox class="address-primary-checkbox"
+                      formControlName="primaryAddress"
+                      color="primary">
+          Make this address as primary address
+        </mat-checkbox>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [disabled]="!addressForm.valid"
+            (click)="create()">Create
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-container>

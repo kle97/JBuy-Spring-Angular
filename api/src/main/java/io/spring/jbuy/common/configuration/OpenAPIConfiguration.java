@@ -5,6 +5,8 @@ import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import lombok.RequiredArgsConstructor;
@@ -44,15 +46,26 @@ public class OpenAPIConfiguration {
 
     @Bean
     public GroupedOpenApi adminApi() {
-        String[] paths = {"/api/v1/admin/**", "/api/v1/auth/**"};
+        String[] paths = {"/api/v1/admin/**"};
         String[] packagesToScan = {};
         GroupedOpenApi.Builder adminApiBuilder = GroupedOpenApi.builder()
                 .group("jbuy-admin")
                 .pathsToMatch(paths)
                 .packagesToScan(packagesToScan)
+                .addOpenApiCustomiser(openApi -> openApi.addSecurityItem(new SecurityRequirement().addList("httpBasic")))
                 .addOpenApiCustomiser(rapidocCollapseTagByDefault());
 
         return adminApiBuilder.build();
+    }
+
+    @Bean
+    public OpenApiCustomiser adminSecurityRequirement() {
+        return openApi -> openApi.getPaths().values().stream()
+                .flatMap(pathItem -> pathItem.readOperations().stream())
+                .filter(operation -> operation.getTags().size() > 0
+                        && operation.getTags().get(0).contains("admin"))
+                .forEach(operation -> operation
+                        .addSecurityItem(new SecurityRequirement().addList("httpBasic")));
     }
 
     // Springdoc bean configuration
@@ -62,8 +75,8 @@ public class OpenAPIConfiguration {
                 .info(new Info()
                               .title("JBuy API")
                               .version(systemProperties.getCurrentVersion()).description("JBuy.")
-//                              .license(new License().name("MIT").url(
-//                                      "https://github.com/kle97/JBuy-Spring-Angular/blob/master/LICENSE"))
+                              .license(new License().name("MIT").url(
+                                      "https://github.com/kle97/JBuy-Spring-Angular/blob/master/LICENSE"))
                 )
                 .addServersItem(new Server().description("Development Server").url(systemProperties.getUrls()[0]))
                 .components(new Components().addSecuritySchemes("httpBasic",

@@ -1,0 +1,7 @@
+<ng-container *appVar="{ltLarge: 'ltLg' | matchMedia | async, xSmall: 'xs' | matchMedia | async} as media">
+  <mat-toolbar class="toolbar" color="primary">
+    <span class="title"><a routerLink="/"><b>{{title}}</b></a></span>
+
+    <span class="fill-remaining-spacer"></span>
+  </mat-toolbar>
+</ng-container>

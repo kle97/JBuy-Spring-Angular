@@ -1,0 +1,23 @@
+.mat-icon {
+  margin-right: 0.5rem;
+}
+
+.gt-xmall {
+  display: flex;
+  @media only screen and (max-width: 599.98px) {
+    display: none;
+  }
+}
+
+.xsmall {
+  display: none;
+  @media only screen and (max-width: 599.98px) {
+    display: block;
+    ::ng-deep .mat-button {
+      width: 100%;
+      border-radius: 0;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  }
+}

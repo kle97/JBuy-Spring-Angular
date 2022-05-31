@@ -1,0 +1,72 @@
+<ng-container>
+  <ng-container *ngIf="averageRating < 0.5">
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 0.5 && averageRating < 1.0">
+    <mat-icon class="star">star_half</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 1.5 && averageRating < 2.0">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star_half</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 2 && averageRating < 2.5">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 2.5 && averageRating < 3.0">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star_half</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 3 && averageRating < 3.5">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 3.5 && averageRating < 4">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star_half</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 4 && averageRating < 4.5">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="material-icons-outlined star">grade</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating >= 4.5 && averageRating < 5.0">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star_half</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="averageRating && averageRating === 5">
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+    <mat-icon class="star">star</mat-icon>
+  </ng-container>
+</ng-container>

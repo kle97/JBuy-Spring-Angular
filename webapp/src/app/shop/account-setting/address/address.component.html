@@ -1,0 +1,30 @@
+<mat-card class="address-card-container">
+  <mat-card-header>
+    <mat-card-title>Addresses</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *appVar="addresses$ | async as addresses">
+      <button class="create-button" mat-raised-button color="primary" (click)="createAddress()">
+        Create New Address
+      </button>
+      <div class="addresses-tab" *ngFor="let address of addresses; let i = index">
+        <div class="address-info mat-elevation-z3">
+          <h2>Address {{i + 1}}
+            <span *ngIf="address.primaryAddress">(Primary)</span>
+          </h2>
+          <h3>{{address.addressLine1}}</h3>
+          <h3 *ngIf="address.addressLine2">{{address.addressLine2}}</h3>
+          <h3>{{address.city}}, {{address.state}} {{address.postalCode}}</h3>
+          <div class="action-buttons">
+            <button mat-raised-button (click)="editAddress(address)">
+              Edit
+            </button>
+            <button mat-raised-button (click)="removeAddress(address)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

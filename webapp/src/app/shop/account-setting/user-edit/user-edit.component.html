@@ -1,0 +1,34 @@
+<ng-container>
+  <h2 mat-dialog-title>Edit User</h2>
+  <mat-dialog-content>
+    <form id="userForm" [formGroup]="userForm">
+      <div>
+        <mat-form-field appearance="outline" class="user-form-field">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" required>
+          <mat-error
+            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+            <div *ngIf="firstName.errors?.['required']">Please enter your first name.</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" class="user-form-field">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" required>
+          <mat-error
+            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+            <div *ngIf="lastName.errors?.['required']">Please enter your last name.</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [disabled]="!userForm.valid || !userForm.dirty"
+            (click)="saveEdit()">Save
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-container>
+

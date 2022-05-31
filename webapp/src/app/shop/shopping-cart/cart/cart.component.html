@@ -1,0 +1,92 @@
+<div class="container" *appVar="cartItemCount$ | async as cartItemCount">
+  <ng-container *appVar="cartItems$ | async as cartItems">
+    <div class="title">
+      <h1>Shopping Cart ({{cartItemCount}}
+        <ng-container *ngIf="cartItemCount === 1; else plural"> item)</ng-container>
+        <ng-template #plural> items)</ng-template>
+      </h1>
+    </div>
+    <div class="item">
+      <mat-card class="card-container">
+        <ng-container *ngIf="cartItems && cartItems.length > 0; else cartEmpty">
+          <mat-card-content>
+            <div class="cart-container" *ngFor="let cartItem of cartItems; let i = index">
+              <div class="item-image">
+                <a routerLink="/product/{{cartItem.productId}}">
+                  <img class="image-responsive"
+                       src="{{cartItem.images.split('|')[0]}}"
+                       alt="image"
+                       onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+                </a>
+              </div>
+              <div class="item-info">
+                <a routerLink="/product/{{cartItem.productId}}">
+                  <h3>{{cartItem.name}}</h3>
+                </a>
+                <div class="info">
+                  <h2>{{cartItem.discountPrice | currency}}</h2>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Quantity</mat-label>
+                    <mat-select [(value)]="cartItem.quantity" (selectionChange)="updateCartItem(cartItem)">
+                      <mat-option *ngFor="let quantity of calculateQuantity(cartItem)" [value]="quantity">
+                        {{ quantity }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div class="remove-item-button">
+                    <button mat-raised-button (click)="removeCartItem(cartItem)">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <mat-divider *ngIf="i < cartItems.length - 1 " inset="true"></mat-divider>
+            </div>
+          </mat-card-content>
+        </ng-container>
+        <ng-template #cartEmpty>
+          <mat-card-header>
+            <mat-card-title>Your cart is empty</mat-card-title>
+            <mat-card-subtitle>Time to start shopping!</mat-card-subtitle>
+          </mat-card-header>
+        </ng-template>
+      </mat-card>
+    </div>
+
+    <div class="total">
+      <mat-card>
+        <mat-card-content>
+          <div class="total-container">
+            <div class="total-left">Items ({{cartItemCount}})</div>
+            <div class="total-right">{{calculateTotal(cartItems) | currency}}</div>
+          </div>
+          <div class="total-container">
+            <div class="total-left">Shipping</div>
+            <div class="total-right">Free</div>
+          </div>
+          <mat-divider inset="true"></mat-divider>
+          <div class="total-container">
+            <div class="total-left">
+              <h1>Total</h1>
+            </div>
+            <div class="total-right">
+              <h1>{{calculateTotal(cartItems) | currency}}</h1>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-section">
+            <button routerLink="/checkout"
+                    mat-raised-button color="accent"
+                    class="action-button"
+                    [disabled]="cartItemCount === 0">
+              Check Out
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>
+
+<app-recently-visited></app-recently-visited>

@@ -1,0 +1,38 @@
+<div class="navigation-wrapper">
+  <h1 *ngIf="products.length > 0">Your recently viewed items</h1>
+  <div *ngIf="products.length > 0" class="keen-slider keen-slider--vertical" #sliderRef>
+    <ng-container *ngFor="let product of products; let i = index">
+      <mat-card class="mat-elevation-z0 keen-slider__slide number-slide{{i + 1}}" (click)="slider.moveToIdx(0)">
+        <mat-card-content>
+          <a [routerLink]="['/product', product.id, productSlugs[i]]">
+            <img mat-card-image src="{{product.images.split('|')[0]}}" alt="image-{{i + 1}}"
+                 onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+            <h4 class="product-name">
+              {{product.name.length > 80 ? (product.name | slice:0:80) + '...' : product.name}}
+            </h4>
+            <div class="rating">
+              <app-rating [averageRating]="product.averageRating"></app-rating>
+              <sup class="rating-text">
+                {{product.ratingCount}}
+              </sup>
+            </div>
+            <h2>{{product.discountPrice | currency}}</h2>
+          </a>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+    <button mat-icon-button
+            [ngClass]="'arrow arrow--left mat-elevation-z3 ' + (currentSlide === 0 ? 'arrow--disabled' : '')"
+            (click)="slider.moveToIdx(prev())">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <button mat-icon-button
+            *ngIf="slider"
+            [ngClass]="'arrow arrow--right mat-elevation-z3 '
+            + (slider.track.details.slides.length - perView === currentSlide || slider.track.details.slides.length < perView
+            ? 'arrow--disabled' : '')"
+            (click)="slider.moveToIdx(next(slider.track.details.slides.length))">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
+</div>

@@ -30,7 +30,7 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_profile_type")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter @Setter @NoArgsConstructor
 @ToString(exclude = {"user"})
 public class UserProfile extends DateAudit implements Serializable {
@@ -66,8 +66,7 @@ public class UserProfile extends DateAudit implements Serializable {
         }
 
         ID other = (ID) obj;
-        return this.getId() != null && other.getId() != null
-                && this.getId().equals(other.getId());
+        return this.getId() != null && other.getId() != null && this.getId().equals(other.getId());
     }
 
     @Override

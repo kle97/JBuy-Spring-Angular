@@ -1,0 +1,22 @@
+.category-container {
+  max-width: 125rem;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+
+  .category-card {
+    margin: 0 2rem 2rem 2rem;
+    cursor: pointer;
+
+    ::ng-deep .mat-card-content {
+      text-align: center !important;
+    }
+  }
+}
+
+.title {
+  margin-top: 3rem;
+  margin-left: 1rem;
+}
+

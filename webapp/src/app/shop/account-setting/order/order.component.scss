@@ -1,0 +1,57 @@
+.order-card-container {
+  min-height: calc(100vh - 20.4rem);
+
+  .order-empty {
+    margin: 8rem auto;
+    text-align: center;
+  }
+
+  .order-tab {
+    padding: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-flow: row nowrap;
+    @media only screen and (max-width: 749.98px) {
+      flex-flow: row wrap;
+    }
+
+    .order-info {
+      width: 55%;
+      @media only screen and (max-width: 749.98px) {
+        width: 100%;
+      }
+      .order-info-row {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        .order-info-left {
+          width: 50%;
+        }
+        .order-info-right {
+          width: 50%;
+        }
+      }
+
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+      width: 45%;
+      @media only screen and (max-width: 749.98px) {
+        justify-content: center;
+        width: 100%;
+      }
+
+      ::ng-deep .mat-raised-button {
+        width: 20rem;
+        height: 5rem;
+        @media only screen and (max-width: 749.98px) {
+          margin: 2rem 0 auto;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.user-form-field {
+  width: 35%;
+  margin-bottom: 1.6rem;
+  @media only screen and (max-width: 599.98px) {
+    width: 100%;
+  }
+}

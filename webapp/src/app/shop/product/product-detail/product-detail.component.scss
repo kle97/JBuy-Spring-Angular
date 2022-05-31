@@ -1,0 +1,169 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 125rem;
+  margin: 3rem auto;
+}
+
+.left {
+  .keen-slider {
+    margin: auto;
+    max-width: 25rem;
+  }
+
+  .thumbnail > .keen-slider__slide {
+    opacity: 0.2;
+    cursor: pointer;
+  }
+  .keen-slider > .active {
+    opacity: 1;
+    border: 0.2rem solid;
+  }
+
+  flex: 22%;
+  padding-right: 1rem;
+  @media only screen and (max-width: 959.98px) {
+    max-width: 35rem;
+    margin: 2rem auto;
+  }
+}
+
+.center {
+  flex: 50%;
+
+  .rating {
+    margin-bottom: 2rem;
+
+    a {
+      text-decoration: none;
+      color: #363636;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .rating-text sup {
+      margin-left: 1rem;
+      font-size: 115%;
+
+
+    }
+  }
+
+  .in-stock, .last-one {
+    color: green;
+  }
+
+  .out-stock {
+    color: #666;
+  }
+
+  .regular-price {
+    font-size: 120%;
+    s {
+      color: #666;
+    }
+
+    span {
+      color: #cc0000;
+    }
+
+    margin-bottom: 2rem;
+  }
+
+  .discount-price h1 {
+    font-size: 250%;
+    color: #cc0000;
+  }
+
+  .description {
+    margin-top: 3rem;
+    //max-width: 60rem;
+  }
+
+  @media only screen and (max-width: 959.98px) {
+    flex: 100%;
+    padding: 2rem 2rem;
+  }
+}
+
+.right {
+  padding-left: 1rem;
+  padding-top: 15.5rem;
+  flex: 18%;
+  @media only screen and (max-width: 959.98px) {
+    padding: 2rem 2rem;
+    flex: 100%;
+  }
+
+  .action-button {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 2rem;
+    @media only screen and (max-width: 959.98px) {
+      margin: 1.5rem;
+      //max-width: 50%;
+    }
+  }
+
+  .button-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .quantity {
+    @media only screen and (max-width: 959.98px) {
+      padding-left: 1.5rem;
+    }
+  }
+}
+
+.product-info {
+  max-width: 125rem;
+  margin: 6rem auto;
+
+  .overview {
+    min-height: 30rem;
+  }
+
+  .specs-container {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 1.6rem 0 1.6rem;
+    .specs-left {
+      flex: 30%;
+      margin: 2rem auto;
+      @media only screen and (max-width: 959.98px) {
+        flex: 100%;
+      }
+    }
+    .specs-right {
+      margin: 2rem auto;
+      flex: 70%;
+
+      table {
+        border-collapse: collapse;
+        //width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 0.8rem;
+      }
+
+      .attribute-name {
+        min-width: 20rem;
+        background-color: #dddddd;
+      }
+
+      .attribute-value {
+        width: 100%;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
+

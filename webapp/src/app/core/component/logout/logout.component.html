@@ -1,0 +1,13 @@
+<a mat-menu-item (click)="onLogout()" class="gt-xmall">
+  <mat-icon>logout</mat-icon>
+  Sign Out
+</a>
+
+<a mat-button (click)="onLogout()" class="xsmall">
+  <mat-icon>logout</mat-icon>
+  Sign Out
+</a>
+
+<ng-container *ngIf="true | isLoading | async">
+  <app-loading></app-loading>
+</ng-container>

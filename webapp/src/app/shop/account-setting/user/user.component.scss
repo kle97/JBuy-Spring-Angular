@@ -1,0 +1,29 @@
+.user-card-container {
+  min-height: calc(100vh - 20.4rem);
+
+  .user-info {
+    padding: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-flow: row nowrap;
+    @media only screen and (max-width: 499.98px) {
+      padding: 1rem;
+    }
+    .left {
+      min-width: 30%;
+      @media only screen and (max-width: 599.98px) {
+        min-width: 50%;
+      }
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-start;
+
+    ::ng-deep .mat-raised-button {
+      margin-left: 2.5rem;
+    }
+  }
+}

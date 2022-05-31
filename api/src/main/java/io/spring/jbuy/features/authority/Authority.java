@@ -26,16 +26,16 @@ import java.util.Set;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter @Setter @NoArgsConstructor
-@ToString(exclude = {"users"})
+@ToString(exclude = {"listOfUser"})
 public class Authority extends DateAuditWithID implements GrantedAuthority {
 
     @NotNull
     @Column(unique = true)
     private String role;
 
-    @ManyToMany(mappedBy = "authorities")
+    @ManyToMany(mappedBy = "listOfAuthority")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<User> users = new HashSet<>();
+    private Set<User> listOfUser = new HashSet<>();
 
     @Default
     public Authority(String role) {
@@ -49,8 +49,8 @@ public class Authority extends DateAuditWithID implements GrantedAuthority {
 
     @PreRemove
     private void removeAuthoritiesFromUsers() {
-        for (User user : this.getUsers()) {
-            user.getAuthorities().remove(this);
+        for (User user : this.getListOfUser()) {
+            user.getListOfAuthority().remove(this);
         }
     }
 }

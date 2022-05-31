@@ -1,7 +1,8 @@
 version: "3.8"
 services:
   postgresql:
-    image: postgres:14-alpine
+#    image: postgres:14-alpine
+    image: jbuy_preload:latest
     ports:
       - "5432:5432"
     #    env_file: .env

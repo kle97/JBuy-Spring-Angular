@@ -1,0 +1,38 @@
+.fill-remaining-spacer {
+  flex: auto;
+}
+
+.toolbar-container {
+  background-color: #363636;
+}
+
+.toolbar {
+  background-color: #363636;
+  max-width: 125rem;
+  margin: auto;
+}
+
+.title {
+  //padding-left: 2rem;
+  padding-right: 2rem;
+  @media only screen and (max-width: 959.98px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  font-size: 130%;
+  a:link, a:visited {
+    color: white;
+    text-decoration: none;
+  }
+  a:hover, a:active {
+    background-color: #363636;
+  }
+}
+
+.sidenav-menu {
+  width: 100%;
+}
+
+::ng-deep .mat-drawer-container {
+  background-color: white;
+}

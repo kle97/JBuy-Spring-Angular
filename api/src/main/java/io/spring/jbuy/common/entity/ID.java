@@ -16,7 +16,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class ID implements Serializable {
 
-    private static final long serialVersionUID = 2575690552348142L;
+    private static final long serialVersionUID = 257512386974142L;
 
     @Id
     @Column(columnDefinition = "uuid", updatable = false, nullable = false)

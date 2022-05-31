@@ -1,0 +1,93 @@
+<ng-container *appVar="orderProductPage$ | async as orderProductPage">
+  <ng-container *ngIf="orderProductPage.content.length > 0; else orderProductEmpty">
+    <div *ngIf="order" class="order-info">
+      <div class="order-info-row">
+        <div class="order-info-left">
+          <h3>Order Number</h3>
+        </div>
+        <div class="order-info-right">
+          <h3>{{order.id}}</h3>
+        </div>
+      </div>
+      <div class="order-info-row">
+        <div class="order-info-left">
+          <h3>Shipping Address</h3>
+        </div>
+        <div class="order-info-right">
+          <h3>{{order.shippingAddressLine1}}</h3>
+          <h3 *ngIf="order.shippingAddressLine2">{{order.shippingAddressLine2}}</h3>
+          <h3>{{order.shippingCity}}, {{order.shippingState}} {{order.shippingPostalCode}}</h3>
+        </div>
+      </div>
+      <div class="order-info-row">
+        <div class="order-info-left">
+          <h3>Order Date</h3>
+        </div>
+        <div class="order-info-right">
+          <h3>{{order.orderDate | date:"short"}}</h3>
+        </div>
+      </div>
+      <div class="order-info-row">
+        <div class="order-info-left">
+          <h3>Order Status</h3>
+        </div>
+        <div class="order-info-right">
+          <h3>{{order.orderStatus}}</h3>
+        </div>
+      </div>
+      <div class="order-info-row">
+        <div class="order-info-left">
+          <h3>Order Total</h3>
+        </div>
+        <div class="order-info-right">
+          <h3>{{order.total | currency}}</h3>
+        </div>
+      </div>
+    </div>
+    <h1>Order Details</h1>
+    <div class="order-product-tab mat-elevation-z3" *ngFor="let orderProduct of orderProductPage.content; let i = index">
+      <div class="order-product-info">
+        <div class="item-image">
+          <a routerLink="/product/{{orderProduct.productId}}">
+            <img class="image-responsive"
+                 src="{{orderProduct.images.split('|')[0]}}"
+                 alt="image"
+                 onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+          </a>
+        </div>
+        <div class="item-info">
+          <a routerLink="/product/{{orderProduct.productId}}">
+            <h3>{{orderProduct.name}}</h3>
+          </a>
+          <div class="info">
+            <h3>{{orderProduct.price | currency}}</h3>
+            <h4>Qty: {{orderProduct.quantity}}</h4>
+            <h2>Total: {{orderProduct.price * orderProduct.quantity | currency}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="writeOrEditReview(orderProduct)">
+          Write or Edit Review
+        </button>
+      </div>
+    </div>
+
+    <app-paginator
+      [length]="orderProductPage.totalElements"
+      [pageSize]="orderProductPage.size"
+      [pageIndex]="orderProductPage.number"
+      [showFirstLastButtons]="true"
+      (page)="onPageEvent($event)">
+    </app-paginator>
+  </ng-container>
+  <ng-template #orderProductEmpty>
+    <div class="order-product-empty">
+      <h2>There are no orders!</h2>
+      <div class="order-product-empty-2">
+        Please make an order and come back later.
+      </div>
+    </div>
+  </ng-template>
+</ng-container>
+

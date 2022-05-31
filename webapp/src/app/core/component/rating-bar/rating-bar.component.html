@@ -1,0 +1,33 @@
+<ng-container>
+  <div class="overall-rating">
+    <h2 [ngClass]="touched && !hovering && selectedStar === 0 ? 'red' : ''">Overall Rating<sup>*</sup></h2>{{ratingText}}
+  </div>
+  <div (mouseenter)="onEnter()" (mouseleave)="onLeave()">
+    <span class="star-area" (mouseenter)="hoverOne()" (mouseleave)="noHover()" (click)="selectStar(1)">
+      <mat-icon *ngIf="oneStar" class="star first">star</mat-icon>
+      <mat-icon *ngIf="!oneStar" class="material-icons-outlined star first">grade</mat-icon>
+    </span>
+    <span class="star-area" (mouseenter)="hoverTwo()" (mouseleave)="noHover()" (click)="selectStar(2)">
+      <mat-icon *ngIf="twoStar" class="star">star</mat-icon>
+      <mat-icon *ngIf="!twoStar" class="material-icons-outlined star">grade</mat-icon>
+    </span>
+    <span class="star-area" (mouseenter)="hoverThree()" (mouseleave)="noHover()" (click)="selectStar(3)">
+      <mat-icon *ngIf="threeStar" class="star">star</mat-icon>
+      <mat-icon *ngIf="!threeStar" class="material-icons-outlined star">grade</mat-icon>
+    </span>
+    <span class="star-area" (mouseenter)="hoverFour()" (mouseleave)="noHover()" (click)="selectStar(4)">
+      <mat-icon *ngIf="fourStar" class="star">star</mat-icon>
+      <mat-icon *ngIf="!fourStar" class="material-icons-outlined star">grade</mat-icon>
+    </span>
+    <span class="star-area" (mouseenter)="hoverFive()" (mouseleave)="noHover()" (click)="selectStar(5)">
+      <mat-icon *ngIf="fiveStar" class="star">star</mat-icon>
+      <mat-icon *ngIf="!fiveStar" class="material-icons-outlined star">grade</mat-icon>
+    </span>
+  </div>
+  <div >
+    <mat-error *ngIf="touched && !hovering">
+      <div *ngIf="selectedStar === 0">Rating is required</div>
+    </mat-error>
+    <div *ngIf="!touched || hovering || selectedStar !== 0" class="mat-error-else"></div>
+  </div>
+</ng-container>

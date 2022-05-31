@@ -1,0 +1,23 @@
+.address-form-field {
+  width: 49%;
+  margin-bottom: 1.6rem;
+  @media only screen and (max-width: 599.98px) {
+    width: 100%;
+  }
+}
+
+.city-state-form-field {
+  width: 32%;
+  margin-bottom: 1.6rem;
+  @media only screen and (max-width: 599.98px) {
+    width: 100%;
+  }
+}
+
+.form-field-margin {
+  margin-right: 2%;
+}
+
+.address-primary-checkbox {
+  margin-left: 0.2rem;
+}

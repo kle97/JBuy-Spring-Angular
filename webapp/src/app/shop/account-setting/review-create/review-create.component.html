@@ -1,0 +1,37 @@
+<ng-container>
+  <h2 mat-dialog-title>Create New Review</h2>
+  <mat-dialog-content>
+    <form id="reviewForm" [formGroup]="reviewForm">
+      <div class="review-row">
+        <mat-form-field appearance="outline" class="review-form-field">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" required>
+          <mat-error
+            *ngIf="title.invalid && (title.dirty || title.touched)">
+            <div *ngIf="title.errors?.['required']">Please enter a title.</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="review-row">
+        <mat-form-field appearance="outline" class="review-form-field">
+          <mat-label>Comment</mat-label>
+          <textarea matInput formControlName="comment" cdkTextareaAutosize required></textarea>
+          <mat-error
+            *ngIf="comment.invalid && (comment.dirty || comment.touched)">
+            <div *ngIf="comment.errors?.['required']">Please leave a comment.</div>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="review-row">
+        <app-rating-bar (selectedStarEvent)="onSelectedStar($event)"></app-rating-bar>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" [disabled]="!reviewForm.valid"
+            (click)="create()">Create
+    </button>
+    <button mat-button mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</ng-container>

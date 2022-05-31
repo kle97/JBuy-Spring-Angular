@@ -1,0 +1,7 @@
+.review-form-field {
+  width: 50%;
+  margin-bottom: 1.6rem;
+  @media only screen and (max-width: 799.98px) {
+    width: 100%;
+  }
+}

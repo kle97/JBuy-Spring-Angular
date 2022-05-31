@@ -1,0 +1,29 @@
+.star {
+  color: #ffa41c;
+  font-size: 5rem;
+  margin-left: 0.9rem;
+  margin-right: 0.9rem;
+}
+
+.first {
+  margin-left: 0;
+}
+
+.star-area {
+  cursor: pointer;
+}
+
+.overall-rating {
+  h2 {
+    display: inline;
+    margin-right: 1.5rem;
+  }
+
+  .red {
+    color: red;
+  }
+}
+
+.mat-error-else {
+  height: 2rem;
+}

@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="title">
+    <h1>JBuy Account Setting</h1>
+  </div>
+
+  <div class="side-menu">
+    <mat-card class="side-menu-card">
+      <mat-card-content>
+        <a [routerLink]="['user']"
+           routerLinkActive="active"
+           mat-button class="side-menu-button">
+          Personal Information
+        </a>
+        <a [routerLink]="['password']"
+           routerLinkActive="active"
+           mat-button class="side-menu-button">
+          Password
+        </a>
+        <a [routerLink]="['address']"
+           routerLinkActive="active"
+           mat-button class="side-menu-button">
+          Addresses
+        </a>
+        <a [routerLink]="['order']"
+           routerLinkActive="active"
+           mat-button class="side-menu-button">
+          Purchases and Orders
+        </a>
+        <a [routerLink]="['review']"
+           routerLinkActive="active"
+           mat-button class="side-menu-button">
+          Reviews
+        </a>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

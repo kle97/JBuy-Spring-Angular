@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     public void handleBadCredentialsException(HttpServletRequest request,
                                               HttpServletResponse response,
                                               BadCredentialsException ex) throws Exception {
-        String message = "Incorrect username or password!";
+        String message = "Incorrect email or password!";
         handleExceptionInternal(request, response, HttpStatus.UNAUTHORIZED, message, ex);
     }
 
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValidException(HttpServletRequest request,
-                                                                        MethodArgumentNotValidException ex) throws Exception {
+                                                                        MethodArgumentNotValidException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", Instant.now());

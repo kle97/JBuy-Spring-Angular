@@ -17,7 +17,7 @@ public class SystemProperties {
     private String currentVersion;
     private String[] webIgnoreEndpoints = new String[0];
     private Set<String> publicEndpoints;
-    private String adminUserName;
+    private String adminEmail;
     private String adminPassword;
     private String testPassword;
     private boolean cookieSecure;

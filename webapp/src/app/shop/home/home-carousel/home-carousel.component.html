@@ -1,0 +1,52 @@
+<div class="navigation-wrapper">
+  <div class="keen-slider keen-slider--vertical" #sliderRef>
+    <div class="keen-slider__slide number-slide1">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide1.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider__slide number-slide2">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide2.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider__slide number-slide3">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide3.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider__slide number-slide4">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide4.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider__slide number-slide5">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide5.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <div class="keen-slider__slide number-slide6">
+      <img src="https://res.cloudinary.com/khoale97/image/upload/jbuy/slide6.jpg" alt="error"
+           onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+    </div>
+    <button mat-icon-button
+            class="arrow arrow--left mat-elevation-z3"
+            (click)="slider.prev()">
+      <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+    <button mat-icon-button
+            *ngIf="slider"
+            class="arrow arrow--right mat-elevation-z3"
+            (click)="slider.next()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+    <button mat-icon-button *ngIf="slider"
+            class="play-button" disableRipple
+            (click)="toggleAutoSlide()">
+      <mat-icon *ngIf="autoSlide">pause_circle</mat-icon>
+      <mat-icon *ngIf="!autoSlide">play_circle</mat-icon>
+    </button>
+  </div>
+
+  <div class="dots">
+    <button *ngFor="let slide of dotHelper; let i = index"
+            (click)="slider.moveToIdx(i)"
+            [ngClass]="'dot mat-elevation-z3 ' + (i === currentSlide ? 'active' : '')">
+    </button>
+  </div>
+</div>

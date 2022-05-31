@@ -1,0 +1,49 @@
+
+.product-review-empty {
+  min-height: 30rem;
+  margin: 4rem 1.6rem;
+}
+
+.review-top {
+  margin: 2rem;
+}
+
+.rating-text {
+  font-size: 130%;
+}
+
+.product-review-tab {
+  //min-height: 30rem;
+  padding: 3rem;
+  margin: 2rem;
+  display: flex;
+  flex-flow: row nowrap;
+  @media only screen and (max-width: 749.98px) {
+    flex-flow: row wrap;
+  }
+
+  .comment-section {
+    max-width: 80rem;
+    overflow: hidden;
+    word-wrap: break-word;
+
+    .comment {
+      margin-top: 2rem;
+    }
+
+    .comment-title {
+      h3 {
+        padding-bottom: 0.1rem;
+        margin-bottom: 0;
+        overflow: hidden;
+        word-wrap: break-word;
+      }
+
+      .rating {
+        margin-right: 1rem;
+      }
+
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 package io.spring.jbuy.features.authentication;
 
-import io.spring.jbuy.features.user.UserDto;
+import io.spring.jbuy.features.user.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -37,9 +37,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Login a user by username and password", tags = "authentication",
+    @Operation(summary = "Login a user by email and password", tags = "authentication",
             security = {@SecurityRequirement(name = "httpBasic")})
-    public ResponseEntity<UserDto> login() {
+    public ResponseEntity<UserResponse> login() {
         return ResponseEntity.ok().body(authenticationService.login());
     }
 

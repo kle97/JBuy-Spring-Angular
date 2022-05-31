@@ -1,0 +1,31 @@
+<div class="toolbar-container" *appVar="{xSmall: 'xs' | matchMedia | async} as media">
+  <mat-toolbar class="toolbar" color="primary">
+    <span class="title"><a routerLink="/"><b>{{title}}</b></a></span>
+
+    <span class="fill-remaining-spacer"></span>
+
+    <app-navigation-bar-cart></app-navigation-bar-cart>
+    <ng-container *ngIf="media.xSmall; else gtXSmall">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </ng-container>
+    <ng-template #gtXSmall>
+      <app-account-menu></app-account-menu>
+    </ng-template>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over" opened="false" [autoFocus]="false" class="sidenav-menu">
+      <app-account-menu></app-account-menu>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<!--<ng-container *ngIf="true | isLoading | async">-->
+<!--  <app-loading></app-loading>-->
+<!--</ng-container>-->

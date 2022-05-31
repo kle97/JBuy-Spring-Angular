@@ -1,0 +1,71 @@
+.footer-container {
+  margin-top: 3rem;
+  bottom: 0;
+  width: 100%;
+  background-color: #363636;
+  color: white;
+
+  .footer-wrapper {
+    max-width: 125rem;
+    display: flex;
+    flex-flow: row nowrap;
+    margin: auto;
+    padding: 2rem 0 0 0;
+    @media only screen and (max-width: 749.98px) {
+      padding: 3rem;
+      flex-flow: row wrap;
+    }
+
+    .navigate {
+      margin: 2rem 0 2rem 2%;
+      flex: 32%;
+      @media only screen and (max-width: 749.98px) {
+        flex: 100%;
+        margin-left: 0;
+      }
+
+      .link {
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .footer-title {
+        font-size: 200%;
+
+        .demo {
+          color: #47AFE8;
+        }
+      }
+    }
+
+    .contact {
+      margin: 2rem 0 2rem 0;
+      flex: 32%;
+      @media only screen and (max-width: 749.98px) {
+        flex: 100%;
+      }
+
+      .contact-info {
+        margin-bottom: 2rem;
+      }
+
+      .align-with-icon {
+        position: relative;
+        top: -0.5rem;
+        margin-left: 1rem;
+      }
+    }
+
+    .about {
+      flex: 32%;
+      margin: 2rem 2% 2rem 0;
+      @media only screen and (max-width: 749.98px) {
+        margin-right: 0;
+        flex: 100%;
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,25 @@
+.paginator {
+  display: flex;
+  flex-flow: row;
+  @media only screen and (max-width: 623.98px) {
+    flex-flow: row-reverse;
+    ::ng-deep .mat-paginator-outer-container {
+      .mat-paginator-page-size-label, .mat-paginator-range-label {
+        display: none;
+      }
+      .mat-paginator-container {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.goto-button {
+  @media only screen and (max-width: 349.98px) {
+    padding: 0.5rem;
+  }
+}
+
+.form-field {
+  width: 18rem;
+}

@@ -39,6 +39,8 @@ public class HazelcastConfiguration {
     public SessionRepositoryCustomizer<HazelcastIndexedSessionRepository> customize() {
         return (sessionRepository) -> {
             // Set session timeout. Default session timeout is 1800s or 30 min
+            // seems to not work, use properties 'server.servlet.session.cookie.max-age' or
+            // 'server.servlet.session.timeout' in application.properties instead
             sessionRepository.setDefaultMaxInactiveInterval(systemProperties.getSessionTimeout());
         };
     }
@@ -96,12 +98,55 @@ public class HazelcastConfiguration {
                 .setMaxSizeConfig(new MaxSizeConfig().setSize(1000))
                 .setTimeToLiveSeconds(600);
 
-        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.user.User"));
-        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.user.User.authorities"));
-        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.user.UserProfile"));
+        MapConfig largeMapConfig = new MapConfig()
+                .setBackupCount(0)
+                .setEvictionPolicy(EvictionPolicy.LRU)
+                .setMaxSizeConfig(new MaxSizeConfig().setSize(5000))
+                .setTimeToLiveSeconds(900);
+
+        // query cache
+        config.addMapConfig(new MapConfig(largeMapConfig).setName("default-query-results-region"));
+
+        // entities and collections cache
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.user.User"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.user.User.listOfAuthority"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.user.UserProfile"));
         config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.authority.Authority"));
-        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.authority.Authority.users"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.authority.Authority.listOfUser"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.address.Address"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.attribute.Attribute.listOfProductAttribute"));
+        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.attribute_type.AttributeType"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.attribute_type.AttributeType.listOfAttribute"));
+        config.addMapConfig(new MapConfig(smallMapConfig)
+                                    .setName("io.spring.jbuy.features.attribute_type.AttributeType.listOfCategory"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.cart_item.CartItem"));
+        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.category.Category"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.category.Category.listOfProduct"));
+        config.addMapConfig(new MapConfig(smallMapConfig)
+                                    .setName("io.spring.jbuy.features.category.Category.listOfAttributeType"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.customer.Customer"));
+        config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.keyword.Keyword"));
+        config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.order.Order"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.order_product.OrderProduct"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product.listOfProductAttribute"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product.listOfCartItem"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product.listOfOrderProduct"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product.listOfReview"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product.Product.listOfCategory"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.product_attribute.ProductAttribute"));
+        config.addMapConfig(new MapConfig(mediumMapConfig)
+                                    .setName("io.spring.jbuy.features.review.Review"));
     }
-
-
 }

@@ -1,0 +1,32 @@
+<div class="paginator">
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 [showFirstLastButtons]="showFirstLastButtons"
+                 [pageIndex]="pageIndex"
+                 [hidePageSize]="hidePageSize"
+                 [disabled]="disabled"
+                 [color]="color"
+                 (page)="onPageEvent($event)">
+  </mat-paginator>
+  <button class="goto-button" mat-button [matMenuTriggerFor]="goto">Page: {{pageNumber.value}}</button>
+  <mat-menu #goto="matMenu">
+    <form id="pageNumberForm" (click)="$event.stopPropagation()" (keydown.enter)="$event.preventDefault()"
+          [formGroup]="pageNumberForm" (ngSubmit)="goToPage()">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Go to page [1 - {{maxPageNumber}}]</mat-label>
+        <input min="1" [max]="maxPageNumber" type="number" matInput formControlName="pageNumber" required>
+        <button type="submit" *ngIf="pageNumber.valid"
+                matSuffix mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+        <mat-error *ngIf="pageNumber.invalid && (pageNumber.dirty || pageNumber.touched)">
+          <div *ngIf="pageNumber.errors?.['required']">Page number is required</div>
+          <div *ngIf="pageNumber.errors?.['max']">Maximum page number is {{maxPageNumber}}</div>
+          <div *ngIf="pageNumber.errors?.['min']">Minimum page number is 1</div>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-menu>
+</div>
+

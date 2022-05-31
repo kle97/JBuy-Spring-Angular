@@ -1,0 +1,24 @@
+.fill-remaining-spacer {
+  flex: auto;
+}
+
+.toolbar {
+  background-color: #363636;
+}
+
+.title {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  @media only screen and (max-width: 959.98px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  font-size: 130%;
+  a:link, a:visited {
+    color: white;
+    text-decoration: none;
+  }
+  a:hover, a:active {
+    background-color: #363636;
+  }
+}

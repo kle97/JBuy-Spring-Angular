@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
+import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CookieService } from "ngx-cookie";
 import { environment } from "../../../environments/environment";
@@ -8,11 +8,11 @@ import { environment } from "../../../environments/environment";
   templateUrl: "./ui.component.html",
   styleUrls: ["./ui.component.scss"],
 })
-export class UiComponent implements OnInit {
+export class UiComponent implements OnInit, AfterViewInit {
 
   specUrl: string = environment.specUrl;
   securityScheme: string = environment.securityScheme;
-  username: string = environment.username;
+  email: string = environment.email;
   password: string = environment.password;
 
   @ViewChild("theDoc") rapidocEl!: ElementRef;
@@ -29,13 +29,12 @@ export class UiComponent implements OnInit {
   };
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {
     this.rapidocEl.nativeElement.setAttribute("spec-url", this.specUrl);
     this.rapidocEl.nativeElement.setAttribute("goto-path", "auth");
-    this.rapidocEl.nativeElement.setAttribute("route-prefix", "/rapidoc/#");
+    this.rapidocEl.nativeElement.setAttribute("route-prefix", "rapidoc#");
     this.rapidocEl.nativeElement.setAttribute("fetch-credentials", "include");
     this.http.get("/auth/csrf", this.httpOptions).subscribe();
   }
@@ -76,7 +75,7 @@ export class UiComponent implements OnInit {
   }
 
   onBtn6() {
-    this.rapidocEl.nativeElement.setHttpUserNameAndPassword(this.securityScheme, this.username, this.password);
+    this.rapidocEl.nativeElement.setHttpUserNameAndPassword(this.securityScheme, this.email, this.password);
   }
 
   onBtn7() {

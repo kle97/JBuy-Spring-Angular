@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Component("webSecurity") @Slf4j
 public class WebSecurity {
+
     public boolean hasUserId(UUID userId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -25,7 +26,7 @@ public class WebSecurity {
         return false;
     }
 
-    public boolean hasStudentId(UUID studentId) {
-        return hasUserId(studentId);
+    public boolean hasCustomerId(UUID customerId) {
+        return hasUserId(customerId);
     }
 }

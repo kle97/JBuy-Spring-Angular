@@ -78,22 +78,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .requestCache(new NullRequestCache());
 
         // enable basic authentication
-        http.httpBasic();
+        http.httpBasic()
+                // Set Http 401 "unauthorized" entry point
+                .authenticationEntryPoint(http401UnauthorizedEntryPoint);
+
+        // Set custom access denied handler instead of the default 403 "access denied" entry point
+        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
 
         // enable logout functionality without redirect upon successful logging out
         http.logout()
                 .logoutUrl("/api/v1/auth/logout")
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT));
 
-
         // Allow only same origin in a frame (default: deny, other option are allow-from and sameOrigin)
         // Used only for h2-console
 //        http.headers().frameOptions().sameOrigin();
-
-        // Set Http 401 "unauthorized" entry point
-        http.exceptionHandling().authenticationEntryPoint(http401UnauthorizedEntryPoint);
-        // Set custom access denied handler instead of the default 403 "access denied" entry point
-        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
 
         // Disable form login and http basic
 //        http.formLogin().disable();

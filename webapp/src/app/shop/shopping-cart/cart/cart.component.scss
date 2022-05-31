@@ -1,0 +1,112 @@
+.container {
+  max-width: 125rem;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 3rem auto;
+  .card-container {
+    min-height: 21.5rem;
+
+    .mat-card-header {
+      margin: 7rem auto;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  .title {
+    width: 100%;
+  }
+
+  .item {
+    width: 73%;
+    margin-right: 2%;
+
+    @media only screen and (max-width: 899.98px) {
+      margin: 2rem;
+      width: 100%;
+    }
+
+    .cart-container {
+      display: flex;
+      flex-flow: row wrap;
+      margin: 3rem auto;
+
+      .item-image {
+        width: 30%;
+
+        .image-responsive {
+          max-width: 100%;
+          height: auto;
+        }
+      }
+
+      .item-info {
+        width: 70%;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
+        h1 {
+          word-wrap: anywhere;
+        }
+
+        .info .mat-form-field {
+          max-width: 10rem;
+        }
+
+        a {
+          text-decoration: none;
+          color: #363636;
+        }
+
+        a:hover {
+          h3 {
+            text-decoration: underline;
+          }
+        }
+
+        .remove-item-button {
+          float: right;
+          margin-right: 1rem;
+          margin-top: 2rem;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+
+  .total {
+    width: 25%;
+    @media only screen and (max-width: 899.98px) {
+      margin: 2rem;
+      width: 100%;
+    }
+
+    .total-container {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      .total-left {
+        width: 50%;
+      }
+      .total-right {
+        width: 50%;
+        text-align: end;
+      }
+    }
+
+    .button-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+    }
+
+    .action-button {
+      width: 100%;
+      height: 5rem;
+    }
+  }
+}

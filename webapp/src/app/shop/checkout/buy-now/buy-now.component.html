@@ -1,0 +1,129 @@
+<div class="container" *appVar="cartItemCount$ | async as cartItemCount">
+  <ng-container *appVar="cartItems$ | async as cartItems">
+    <div class="title">
+      <h1>JBuy Checkout ({{cartItemCount}}
+        <ng-container *ngIf="cartItemCount === 1; else plural"> item)</ng-container>
+        <ng-template #plural> items)</ng-template>
+      </h1>
+    </div>
+    <div class="checkout-info">
+      <mat-card class="shipping-address">
+        <mat-card-header>
+          <mat-card-title>Shipping Address</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ng-container *ngIf="selectedAddress; else addAddress">
+            <mat-form-field appearance="outline">
+              <mat-label>Address</mat-label>
+              <mat-select [value]="selectedAddress" (selectionChange)="onAddressChange($event.value)">
+                <mat-option *ngFor="let address of addresses$ | async" [value]="address">
+                  {{ address.addressLine1 }}
+                  , {{address.addressLine2 ? address.addressLine2 + ", " : ""}}{{address.city}},
+                  {{address.state}} {{address.postalCode}}{{address.primaryAddress ? " (Primary)" : ""}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <h3>Address
+              <span *ngIf="selectedAddress.primaryAddress"> (Primary)</span>
+            </h3>
+            <h3>{{selectedAddress.addressLine1}}</h3>
+            <h3 *ngIf="selectedAddress.addressLine2">{{selectedAddress.addressLine2}}</h3>
+            <h3>{{selectedAddress.city}}, {{selectedAddress.state}} {{selectedAddress.postalCode}}</h3>
+            <div>
+              <button mat-raised-button (click)="editAddress(selectedAddress)">
+                Edit
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #addAddress>
+            <div>
+              <button class="create-button" mat-raised-button color="primary" (click)="createAddress()">
+                Create New Address
+              </button>
+            </div>
+          </ng-template>
+
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="item-container">
+        <mat-card-header>
+          <mat-card-title>Review your items</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ng-container *ngIf="cartItems && cartItems.length > 0; else cartEmpty">
+            <div class="cart-container" *ngFor="let cartItem of cartItems; let i = index">
+              <div class="item-image">
+                <img class="image-responsive"
+                     src="{{cartItem.images.split('|')[0]}}"
+                     alt="image"
+                     onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+              </div>
+              <div class="item-info">
+                <h3>{{cartItem.name}}</h3>
+                <div class="info">
+                  <h2>{{cartItem.discountPrice | currency}}</h2>
+                  <h3>Qty: {{cartItem.quantity}}</h3>
+                </div>
+              </div>
+              <mat-divider *ngIf="i < cartItems.length - 1 " inset="true"></mat-divider>
+            </div>
+          </ng-container>
+          <ng-template #cartEmpty>
+            <mat-card-header>
+              <mat-card-title>Your cart is empty</mat-card-title>
+              <mat-card-subtitle>Time to start shopping!</mat-card-subtitle>
+            </mat-card-header>
+          </ng-template>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+    <div class="checkout-total">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Order Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="checkout-total-row">
+            <div class="total-left">Items ({{cartItemCount}})</div>
+            <div class="total-right">{{calculateTotal(cartItems) | currency}}</div>
+          </div>
+          <div class="checkout-total-row">
+            <div class="total-left">Shipping</div>
+            <div class="total-right">Free</div>
+          </div>
+          <mat-divider inset="true"></mat-divider>
+          <div class="checkout-total-row">
+            <div class="total-left">
+              <h1>Order Total</h1>
+            </div>
+            <div class="total-right">
+              <h1>{{calculateTotal(cartItems) | currency}}</h1>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-section">
+            <button mat-raised-button color="accent"
+                    class="action-button"
+                    (click)="checkout()"
+                    [disabled]="cartItemCount === 0 || !selectedAddress">
+              Place Order
+            </button>
+          </div>
+          <div *ngIf="!selectedAddress" class="button-section warning">
+            <h3>Please add a shipping address</h3>
+          </div>
+          <div class="button-section">
+            <button routerLink="/cart" mat-raised-button color="primary" class="action-button">
+              Back to Cart
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>
+

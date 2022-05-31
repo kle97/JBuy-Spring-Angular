@@ -1,0 +1,26 @@
+.mat-menu-item .mat-icon {
+  margin-right: 0.5rem !important;
+}
+
+::ng-deep .account-menu .mat-menu-content:not(:empty) {
+  padding: 0 !important;
+}
+
+.account-menu-button {
+  background-color: #363636;
+  color: white;
+  @media only screen and (max-width: 599.98px) {
+    padding-left: 0;
+    padding-right: 0;
+    min-width: 4rem;
+  }
+}
+
+.sidenav-menu {
+  ::ng-deep .mat-button {
+    border-radius: 0;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}

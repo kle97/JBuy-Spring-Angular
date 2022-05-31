@@ -1,0 +1,20 @@
+@use 'node_modules/@angular/material/index' as mat;
+
+@include mat.core();
+
+$jbuy-primary: mat.define-palette(mat.$blue-palette, A700);
+$jbuy-accent: mat.define-palette(mat.$green-palette, 700);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$jbuy-warn: mat.define-palette(mat.$red-palette);
+
+
+$jbuy-theme: mat.define-light-theme((
+  color: (
+    primary: $jbuy-primary,
+    accent: $jbuy-accent,
+    warn: $jbuy-warn,
+  )
+));
+
+@include mat.all-component-themes($jbuy-theme);

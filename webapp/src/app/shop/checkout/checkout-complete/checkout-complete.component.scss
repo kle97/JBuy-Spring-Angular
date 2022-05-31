@@ -1,0 +1,23 @@
+.order-complete-card-container {
+  min-height: calc(100vh - 20.4rem);
+
+  .mat-card-header {
+    margin: 7rem auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .order-complete-detail {
+    margin: 2rem auto;
+    text-align: center;
+
+    .field-name {
+      color: #666666;
+    }
+
+    .field-value {
+      margin-bottom: 5rem;
+    }
+  }
+}

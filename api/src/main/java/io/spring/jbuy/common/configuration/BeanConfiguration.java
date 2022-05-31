@@ -2,6 +2,7 @@ package io.spring.jbuy.common.configuration;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import io.spring.jbuy.features.product.dto.PageFacet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class BeanConfiguration {
     public Module paginationWithJsonViewModule() {
         SimpleModule module = new SimpleModule();
         module.addSerializer(Page.class, new CustomPageSerializer());
+        module.addSerializer(PageFacet.class, new CustomPageFacetSerializer());
         module.addSerializer(Slice.class, new CustomSliceSerializer());
         return module;
     }

@@ -1,0 +1,22 @@
+.address-card-container {
+  min-height: calc(100vh - 20.4rem);
+
+  .create-button {
+    margin-top: 2rem;
+  }
+
+  .address-info {
+    padding: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .action-buttons {
+      display: flex;
+      justify-content: flex-end;
+
+      ::ng-deep .mat-raised-button {
+        margin-left: 3rem;
+      }
+    }
+  }
+}

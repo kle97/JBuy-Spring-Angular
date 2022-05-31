@@ -1,0 +1,70 @@
+<mat-card class="review-card-container">
+  <mat-card-header>
+    <mat-card-title>Reviews</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *appVar="reviewPage$ | async as reviewPage">
+      <ng-container *ngIf="reviewPage.content.length > 0; else reviewPageEmpty">
+        <div class="review-tab mat-elevation-z3" *ngFor="let review of reviewPage.content; let i = index">
+          <div class="review-info">
+            <div class="item-image">
+              <a routerLink="/product/{{review.productId}}">
+                <img class="image-responsive"
+                     src="{{review.images.split('|')[0]}}"
+                     alt="image"
+                     onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+              </a>
+            </div>
+            <div class="item-info">
+              <a routerLink="/product/{{review.productId}}">
+                <h3>{{review.name}}</h3>
+              </a>
+              <div class="info">
+                <h3>{{review.price | currency}}</h3>
+              </div>
+              <div>
+                <h1>Comment: </h1>
+                <div class="comment-title">
+                  <h2>
+                    <span class="rating">
+                      <app-rating [averageRating]="review.rating" [ratingCount]="1"></app-rating>
+                    </span>
+                    {{review.title}}
+                  </h2>
+                </div>
+                <div>
+                  <h3>{{review.reviewDate | date:"mediumDate"}}</h3>
+                </div>
+                <h3 class="comment">{{review.comment}}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button mat-raised-button color="primary"
+                    (click)="editReview(review)">
+              Edit Review
+            </button>
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="reviewPage.totalElements"
+          [pageSize]="reviewPage.size"
+          [pageIndex]="reviewPage.number"
+          [showFirstLastButtons]="true"
+          (page)="onPageEvent($event)">
+        </app-paginator>
+      </ng-container>
+      <ng-template #reviewPageEmpty>
+        <div class="review-empty">
+          <h2>There are no reviews!</h2>
+          <div class="review-empty-2">
+            Please leave a review comment and come back later.
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+
+

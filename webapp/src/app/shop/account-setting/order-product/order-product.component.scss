@@ -1,0 +1,113 @@
+.order-info {
+  margin-top: 2rem;
+  width: 100%;
+  .order-info-row {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    .order-info-left {
+      width: 30%;
+      @media only screen and (max-width: 749.98px) {
+        width: 50%;
+      }
+    }
+    .order-info-right {
+      width: 70%;
+      @media only screen and (max-width: 749.98px) {
+        width: 50%;
+      }
+    }
+  }
+
+}
+
+.order-product-empty {
+  margin: 8rem auto;
+  text-align: center;
+}
+
+.order-product-tab {
+  padding: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-flow: row nowrap;
+  @media only screen and (max-width: 749.98px) {
+    flex-flow: row wrap;
+  }
+
+  .order-product-info {
+    width: 75%;
+    @media only screen and (max-width: 749.98px) {
+      width: 100%;
+    }
+    display: flex;
+    flex-flow: row wrap;
+    margin: 3rem auto;
+
+    .item-image {
+      width: 30%;
+
+      @media only screen and (max-width: 749.98px) {
+        width: 100%;
+        text-align: center;
+      }
+      .image-responsive {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .item-info {
+      width: 70%;
+      @media only screen and (max-width: 749.98px) {
+        width: 100%;
+        margin: auto;
+      }
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+
+      h1 {
+        word-wrap: anywhere;
+      }
+
+      .info .mat-form-field {
+        max-width: 10rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: #363636;
+      }
+
+      a:hover {
+        h3 {
+          text-decoration: underline;
+        }
+      }
+    }
+
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 2%;
+    width: 23%;
+    @media only screen and (max-width: 749.98px) {
+      margin-left: 0;
+      justify-content: center;
+      width: 100%;
+    }
+
+    ::ng-deep .mat-raised-button {
+      width: 20rem;
+      height: 5rem;
+      @media only screen and (max-width: 749.98px) {
+        margin: 2rem 0 auto;
+        width: 100%;
+      }
+    }
+  }
+}

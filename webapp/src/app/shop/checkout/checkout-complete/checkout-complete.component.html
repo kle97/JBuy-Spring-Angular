@@ -1,0 +1,31 @@
+<mat-card class="order-complete-card-container">
+  <mat-card-header>
+    <mat-card-title>JBuy - Thank you for shopping with us</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngIf="order$ | async as order">
+      <div class="order-complete-detail">
+        <h1>Your order is complete!</h1>
+        <div class="field-name">
+          <h3>Order Confirmation ID</h3>
+        </div>
+        <div class="field-value">
+          <h3>{{order.id}}</h3>
+        </div>
+        <div class="field-name">
+          <h3>Shipping Cost</h3>
+        </div>
+        <div class="field-value">
+          <h3>Free</h3>
+        </div>
+        <div class="field-name">
+          <h3>Total Paid</h3>
+        </div>
+        <div class="field-value">
+          <h3>{{order.total | currency}}</h3>
+        </div>
+        <a routerLink="/">Continue Shopping</a>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

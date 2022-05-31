@@ -1,0 +1,99 @@
+<ng-container *appVar="{ltLarge: 'ltLg' | matchMedia | async, xSmall: 'xs' | matchMedia | async} as media">
+  <ng-container *appVar="cartItemCount$ | async as cartItemCount">
+    <ng-container *appVar="url$ | async as url">
+      <button
+        *ngIf="url.startsWith('/cart') || url.startsWith('/checkout') || url.startsWith('/buy-now') || media.xSmall"
+        routerLink="/cart"
+        mat-flat-button disableRipple
+        class="cart-button">
+        <mat-icon matBadge="{{cartItemCount > 99 ? '99+' : cartItemCount}}" matBadgeSize="small">shopping_cart
+        </mat-icon>
+        <span class="cart-button-text" *ngIf="!media.xSmall">Cart</span>
+      </button>
+      <ng-container
+        *ngIf="!url.startsWith('/cart') && !url.startsWith('/checkout') && !url.startsWith('/buy-now') && !media.xSmall">
+        <button mat-flat-button disableRipple
+                class="cart-button"
+                routerLink="/cart"
+                [matMenuTriggerFor]="menu"
+                #menuTrigger="matMenuTrigger"
+                (mouseenter)="mouseEnter(menuTrigger)"
+                (mouseleave)="mouseLeave(menuTrigger)">
+          <mat-icon matBadge="{{cartItemCount > 99 ? '99+' : cartItemCount}}" matBadgeSize="small">shopping_cart
+          </mat-icon>
+          <span class="cart-button-text" *ngIf="!media.xSmall">Cart</span>
+        </button>
+        <mat-menu #menu="matMenu" [hasBackdrop]="false" xPosition="before">
+          <mat-card class="card"
+                    (mouseenter)="mouseEnter(menuTrigger)"
+                    (mouseleave)="mouseLeave(menuTrigger)"
+                    (focusout)="mouseLeave(menuTrigger)"
+                    (click)="$event.stopPropagation();">
+            <mat-card-header>
+              <mat-card-title *ngIf="cartItemCount > 0; else cartEmpty">Shopping Cart</mat-card-title>
+              <ng-template #cartEmpty>
+                <mat-card-title>Your cart is empty</mat-card-title>
+                <mat-card-subtitle>Time to start shopping!</mat-card-subtitle>
+              </ng-template>
+            </mat-card-header>
+            <ng-container *ngIf="cartItemCount > 0">
+              <ng-container *ngIf="cartItems$ | async as cartItems">
+                <mat-card-content *ngFor="let cartItem of cartItems">
+                  <div class="cart-item-container">
+                    <div class="cart-item-left">
+                      <a routerLink="/product/{{cartItem.productId}}" (click)="mouseLeave(menuTrigger)">
+                        <img height="100" width="100" src="{{cartItem.images.split('|')[0]}}" alt="image">
+                      </a>
+                    </div>
+                    <div class="cart-item-right">
+                      <span class="product-name">
+                        <a routerLink="/product/{{cartItem.productId}}" (click)="mouseLeave(menuTrigger)">
+                          {{cartItem.name}}
+                        </a>
+                      </span>
+                      <div class="product-price">
+                        <h2 class="price">{{cartItem.discountPrice | currency}}</h2>
+                      </div>
+                      <div>
+                        <span>
+                          Qty: {{cartItem.quantity}}
+                        </span>
+                        <div class="remove-item-button">
+                          <button mat-icon-button (click)="removeCartItem(cartItem)">
+                            <mat-icon>delete</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card-content>
+
+                <mat-card-footer>
+                  <div class="total">
+                    Total: <span>{{getTotal(cartItems) | currency}}</span>
+                  </div>
+                  <div class="button-section">
+                    <button routerLink="/checkout"
+                            (click)="mouseLeave(menuTrigger)"
+                            mat-raised-button color="accent"
+                            class="action-button">
+                      Check Out
+                    </button>
+                  </div>
+                  <div class="button-section">
+                    <button routerLink="/cart"
+                            (click)="mouseLeave(menuTrigger)"
+                            mat-raised-button color="primary"
+                            class="action-button">
+                      View Cart
+                    </button>
+                  </div>
+                </mat-card-footer>
+              </ng-container>
+            </ng-container>
+          </mat-card>
+        </mat-menu>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

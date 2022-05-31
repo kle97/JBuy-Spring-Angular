@@ -1,0 +1,42 @@
+<mat-card class="user-card-container">
+  <mat-card-header>
+    <mat-card-title>Personal Information</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *appVar="user$ | async as user">
+      <div class="user-tab">
+        <div class="user-info">
+          <div class="left">
+            Email
+          </div>
+          <div class="right">
+            {{user.email}}
+          </div>
+        </div>
+        <mat-divider inset="true"></mat-divider>
+        <div class="user-info">
+          <div class="left">
+            First name
+          </div>
+          <div class="right">
+            {{user.firstName}}
+          </div>
+        </div>
+        <mat-divider inset="true"></mat-divider>
+        <div class="user-info">
+          <div class="left">
+            Last name
+          </div>
+          <div class="right">
+            {{user.lastName}}
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button mat-raised-button (click)="editUser(user)">
+            Edit
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

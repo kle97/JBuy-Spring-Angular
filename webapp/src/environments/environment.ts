@@ -6,8 +6,9 @@ export const environment = {
   production: false,
   apiUrl: "http://localhost:8080/api/v1",
   specUrl: "http://localhost:8080/v3/api-docs",
+  homepage: "/",
   securityScheme: "httpBasic",
-  username: "admin",
+  email: "admin@email.com",
   password: "adminpass",
 };
 

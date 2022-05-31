@@ -1,0 +1,58 @@
+.container {
+  max-width: 125rem;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 3rem auto;
+
+  .title {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-card-header-text {
+    margin-left: 0;
+  }
+
+  .content {
+    width: 78%;
+
+    @media only screen and (max-width: 899.98px) {
+      margin: 2rem;
+      width: 100%;
+    }
+
+    .shipping-address {
+      min-height: 21.5rem;
+      margin-bottom: 4rem;
+    }
+
+  }
+
+  .side-menu {
+    width: 20%;
+    margin-right: 2%;
+
+    @media only screen and (max-width: 899.98px) {
+      margin: 2rem;
+      width: 100%;
+    }
+
+    .side-menu-card {
+      padding: 0;
+      //min-height: calc(100vh - 17.2rem);
+      @media only screen and (max-width: 899.98px) {
+        min-height: 0;
+      }
+
+      .side-menu-button {
+        width: 100%;
+        padding: 1rem 1rem 1rem 2rem;
+        border-radius: 0;
+        text-align: left;
+      }
+
+      .side-menu-button.active {
+        background-color: #0000001f;
+      }
+    }
+  }
+}

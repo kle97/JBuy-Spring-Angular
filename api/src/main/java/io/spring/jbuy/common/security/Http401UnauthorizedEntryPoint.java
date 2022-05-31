@@ -19,7 +19,10 @@ public class Http401UnauthorizedEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException ex) throws IOException {
 
         String errorMessage = ex.getMessage();
-        log.error("{} - {}", errorMessage, request.getRequestURI());
+        if (errorMessage.contains("Bad credentials")) {
+            errorMessage = "Incorrect email or password. Please try again.";
+        }
+//        log.error("{} - {}", errorMessage, request.getRequestURI());
 
         response.sendError(HttpStatus.UNAUTHORIZED.value(), errorMessage);
     }

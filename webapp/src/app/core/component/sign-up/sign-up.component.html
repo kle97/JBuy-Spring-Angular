@@ -1,0 +1,115 @@
+<div class="container">
+
+  <app-navigation-bar></app-navigation-bar>
+
+  <ng-container *ngIf="true | isLoading | async">
+    <mat-progress-bar
+      class="sign-up-loading"
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-bar>
+  </ng-container>
+
+  <div class="card-container">
+    <mat-card class="sign-up-card outline">
+      <mat-card-header class="sign-up-card-header">
+        <mat-card-title>Create an account</mat-card-title>
+        <mat-card-subtitle>
+          Personal account
+          <ng-container *ngIf="(errorMessage$ | async) as errorMessage">
+            <div class="error-message" *ngIf="errorMessage.length > 0">
+              {{errorMessage}}
+            </div>
+          </ng-container>
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="sign-up-card-content">
+        <form id="signUpForm" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" class="sign-up-form-field">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+              <div *ngIf="firstName.errors?.['required']">Please enter your first name.</div>
+              <div *ngIf="firstName.errors?.['maxlength']">Please limit to 40 characters.</div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="sign-up-form-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+              <div *ngIf="lastName.errors?.['required']">Please enter your last name.</div>
+              <div *ngIf="lastName.errors?.['maxlength']">Please limit to 40 characters.</div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="sign-up-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.errors?.['required']">Please enter your email.</div>
+              <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+              <div *ngIf="email.errors?.['maxlength']">Please limit to 120 characters.</div>
+              <div *ngIf="email.errors?.['isRegistered']">
+                Email is already registered.
+              </div>
+            </mat-error>
+            <mat-hint *ngIf="email.pending && (email.dirty || email.touched)">
+              <mat-spinner diameter="15"></mat-spinner>
+              validating...
+            </mat-hint>
+          </mat-form-field>
+
+          <div class="show-password-slider">
+            <mat-slide-toggle
+              color="primary"
+              (change)="onShowPasswordChange($event)">
+              Show password
+            </mat-slide-toggle>
+          </div>
+
+
+          <mat-form-field appearance="outline" class="sign-up-form-field">
+            <mat-label>Password</mat-label>
+            <input matInput #passwordInput formControlName="password"
+                   [type]="hidePassword ? 'password' : 'text'" required>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+              <div *ngIf="password.errors?.['required']">Please enter a password.</div>
+              <div *ngIf="password.errors?.['pattern']">At least 1 letter, a number or symbol, at least 8 characters.
+              </div>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="sign-up-form-field">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput #confirmPasswordInput formControlName="confirmPassword" [errorStateMatcher]="matcher"
+                   [type]="hidePassword ? 'password' : 'text'" required>
+            <mat-error
+              *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched); else mismatch">
+              <div *ngIf="confirmPassword.errors?.['required']">Please reenter your password.</div>
+            </mat-error>
+            <ng-template #mismatch>
+              <mat-error *ngIf="signUpForm.errors?.['mismatch']">
+                Password do not match.
+              </mat-error>
+            </ng-template>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit"
+                class="sign-up-button" form="signUpForm"
+                [disabled]="!signUpForm.valid">Create account
+        </button>
+      </mat-card-actions>
+
+      <mat-card-footer>
+        <b>Already have an account? </b>
+        <a routerLink="/login">Sign in</a>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+

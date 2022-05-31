@@ -1,0 +1,18 @@
+.page-not-found {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 15rem auto;
+  text-align: center;
+  .title {
+    flex: 100%;
+    margin-bottom: 2rem;
+    h1 {
+      font-size: 500%;
+      line-height: 8rem;
+    }
+  }
+  .text {
+    flex: 100%;
+    font-size: 150%;
+  }
+}
