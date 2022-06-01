@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
-import { ThemePalette } from "@angular/material/core";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { PageEvent } from "@angular/material/paginator";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { ThemePalette } from "@angular/material/core";
+import { ScrollUpService } from "../../service/scroll-up.service";
 
 @Component({
-  selector: 'app-paginator',
-  templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+  selector: "app-paginator",
+  templateUrl: "./paginator.component.html",
+  styleUrls: ["./paginator.component.scss"],
 })
 export class PaginatorComponent implements OnInit {
 
-  private _pageSize: number = 20;
-  private _length: number = 0;
-  private _pageIndex: number = 0;
+  _pageSize: number = 20;
+  _length: number = 61;
+  _pageIndex: number = 0;
 
   get pageSize() {
     return this._pageSize;
@@ -41,39 +42,85 @@ export class PaginatorComponent implements OnInit {
     this.updatePageInfo();
   }
 
-  @Input() pageSizeOptions: number[] = [5, 10, 20, 25, 50, 100];
-  @Input() showFirstLastButtons: boolean = false;
-  @Input() hidePageSize: boolean = false;
-  @Input() disabled: boolean = false;
+  math: Math = Math;
+  @Input() showPageInfo: boolean = true;
+  @Input() showPageOption: boolean = true;
+  @Input() showGotoPage: boolean = true;
+  @Input() previousLabel: string = "Prev";
+  @Input() nextLabel: string = "Next";
+  @Input() align: "center" | "start" | "end" = "center"
   @Input() color: ThemePalette;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @Input() pageSizeOptions: number[] = [5, 10, 20, 25, 50, 100];
   @Output() page = new EventEmitter<PageEvent>();
-  maxPageNumber: number = 1;
+  maxPageNumber: number = Math.ceil(this.length / this.pageSize);
 
-  goToPage() {
-    if (this.pageNumber.value - 1 === this.paginator.pageIndex) {
-      return;
-    }
-    this.paginator.pageIndex = this.pageNumber.value - 1;
-    const event: PageEvent = {
-      length: this.paginator.length,
-      pageIndex: this.paginator.pageIndex,
-      pageSize: this.paginator.pageSize,
-    };
-    this.paginator.page.next(event);
-    this.onPageEvent(event);
+  buttonNumbers() {
+    return [...Array(this.maxPageNumber).keys()].map(i => i + 1);
   }
 
-  onPageEvent(pageEvent: PageEvent) {
-    this.pageNumber.setValue(pageEvent.pageIndex + 1);
-    this.maxPageNumber = Math.ceil(this.length / this.pageSize);
+  goToPage(page: number) {
+    if (page === this._pageIndex || page + 1 > this.maxPageNumber) {
+      return;
+    }
+    this._pageIndex = page;
+    this.updatePageInfo();
+
+    this.onPageEvent();
+  }
+
+  onPageEvent() {
+    const pageEvent: PageEvent = {
+      length: this._length,
+      pageIndex: this._pageIndex,
+      pageSize: this._pageSize,
+    };
     this.page.emit(pageEvent);
+    this.scrollUpService.scrollIntoView("body");
+  }
+
+  pageSizeChange() {
+    this._pageIndex = 0;
+    this.updatePageInfo();
+    this.onPageEvent();
   }
 
   updatePageInfo() {
     this.pageNumber.setValue(this.pageIndex + 1);
     this.maxPageNumber = Math.ceil(this.length / this.pageSize);
+  }
+
+  isHiddenButton(number: number) {
+    const current = this.pageIndex + 1;
+    if (current <= 3 && number <= 6) {
+      return false;
+    } else if (current >= this.maxPageNumber - 2 && number >= this.maxPageNumber - 5) {
+      return false;
+    } else {
+      return !(number === 1
+        || number === this.maxPageNumber
+        || number === current + 2
+        || number === current + 1
+        || number === current
+        || number === current - 1
+        || number === current - 2);
+    }
+  }
+
+  isEclipseButton(number: number) {
+    const current = this.pageIndex + 1;
+    if (current <= 4 && number <= 5) {
+      return false;
+    }
+    if (current <= 3 && number === 6 && number !== this.maxPageNumber && number !== this.maxPageNumber - 1) {
+      return true;
+    } else if (current >= this.maxPageNumber - 3 && number >= this.maxPageNumber - 4) {
+      return false;
+    } else if (current >= this.maxPageNumber - 2 && number === this.maxPageNumber - 5 && number !== 1 && number !== 2) {
+      return true;
+    } else {
+      return (number === this.pageIndex + 3 || number === this.pageIndex - 1)
+        && !(number === 1 || number === this.maxPageNumber);
+    }
   }
 
   pageNumberForm = this.formBuilder.group({
@@ -86,6 +133,7 @@ export class PaginatorComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private scrollUpService: ScrollUpService,
   ) {
   }
 

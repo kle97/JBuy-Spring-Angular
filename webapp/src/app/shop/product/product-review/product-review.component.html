@@ -29,10 +29,12 @@
     </div>
 
     <app-paginator
+      color="primary"
+      [showPageOption]="false"
+      [showGotoPage]="false"
       [length]="reviewPage.totalElements"
       [pageSize]="reviewPage.size"
       [pageIndex]="reviewPage.number"
-      [showFirstLastButtons]="true"
       (page)="onPageEvent($event)">
     </app-paginator>
   </ng-container>

@@ -48,10 +48,10 @@
         </div>
 
         <app-paginator
+          color="primary"
           [length]="reviewPage.totalElements"
           [pageSize]="reviewPage.size"
           [pageIndex]="reviewPage.number"
-          [showFirstLastButtons]="true"
           (page)="onPageEvent($event)">
         </app-paginator>
       </ng-container>

@@ -74,10 +74,10 @@
     </div>
 
     <app-paginator
+      color="primary"
       [length]="orderProductPage.totalElements"
       [pageSize]="orderProductPage.size"
       [pageIndex]="orderProductPage.number"
-      [showFirstLastButtons]="true"
       (page)="onPageEvent($event)">
     </app-paginator>
   </ng-container>

@@ -1,32 +1,67 @@
-<div class="paginator">
-  <mat-paginator [length]="length"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="pageSizeOptions"
-                 [showFirstLastButtons]="showFirstLastButtons"
-                 [pageIndex]="pageIndex"
-                 [hidePageSize]="hidePageSize"
-                 [disabled]="disabled"
-                 [color]="color"
-                 (page)="onPageEvent($event)">
-  </mat-paginator>
-  <button class="goto-button" mat-button [matMenuTriggerFor]="goto">Page: {{pageNumber.value}}</button>
-  <mat-menu #goto="matMenu">
-    <form id="pageNumberForm" (click)="$event.stopPropagation()" (keydown.enter)="$event.preventDefault()"
-          [formGroup]="pageNumberForm" (ngSubmit)="goToPage()">
-      <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Go to page [1 - {{maxPageNumber}}]</mat-label>
-        <input min="1" [max]="maxPageNumber" type="number" matInput formControlName="pageNumber" required>
-        <button type="submit" *ngIf="pageNumber.valid"
-                matSuffix mat-icon-button>
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
-        <mat-error *ngIf="pageNumber.invalid && (pageNumber.dirty || pageNumber.touched)">
-          <div *ngIf="pageNumber.errors?.['required']">Page number is required</div>
-          <div *ngIf="pageNumber.errors?.['max']">Maximum page number is {{maxPageNumber}}</div>
-          <div *ngIf="pageNumber.errors?.['min']">Minimum page number is 1</div>
-        </mat-error>
+<div class="paginator-container">
+  <div class="paginator-info" [style.justify-content]="align">
+    <div *ngIf="showPageOption" class="page-option">
+      <span>Items per page: </span>
+      <mat-form-field>
+        <mat-select [(value)]="_pageSize" (valueChange)="pageSizeChange()">
+          <mat-option *ngFor="let pageSize of pageSizeOptions" [value]="pageSize">
+            {{pageSize}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
-    </form>
-  </mat-menu>
+    </div>
+    <div *ngIf="showPageInfo" class="page-info">
+      {{pageIndex * pageSize + 1}} - {{math.min((pageIndex + 1) * pageSize, length)}} of {{length}} items
+    </div>
+    <div *ngIf="showGotoPage" class="goto-page">
+      <span>Page </span>
+      <mat-form-field>
+        <input min="1" [max]="maxPageNumber"
+               type="number" matInput
+               [formControl]="pageNumber" (change)="goToPage(pageNumber.value - 1)">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="paginator" [style.justify-content]="align">
+    <button [color]="color" mat-stroked-button class="previous-button"
+            [disabled]="pageIndex === 0"
+            (click)="goToPage(pageIndex - 1)">
+      <mat-icon>arrow_back_ios</mat-icon>
+      <span *ngIf="previousLabel" class="previous-label">{{previousLabel}}</span>
+    </button>
+    <div class="paginator-number">
+      <ng-container *ngIf="color">
+        <ng-container *ngFor="let number of buttonNumbers()">
+          <ng-container *ngIf="pageIndex + 1 === number">
+            <button [color]="color" mat-raised-button class="number-button">
+              {{number}}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="pageIndex + 1 !== number">
+            <button [color]="color" mat-stroked-button (click)="goToPage(number - 1)"
+                    [disabled]="isEclipseButton(number)"
+                    [ngClass]="'number-button ' + (isHiddenButton(number) ? 'hidden-button' : '')">
+              {{isEclipseButton(number) ? '...' : number}}
+            </button>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!color">
+        <button mat-stroked-button *ngFor="let number of buttonNumbers()" (click)="goToPage(number - 1)"
+                [disabled]="isEclipseButton(number)"
+                [ngClass]="'number-button ' + (pageIndex + 1 === number ? 'active-button ' : '')
+              + (isHiddenButton(number) ? 'hidden-button' : '')">
+          {{isEclipseButton(number) ? '...' : number}}
+        </button>
+      </ng-container>
+    </div>
+    <button [color]="color" mat-stroked-button class="next-button"
+            [disabled]="pageIndex === maxPageNumber - 1"
+            (click)="goToPage(pageIndex + 1)">
+      <span *ngIf="nextLabel" class="next-label">{{nextLabel}}</span>
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+  </div>
 </div>
+
 

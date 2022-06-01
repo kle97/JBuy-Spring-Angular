@@ -9,8 +9,9 @@ Todo
 - Product search 
 - Full text search
 - Faceted search
-- Autocomplete
+- Search text autocomplete
 - Shopping cart, checkout, review
+- OpenAPI
 
 ## Technology Stacks
 - Spring Boot

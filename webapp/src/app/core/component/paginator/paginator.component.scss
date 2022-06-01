@@ -1,25 +1,124 @@
-.paginator {
+.paginator-container {
+  margin: 2rem auto;
+  max-width: 125rem;
   display: flex;
-  flex-flow: row;
-  @media only screen and (max-width: 623.98px) {
-    flex-flow: row-reverse;
-    ::ng-deep .mat-paginator-outer-container {
-      .mat-paginator-page-size-label, .mat-paginator-range-label {
+  flex-flow: row wrap;
+  //justify-content: space-between;
+
+  .paginator-info {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 100%;
+    margin: 1rem auto;
+    //justify-content: center;
+
+    .page-info {
+      //margin-right: 2.5rem;
+      text-align: center;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      @media only screen and (max-width: 469.98px) {
         display: none;
       }
-      .mat-paginator-container {
+    }
+
+    .page-option {
+      text-align: center;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      ::ng-deep .mat-form-field-infix {
+        border: 0;
+        margin: 0;
         padding: 0;
+        width: 5rem;
+        height: 3rem;
+      }
+
+      ::ng-deep .mat-form-field-wrapper {
+        margin-left: 0.7rem;
+        padding-bottom: 1rem;
+        width: 5rem;
+      }
+    }
+
+    .goto-page {
+      text-align: center;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      ::ng-deep .mat-form-field-infix {
+        border: 0;
+        margin: 0;
+        padding: 0;
+        width: 5rem;
+        height: 3rem;
+      }
+
+      ::ng-deep .mat-form-field-wrapper {
+        margin-left: 0.7rem;
+        padding-bottom: 1rem;
+        width: 4rem;
       }
     }
   }
-}
 
-.goto-button {
-  @media only screen and (max-width: 349.98px) {
-    padding: 0.5rem;
+  .paginator {
+    display: flex;
+    flex-flow: row nowrap;
+    $button-height: 3.6rem;
+    flex: 100%;
+    //justify-content: center;
+
+    .number-button {
+      height: $button-height;
+      border-radius: 0;
+    }
+
+    ::ng-deep .mat-button, .mat-raised-button, .mat-stroked-button, .mat-flat-button {
+      min-width: 5rem;
+      @media only screen and (max-width: 469.98px) {
+        min-width: 3.2rem;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+      }
+    }
+
+    .number-button:not(.active-button) {
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .number-button:disabled {
+      border-color: #0000001E;
+    }
+
+    .active-button {
+      border-color: black;
+      background-color: #f3f3f3;
+    }
+
+    .hidden-button {
+      display: none;
+    }
+
+    .previous-label, .next-label {
+      @media only screen and (max-width: 599.98px) {
+        display: none;
+      }
+    }
+
+    .previous-button, .next-button {
+      height: $button-height;
+      //@media only screen and (min-width: 600px) {
+      //  width: 10rem;
+      //}
+    }
+
+    .previous-button {
+      border-radius: 3rem 0 0 3rem;
+    }
+
+    .next-button {
+      border-radius: 0 3rem 3rem 0;
+    }
   }
-}
-
-.form-field {
-  width: 18rem;
 }

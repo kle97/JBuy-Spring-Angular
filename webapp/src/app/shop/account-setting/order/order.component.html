@@ -49,12 +49,12 @@
           </div>
 
           <app-paginator
+            color="primary"
             [length]="orderPage.totalElements"
             [pageSize]="orderPage.size"
             [pageIndex]="orderPage.number"
-            [showFirstLastButtons]="true"
             (page)="onPageEvent($event)">
-          </app-paginator>
+          </app-paginator >
         </ng-container>
         <ng-template #orderEmpty>
           <div class="order-empty">
