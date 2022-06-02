@@ -78,6 +78,8 @@
       [length]="orderProductPage.totalElements"
       [pageSize]="orderProductPage.size"
       [pageIndex]="orderProductPage.number"
+      [pageInfoLabel]="'products'"
+      [pageOptionLabel]="'Products'"
       (page)="onPageEvent($event)">
     </app-paginator>
   </ng-container>

@@ -1,4 +1,4 @@
-<div class="navigation-wrapper">
+<div class="navigation-wrapper" *ngIf="productId; else similarProductsSkeleton">
   <h1 *ngIf="products.length > 0">Similar Products</h1>
   <div *ngIf="products.length > 0" class="keen-slider keen-slider--vertical" #sliderRef>
     <ng-container *ngFor="let product of products; let i = index">
@@ -42,4 +42,19 @@
     </button>
   </div>
 </div>
+
+<ng-template #similarProductsSkeleton>
+  <div class="navigation-wrapper">
+    <div>
+      <ngx-skeleton-loader count="1" appearance="line"
+                           [theme]="{ height: '3.2rem', 'max-width': '17rem'}">
+      </ngx-skeleton-loader>
+    </div>
+    <div>
+      <ngx-skeleton-loader count="1" appearance="line"
+                           [theme]="{ height: '41.7rem'}">
+      </ngx-skeleton-loader>
+    </div>
+  </div>
+</ng-template>
 

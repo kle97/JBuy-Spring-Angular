@@ -52,6 +52,8 @@
           [length]="reviewPage.totalElements"
           [pageSize]="reviewPage.size"
           [pageIndex]="reviewPage.number"
+          [pageInfoLabel]="'reviews'"
+          [pageOptionLabel]="'Reviews'"
           (page)="onPageEvent($event)">
         </app-paginator>
       </ng-container>

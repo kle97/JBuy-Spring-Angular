@@ -97,6 +97,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           next: (product) => {
             this.product = product;
             this.similarProductSearchText = this.product.listOfCategory[0].name;
+
+            // setTimeout(() => {
+            //   this.productId = this.product.id;
+            // }, 5000)
             this.productId = this.product.id;
 
             const productName = this.product.name.split(";");

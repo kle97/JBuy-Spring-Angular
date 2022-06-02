@@ -17,6 +17,7 @@
       text-align: center;
       margin-left: 1.5rem;
       margin-right: 1.5rem;
+      min-width: 13rem;
       @media only screen and (max-width: 469.98px) {
         display: none;
       }
@@ -108,17 +109,16 @@
 
     .previous-button, .next-button {
       height: $button-height;
-      //@media only screen and (min-width: 600px) {
-      //  width: 10rem;
-      //}
     }
 
     .previous-button {
       border-radius: 3rem 0 0 3rem;
+      border-right: 0;
     }
 
     .next-button {
       border-radius: 0 3rem 3rem 0;
+      border-left: 0;
     }
   }
 }

@@ -1,7 +1,7 @@
 <div class="paginator-container">
   <div class="paginator-info" [style.justify-content]="align">
     <div *ngIf="showPageOption" class="page-option">
-      <span>Items per page: </span>
+      <span>{{pageOptionLabel}} per page: </span>
       <mat-form-field>
         <mat-select [(value)]="_pageSize" (valueChange)="pageSizeChange()">
           <mat-option *ngFor="let pageSize of pageSizeOptions" [value]="pageSize">
@@ -11,7 +11,7 @@
       </mat-form-field>
     </div>
     <div *ngIf="showPageInfo" class="page-info">
-      {{pageIndex * pageSize + 1}} - {{math.min((pageIndex + 1) * pageSize, length)}} of {{length}} items
+      {{pageIndex * pageSize + 1}} - {{math.min((pageIndex + 1) * pageSize, length)}} of {{length}} {{pageInfoLabel}}
     </div>
     <div *ngIf="showGotoPage" class="goto-page">
       <span>Page </span>

@@ -5,8 +5,17 @@
       <sup class="rating-text">
         {{averageRating | number: '1.1-2'}} out of 5
       </sup>
-      <h2>There are {{reviewPage.content.length === 1 ? "1 review" : reviewPage.content.length + " ratings"}}
+      <h2>There are {{reviewPage.content.length === 1 ? "1 review" : reviewPage.content.length + " reviews"}}
         and {{ratingCount === 1 ? ratingCount + " rating" : ratingCount + " ratings"}} </h2>
+      <div *ngIf="reviewPage.content.length > 0">
+        <mat-form-field appearance="outline">
+          <mat-select [(value)]="selectedSort" (valueChange)="sortChange(reviewPage)">
+            <mat-option *ngFor="let sortOption of sortOptions; let i = index" [value]="sortOption">
+              {{sortOptionLabels[i]}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <div id="product-review-tab"
          class="product-review-tab mat-elevation-z1" *ngFor="let review of reviewPage.content; let i = index">
@@ -35,6 +44,8 @@
       [length]="reviewPage.totalElements"
       [pageSize]="reviewPage.size"
       [pageIndex]="reviewPage.number"
+      [pageInfoLabel]="'reviews'"
+      [pageOptionLabel]="'Reviews'"
       (page)="onPageEvent($event)">
     </app-paginator>
   </ng-container>

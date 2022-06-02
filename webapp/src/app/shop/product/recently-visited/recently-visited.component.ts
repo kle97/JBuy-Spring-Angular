@@ -1,13 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit, SimpleChanges,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import KeenSlider, { KeenSliderInstance } from "keen-slider";
 import { ProductDetailRepository } from "../repository/product-detail.repository";
 import { Subject, takeUntil } from "rxjs";
@@ -32,7 +23,7 @@ export class RecentlyVisitedComponent implements OnInit, OnDestroy, OnChanges {
   perView: number = 1;
   slider!: KeenSliderInstance;
 
-  products: Product[] = [];
+  products!: Product[];
   productSlugs: string[] = [];
 
   constructor(

@@ -7,7 +7,6 @@ import { httpInterceptorProviders } from "./core/interceptor";
 import { MaterialModule } from "./shared/module/material.module";
 import { HttpClientModule } from "@angular/common/http";
 import { CookieModule } from "ngx-cookie";
-import { AppStoreModule } from "./shared/store/app-store.module";
 import { CoreModule } from "./core/core.module";
 
 @NgModule({
@@ -20,7 +19,6 @@ import { CoreModule } from "./core/core.module";
     BrowserAnimationsModule,
     MaterialModule,
     CookieModule.withOptions(),
-    AppStoreModule,
     CoreModule,
     AppRoutingModule,
   ],

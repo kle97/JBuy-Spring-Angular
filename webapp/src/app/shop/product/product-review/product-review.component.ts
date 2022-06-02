@@ -20,6 +20,9 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
   @Input() productId: string = "";
   @Input() ratingCount: number = 0;
   @Input() averageRating: number = 0;
+  sortOptions: Array<string> = ["reviewDate,desc", "reviewDate", "rating,desc", "rating"];
+  sortOptionLabels: Array<string> = ["Most Recent", "Oldest", "Highest rating", "Lowest rating"];
+  selectedSort: string = "reviewDate,desc";
 
   constructor(
     private reviewRepository: ReviewRepository,
@@ -29,7 +32,6 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {
@@ -43,11 +45,24 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  sortChange(reviewPage: Page<Review>) {
+    const pageRequest: PageRequest = {
+      page: reviewPage.number,
+      size: reviewPage.size,
+      sort: [this.selectedSort],
+    };
+
+    if (this.productId) {
+      this.reviewService.getReviewPageForProduct(this.productId, pageRequest);
+      this.scrollUpService.toTop("product-review-tab");
+    }
+  }
+
   onPageEvent(pageEvent: PageEvent) {
     const pageRequest: PageRequest = {
       page: pageEvent.pageIndex,
       size: pageEvent.pageSize,
-      sort: ["orderDate,desc"],
+      sort: [this.selectedSort],
     };
 
     if (this.productId) {

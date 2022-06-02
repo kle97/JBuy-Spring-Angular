@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="productId; else productSkeleton">
   <div class="left">
     <div class="keen-slider" #sliderRef>
       <img *ngFor="let imageUrl of imageUrls; let i = index"
@@ -80,10 +80,76 @@
   </div>
 </div>
 
+<ng-template #productSkeleton>
+  <div class="container">
+    <div class="left">
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '25rem' }">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '6.3rem' }">
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+    <div class="center">
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '6.4rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '5.6rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '2.9rem', 'max-width': '25rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '3.2rem', 'max-width': '10rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '2rem', 'max-width': '19rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '3.2rem', 'max-width': '17rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '8rem'}">
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+    <div class="right">
+      <div>
+        <ngx-skeleton-loader count="1" appearance="line"
+                             [theme]="{ height: '5.6rem', 'max-width': '20rem'}">
+        </ngx-skeleton-loader>
+      </div>
+      <div>
+        <ngx-skeleton-loader count="2" appearance="line"
+                             [theme]="{ height: '6rem'}">
+        </ngx-skeleton-loader>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
 <app-similar-product [searchText]="similarProductSearchText" [productId]="productId">
 </app-similar-product>
 
-<div id="product-info" class="product-info">
+<div id="product-info" class="product-info" *ngIf="productId; else productInfoSkeleton">
   <mat-tab-group mat-align-tabs="start" color="accent"
                  [(selectedIndex)]="selectedInfoTab"
                  (selectedIndexChange)="tabChange($event)">
@@ -133,5 +199,18 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+
+<ng-template #productInfoSkeleton>
+  <div class="product-info">
+    <ngx-skeleton-loader count="1" appearance="line"
+                         [theme]="{ height: '4.8rem', 'max-width': '48rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div class="product-info">
+    <ngx-skeleton-loader count="1" appearance="line"
+                         [theme]="{ height: '30rem'}">
+    </ngx-skeleton-loader>
+  </div>
+</ng-template>
 
 <app-recently-visited [productId]="productId"></app-recently-visited>

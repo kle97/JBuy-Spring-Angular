@@ -42,7 +42,7 @@ export class ReviewComponent implements OnInit {
     const pageRequest: PageRequest = {
       page: pageEvent.pageIndex,
       size: pageEvent.pageSize,
-      sort: ["orderDate,desc"],
+      sort: ["reviewDate,desc"],
     };
 
     this.reviewService.getReviewPageForUser(pageRequest);

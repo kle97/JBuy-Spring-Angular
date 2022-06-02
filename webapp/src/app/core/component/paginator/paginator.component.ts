@@ -44,7 +44,9 @@ export class PaginatorComponent implements OnInit {
 
   math: Math = Math;
   @Input() showPageInfo: boolean = true;
+  @Input() pageInfoLabel: string = "items";
   @Input() showPageOption: boolean = true;
+  @Input() pageOptionLabel: string = "Items";
   @Input() showGotoPage: boolean = true;
   @Input() previousLabel: string = "Prev";
   @Input() nextLabel: string = "Next";
@@ -59,7 +61,7 @@ export class PaginatorComponent implements OnInit {
   }
 
   goToPage(page: number) {
-    if (page === this._pageIndex || page + 1 > this.maxPageNumber) {
+    if (page === this._pageIndex || page + 1 > this.maxPageNumber || page + 1 < 1) {
       return;
     }
     this._pageIndex = page;
