@@ -43,7 +43,7 @@ export class UserService extends AbstractGenericCrudService<User, string> {
 
   getUser() {
     this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
-      if (user.id) {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
         this.readOne(user.id).subscribe(user => {
           this.userRepository.updateUser(user);
         })
@@ -53,13 +53,15 @@ export class UserService extends AbstractGenericCrudService<User, string> {
 
   updatePassword(passwordChangeRequest: PasswordChangeRequest) {
     this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
-      const url = this.getUrlWithId(this.entityUrl + this.passwordChangeUrl, user.id);
-      this.http.post(url, passwordChangeRequest, this.httpOptions)
-        .pipe(catchError(errorResponse => this.handleError(errorResponse)))
-        .subscribe(() => {
-          this.notificationService.open("Password Change Saved! Please login again.", 2000);
-          this.authenticationService.logout("/login");
-        });
+      if (user.expiry > 0 && Date.now() < user.expiry) {
+        const url = this.getUrlWithId(this.entityUrl + this.passwordChangeUrl, user.id);
+        this.http.post(url, passwordChangeRequest, this.httpOptions)
+          .pipe(catchError(errorResponse => this.handleError(errorResponse)))
+          .subscribe(() => {
+            this.notificationService.open("Password Change Saved! Please login again.", 2000);
+            this.authenticationService.logout("/login");
+          });
+      }
     });
   }
 
@@ -74,7 +76,7 @@ export class UserService extends AbstractGenericCrudService<User, string> {
         this.update(formValue, user.id).subscribe(user => {
           this.notificationService.open("Changes Saved!", 2000);
           this.userRepository.updateUser(user);
-          this.authenticationRepository.updateUser(user);
+          this.authenticationRepository.updateUserWithoutExpiry(user);
         });
       }
     });

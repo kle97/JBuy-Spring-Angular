@@ -10,9 +10,10 @@ import { AuthGuard } from "../core/guard/auth.guard";
 import { CheckoutCompleteComponent } from "./checkout/checkout-complete/checkout-complete.component";
 import { BuyNowComponent } from "./checkout/buy-now/buy-now.component";
 import { RecentlyVisitedComponent } from "./product/recently-visited/recently-visited.component";
+import { CategoryMenuComponent } from "./home/category-menu/category-menu.component";
 
 const routes: Routes = [
-  { path: "test", component: RecentlyVisitedComponent },
+  { path: "test", component: CategoryMenuComponent },
   {
     path: "",
     component: ShopComponent,

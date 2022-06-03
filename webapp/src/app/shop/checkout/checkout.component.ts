@@ -55,10 +55,7 @@ export class CheckoutComponent extends UnsubscribeComponent implements OnInit {
 
   checkout() {
     if (this.selectedAddress) {
-      this.orderService.createOrder(this.selectedAddress).subscribe(order => {
-        this.shoppingCartService.getCartItems().subscribe();
-        this.router.navigate(["checkout-complete", order.id]);
-      });
+      this.orderService.createOrder(this.selectedAddress);
     }
   }
 

@@ -156,6 +156,9 @@
 
       .attribute-name {
         min-width: 20rem;
+        @media only screen and (max-width: 449.98px) {
+          min-width: 12rem;
+        }
         background-color: #dddddd;
       }
 

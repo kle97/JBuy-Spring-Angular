@@ -1,53 +1,55 @@
 <ng-container *appVar="{xSmall: 'xs' | matchMedia | async} as media">
-  <ng-container *ngIf="media.xSmall; else gtXSmall">
-    <div *ngIf="!isLoggedIn;else LoggedIn" class="sidenav-menu">
-      <a mat-button routerLink="/login">
-        <mat-icon>login</mat-icon>
-        Sign In
-      </a>
-      <a mat-button routerLink="/signup">
-        <mat-icon>person_add</mat-icon>
-        Create Account
-      </a>
-    </div>
-    <ng-template #LoggedIn>
-      <div class="sidenav-menu">
-        <a mat-button routerLink="/account/setting">
-          <mat-icon>person</mat-icon>
-          Account
-        </a>
-        <app-logout></app-logout>
-      </div>
-    </ng-template>
-  </ng-container>
-  <ng-template #gtXSmall>
-    <button mat-flat-button disableRipple class="account-menu-button" [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
-        <span> Hello {{username}}</span>
-      </ng-container>
-      <ng-template #notLoggedIn>
-        <span> Please Sign In</span>
-      </ng-template>
-    </button>
-    <mat-menu #menu="matMenu" class="account-menu" xPosition="before">
-      <ng-container *ngIf="!isLoggedIn;else LoggedIn">
-        <a routerLink="/login" mat-menu-item>
+  <ng-container *appVar="user$ | async as user">
+    <ng-container *ngIf="media.xSmall; else gtXSmall">
+      <div *ngIf="user.expiry <= 0 || !isLoggedIn(user.expiry);else LoggedIn" class="sidenav-menu">
+        <a mat-button routerLink="/login">
           <mat-icon>login</mat-icon>
           Sign In
         </a>
-        <a routerLink="/signup" mat-menu-item>
+        <a mat-button routerLink="/signup">
           <mat-icon>person_add</mat-icon>
           Create Account
         </a>
-      </ng-container>
+      </div>
       <ng-template #LoggedIn>
-        <a routerLink="/account/setting" mat-menu-item>
-          <mat-icon>person</mat-icon>
-          Account
-        </a>
-        <app-logout></app-logout>
+        <div class="sidenav-menu">
+          <a mat-button routerLink="/account/setting" (click)="onLinkClick()">
+            <mat-icon>person</mat-icon>
+            Account
+          </a>
+          <app-logout (click)="onLinkClick()"></app-logout>
+        </div>
       </ng-template>
-    </mat-menu>
-  </ng-template>
+    </ng-container>
+    <ng-template #gtXSmall>
+      <button mat-flat-button disableRipple class="account-menu-button" [matMenuTriggerFor]="menu">
+        <mat-icon>account_circle</mat-icon>
+        <ng-container *ngIf="user.expiry > 0 && isLoggedIn(user.expiry); else notLoggedIn">
+          <span *ngIf="user.firstName"> Hello {{user.firstName}}</span>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <span> Please Sign In</span>
+        </ng-template>
+      </button>
+      <mat-menu #menu="matMenu" class="account-menu" xPosition="before">
+        <ng-container *ngIf="user.expiry <= 0 || !isLoggedIn(user.expiry);else LoggedIn">
+          <a routerLink="/login" mat-menu-item>
+            <mat-icon>login</mat-icon>
+            Sign In
+          </a>
+          <a routerLink="/signup" mat-menu-item>
+            <mat-icon>person_add</mat-icon>
+            Create Account
+          </a>
+        </ng-container>
+        <ng-template #LoggedIn>
+          <a routerLink="/account/setting" mat-menu-item>
+            <mat-icon>person</mat-icon>
+            Account
+          </a>
+          <app-logout></app-logout>
+        </ng-template>
+      </mat-menu>
+    </ng-template>
+  </ng-container>
 </ng-container>

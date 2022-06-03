@@ -82,10 +82,8 @@ export class AuthenticationService {
   logout(navigateToUrl: string = this.homepage) {
     this.http.post(this.logoutUrl, {}, this.httpOptions).pipe(
       tap(() => {
-        this.authenticationRepository.updateUser(initialUser());
-        this.authenticationRepository.updateSyncCart(false);
+        this.reset();
         this.shoppingCartRepository.setCartItems([]);
-
         if (navigateToUrl === this.loginPage) {
           this.router.navigateByUrl(navigateToUrl);
         } else {
@@ -96,5 +94,10 @@ export class AuthenticationService {
       }),
       catchError(errorResponse => this.handleLogoutError(errorResponse)),
     ).subscribe();
+  }
+
+  reset() {
+    this.authenticationRepository.updateUser(initialUser());
+    this.authenticationRepository.updateSyncCart(false);
   }
 }

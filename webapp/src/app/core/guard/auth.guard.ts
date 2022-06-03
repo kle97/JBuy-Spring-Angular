@@ -18,12 +18,12 @@ import { ErrorNotificationService } from "../service/error-notification.service"
 import { AuthenticationService } from "../repository/authentication/authentication.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   private homepage = environment.homepage;
-  private userId: string = "";
+  private loggedIn: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -56,13 +56,14 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   isLoggedIn(url: string): boolean {
-    this.authenticationRepository.user$.pipe(
-      take(1),
-    ).subscribe(user => this.userId = user.id);
+    this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
+      this.loggedIn = user.expiry > 0 && Date.now() < user.expiry;
+    });
 
     // redirect to homepage from login page if already logged in
     if (url.startsWith("/login") || url.startsWith("/signup")) {
-      if (!this.userId) {
+      if (!this.loggedIn) {
+        this.authenticationService.reset();
         return true;
       } else {
         this.router.navigate([this.homepage]);
@@ -70,7 +71,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       }
     }
 
-    if (this.userId) {
+    if (this.loggedIn) {
       return true;
     }
 
@@ -85,6 +86,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     this.errorNotificationService.open(new Error("Please login to continue!"), 2000);
     this.router.navigate(["/login"], navigationExtras);
 
+    this.authenticationService.reset();
     return false;
   }
 }

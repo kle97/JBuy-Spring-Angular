@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { AuthenticationRepository } from "../../../core/repository/authentication/authentication.repository";
-import { take } from "rxjs";
+import { Observable } from "rxjs";
+import { User } from "../../../core/model/user.model";
 
 @Component({
   selector: "app-account-menu",
@@ -9,8 +10,8 @@ import { take } from "rxjs";
 })
 export class AccountMenuComponent implements OnInit {
 
-  isLoggedIn: boolean = false;
-  username: string = "";
+  user$: Observable<User> = this.authenticationRepository.user$;
+  @Output() onRouterLink = new EventEmitter<void>();
 
   constructor(
     private authenticationRepository: AuthenticationRepository,
@@ -18,11 +19,13 @@ export class AccountMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationRepository.user$.pipe(
-      take(1),
-    ).subscribe(user => {
-      this.isLoggedIn = !!user.id;
-      this.username = user.firstName;
-    });
+  }
+
+  isLoggedIn(expiry: number) {
+    return expiry > 0 && Date.now() < expiry;
+  }
+
+  onLinkClick() {
+    this.onRouterLink.emit();
   }
 }

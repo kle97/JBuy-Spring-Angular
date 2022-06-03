@@ -7,6 +7,7 @@ import { HomeComponent } from "./home.component";
 import { HomeCarouselComponent } from './home-carousel/home-carousel.component';
 import { PopularCategoriesComponent } from './popular-categories/popular-categories.component';
 import { ProductModule } from "../product/product.module";
+import { CategoryMenuComponent } from './category-menu/category-menu.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ProductModule } from "../product/product.module";
     HomeComponent,
     HomeCarouselComponent,
     PopularCategoriesComponent,
+    CategoryMenuComponent,
   ],
   imports: [
     SharedModule,
@@ -21,9 +23,10 @@ import { ProductModule } from "../product/product.module";
     ProductModule,
     HomeRoutingModule,
   ],
-  exports: [
-    HomeComponent,
-  ],
+    exports: [
+        HomeComponent,
+        CategoryMenuComponent,
+    ],
 })
 export class HomeModule {
 }

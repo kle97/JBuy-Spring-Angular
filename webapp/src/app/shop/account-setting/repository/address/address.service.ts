@@ -40,7 +40,7 @@ export class AddressService extends AbstractGenericCrudService<Address, string> 
     this.authenticationRepository.user$.pipe(
       take(1),
     ).subscribe(user => {
-      if (user.id) {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
         this.readPage(new HttpParams(), user.id).subscribe(addressPage => {
           this.addressRepository.setAddresses(addressPage.content);
         });
@@ -52,7 +52,7 @@ export class AddressService extends AbstractGenericCrudService<Address, string> 
     this.authenticationRepository.user$.pipe(
       take(1),
     ).subscribe(user => {
-      if (user.id) {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
         const dialogRef = this.dialog.open(AddressCreateComponent, { width: "70rem", disableClose: true });
         dialogRef.afterClosed().subscribe((formValue: Address) => {
           if (formValue) {

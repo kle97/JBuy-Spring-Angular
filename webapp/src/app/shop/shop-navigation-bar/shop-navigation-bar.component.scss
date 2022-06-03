@@ -33,6 +33,25 @@
   width: 100%;
 }
 
+.sidenav-close-button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+::ng-deep .mat-drawer-container.mat-drawer-container-has-open {
+  background-color: white;
+  max-height: calc(100vh - 6.4rem);
+}
+
 ::ng-deep .mat-drawer-container {
   background-color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 6.4rem);
+  .main {
+    flex: 1 0 auto;;
+  }
 }

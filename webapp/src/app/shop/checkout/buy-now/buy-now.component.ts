@@ -61,10 +61,7 @@ export class BuyNowComponent extends UnsubscribeComponent implements OnInit {
 
   checkout() {
     if (this.selectedAddress && this.buyNowProductId) {
-      this.orderService.createBuyNowOrder(this.selectedAddress, this.buyNowProductId).subscribe(order => {
-        this.shoppingCartService.getCartItems().subscribe();
-        this.router.navigate(["checkout-complete", order.id]);
-      });
+      this.orderService.createBuyNowOrder(this.selectedAddress, this.buyNowProductId);
     }
   }
 

@@ -21,12 +21,12 @@ import { HomeModule } from "./home/home.module";
   imports: [
     SharedModule,
     CoreModule,
+    HomeModule,
     ProductModule,
     ShoppingCartModule,
     SearchModule,
     CheckoutModule,
     AccountSettingModule,
-    HomeModule,
     ShopRoutingModule,
   ],
   exports: [

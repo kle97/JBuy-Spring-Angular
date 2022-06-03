@@ -5,7 +5,7 @@ import { ErrorNotificationService } from "../../../core/service/error-notificati
 import { ShoppingCartRepository } from "./shopping-cart.repository";
 import { CartItem } from "../model/cart-item.model";
 import { AuthenticationRepository } from "../../../core/repository/authentication/authentication.repository";
-import { catchError, concat, forkJoin, last, Observable, switchMap, take, tap } from "rxjs";
+import { concat, forkJoin, last, Observable, switchMap, take, tap } from "rxjs";
 import { NotificationService } from "../../../core/service/notification.service";
 import { Router } from "@angular/router";
 
@@ -15,7 +15,6 @@ import { Router } from "@angular/router";
 export class ShoppingCartService extends AbstractGenericCrudService<CartItem, string> {
 
   private userId: string = "";
-  private cartItemCountUrl: string = "/:id/count";
 
   constructor(
     protected override http: HttpClient,
@@ -31,17 +30,6 @@ export class ShoppingCartService extends AbstractGenericCrudService<CartItem, st
       deleteUrl: "/:id/products/:id",
       readOne: false,
     });
-  }
-
-  getCartItemCount(): Observable<number> {
-    if (this.isLoggedIn()) {
-      const url = this.getUrlWithId(this.entityUrl + this.cartItemCountUrl, this.userId);
-      return this.http.get<number>(url, this.httpOptions).pipe(
-        catchError(errorResponse => this.handleError(errorResponse)),
-      );
-    } else {
-      return this.shoppingCartRepository.cartItemCount$;
-    }
   }
 
   getCartItems(): Observable<CartItem[]> {
@@ -84,55 +72,76 @@ export class ShoppingCartService extends AbstractGenericCrudService<CartItem, st
   }
 
   addCartItem(cartItem: CartItem, navigate: boolean = true) {
-    if (this.isLoggedIn()) {
-      this.create({
-        userId: this.userId,
-        productId: cartItem.productId,
-        quantity: cartItem.quantity,
-      }, this.userId).subscribe(
-        () => {
-          this.shoppingCartRepository.addCartItem(cartItem);
-          if (navigate) {
-            this.router.navigateByUrl("/cart");
-          }
-        },
-      );
-    } else {
-      this.shoppingCartRepository.addCartItem(cartItem);
-      if (navigate) {
-        this.router.navigateByUrl("/cart");
+    this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
+        this.create({
+          userId: user.id,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+        }, this.userId).subscribe(
+          () => {
+            this.shoppingCartRepository.addCartItem(cartItem);
+            if (navigate) {
+              this.router.navigateByUrl("/cart");
+            }
+          },
+        );
+      } else {
+        if (user.expiry > 0 && Date.now() >= user.expiry) {
+          this.shoppingCartRepository.setCartItems([]);
+        }
+        this.shoppingCartRepository.addCartItem(cartItem);
+        if (navigate) {
+          this.router.navigateByUrl("/cart");
+        }
       }
-    }
+    });
   }
 
   updateCartItem(cartItem: CartItem) {
-    if (this.isLoggedIn()) {
-      this.update({
-        userId: this.userId,
-        productId: cartItem.productId,
-        quantity: cartItem.quantity,
-      }, this.userId, cartItem.productId).subscribe(
-        cartItem => this.shoppingCartRepository.updateCartItem(cartItem),
-      );
-    } else {
-      this.shoppingCartRepository.updateCartItem(cartItem);
-    }
+    this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
+        this.update({
+          userId: user.id,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+        }, this.userId, cartItem.productId).subscribe(
+          cartItem => this.shoppingCartRepository.updateCartItem(cartItem),
+        );
+      } else {
+        if (user.expiry > 0 && Date.now() >= user.expiry) {
+          this.shoppingCartRepository.setCartItems([]);
+        } else {
+          this.shoppingCartRepository.updateCartItem(cartItem);
+        }
+      }
+    });
   }
 
   removeCartItem(cartItem: CartItem) {
-    if (this.isLoggedIn()) {
-      this.delete(this.userId, cartItem.productId).subscribe(
-        () => this.shoppingCartRepository.removeCartItem(cartItem),
-      );
-    } else {
-      this.shoppingCartRepository.removeCartItem(cartItem);
-    }
+    this.authenticationRepository.user$.pipe(take(1)).subscribe(user => {
+      if (user.expiry > 0 && Date.now() < user.expiry) {
+        this.delete(user.id, cartItem.productId).subscribe(
+          () => this.shoppingCartRepository.removeCartItem(cartItem),
+        );
+      } else {
+        if (user.expiry > 0 && Date.now() >= user.expiry) {
+          this.shoppingCartRepository.setCartItems([]);
+        } else {
+          this.shoppingCartRepository.removeCartItem(cartItem);
+        }
+      }
+    });
   }
 
   isLoggedIn() {
+    let isLoggedIn = false;
     this.authenticationRepository.user$.pipe(
       take(1),
-    ).subscribe(user => this.userId = user.id);
-    return !!this.userId;
+    ).subscribe(user => {
+      this.userId = user.id;
+      isLoggedIn = user.expiry > 0 && Date.now() < user.expiry;
+    });
+    return isLoggedIn;
   }
 }

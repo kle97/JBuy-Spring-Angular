@@ -1,12 +1,13 @@
 <div class="toolbar-container" *appVar="{xSmall: 'xs' | matchMedia | async} as media">
   <mat-toolbar class="toolbar" color="primary">
     <span class="title"><a routerLink="/"><b>{{title}}</b></a></span>
+    <app-category-menu></app-category-menu>
 
     <span class="fill-remaining-spacer"></span>
 
     <app-navigation-bar-cart></app-navigation-bar-cart>
     <ng-container *ngIf="media.xSmall; else gtXSmall">
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <button mat-icon-button (click)="toggle()">
         <mat-icon>menu</mat-icon>
       </button>
     </ng-container>
@@ -16,13 +17,27 @@
   </mat-toolbar>
 
   <mat-sidenav-container>
-    <mat-sidenav #sidenav mode="over" opened="false" [autoFocus]="false" class="sidenav-menu">
-      <app-account-menu></app-account-menu>
+    <mat-sidenav #sidenav mode="over" opened="false"
+                 [fixedInViewport]="true"
+                 [autoFocus]="false" class="sidenav-menu">
+      <div class="sidenav-close-button">
+        <button mat-icon-button (click)="toggle()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="!media.xSmall" ></div>
+      <app-account-menu (onRouterLink)="toggle()"></app-account-menu>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-      <ng-content></ng-content>
+    <mat-sidenav-content class="content">
+      <div class="main">
+        <ng-content></ng-content>
+      </div>
+      <div>
+        <app-footer></app-footer>
+      </div>
     </mat-sidenav-content>
+
   </mat-sidenav-container>
 </div>
 

@@ -1,0 +1,13 @@
+<ng-container *appVar="{gtXSmall: 'gtXs' | matchMedia | async, categoryPage: categoryPage$ | async} as data">
+  <ng-container *ngIf="data.gtXSmall && data.categoryPage">
+    <button mat-flat-button disableRipple class="category-menu-button" [matMenuTriggerFor]="menu">
+      <span> Shop by category</span>
+      <mat-icon>expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" class="category-menu" xPosition="before">
+      <button mat-menu-item *ngFor="let category of data.categoryPage.content">
+        {{category.name}}
+      </button>
+    </mat-menu>
+  </ng-container>
+</ng-container>

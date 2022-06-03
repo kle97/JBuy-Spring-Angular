@@ -1,5 +1,6 @@
 package io.spring.jbuy.features.authentication;
 
+import io.spring.jbuy.common.configuration.SystemProperties;
 import io.spring.jbuy.common.exception.ResourceNotFoundException;
 import io.spring.jbuy.features.user.User;
 import io.spring.jbuy.features.user.UserMapper;
@@ -14,10 +15,13 @@ public class AuthenticationService {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final UserMapper userMapper;
+    private final SystemProperties systemProperties;
 
     public UserResponse login() {
         User user = customUserDetailsService.getCurrentUser().orElseThrow(
                 () -> new ResourceNotFoundException("Please provide credentials to login!"));
-        return userMapper.toUserResponse(user);
+        UserResponse userResponse = userMapper.toUserResponse(user);
+        userResponse.setExpiry(systemProperties.getSessionTimeout());
+        return userResponse;
     }
 }

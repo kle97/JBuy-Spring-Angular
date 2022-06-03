@@ -46,7 +46,7 @@ export class ReviewService extends AbstractGenericCrudService<Review, string> {
   getReviewPageForUser(pageRequest: PageRequest = defaultPageRequest) {
     this.authenticationRepository.user$.pipe(take(1))
       .subscribe(user => {
-        if (user.id) {
+        if (user.expiry > 0 && Date.now() < user.expiry) {
           const httpParams: HttpParams = new HttpParams({
             fromObject: {
               page: pageRequest.page,
@@ -83,7 +83,7 @@ export class ReviewService extends AbstractGenericCrudService<Review, string> {
   createOrEditReview(productId: string) {
     this.authenticationRepository.user$.pipe(take(1))
       .subscribe(user => {
-        if (user.id) {
+        if (user.expiry > 0 && Date.now() < user.expiry) {
           this.readOne(user.id, productId).subscribe({
             next: (review) => {
               this.updateReview(review);
@@ -101,7 +101,7 @@ export class ReviewService extends AbstractGenericCrudService<Review, string> {
   createReview(productId: string) {
     this.authenticationRepository.user$.pipe(take(1))
       .subscribe(user => {
-        if (user.id) {
+        if (user.expiry > 0 && Date.now() < user.expiry) {
           const dialogRef = this.dialog.open(ReviewCreateComponent, { width: "70rem", disableClose: true });
           dialogRef.afterClosed().subscribe((formValue: Review) => {
             if (formValue) {
@@ -124,7 +124,7 @@ export class ReviewService extends AbstractGenericCrudService<Review, string> {
   updateReview(review: Review) {
     this.authenticationRepository.user$.pipe(take(1))
       .subscribe(user => {
-        if (user.id) {
+        if (user.expiry > 0 && Date.now() < user.expiry) {
           const dialogRef = this.dialog.open(ReviewEditComponent, {
             data: { review: review },
             width: "70rem",
