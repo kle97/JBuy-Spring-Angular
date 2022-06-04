@@ -3,29 +3,19 @@ import { AbstractGenericCrudService } from "../../../core/service/generic-crud.s
 import { Product } from "../model/product.model";
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { ErrorNotificationService } from "../../../core/service/error-notification.service";
-import { ProductRepository } from "./product.repository";
-import { catchError, Observable, throwError } from "rxjs";
+import { ProductResultRepository } from "./product-result.repository";
+import { catchError, Observable, tap, throwError } from "rxjs";
 import { FacetPage } from "../model/facet-page.model";
 import { Page } from "../../../core/model/page.model";
-
-export interface PageOption {
-  page: number,
-  size: number,
-  sort: "",
-}
-
-export const initialPageOption: PageOption = {
-  page: 0,
-  size: 20,
-  sort: "",
-};
+import { PageRequest } from "../../../core/model/page-request.model";
+import { defaultPageRequest } from "../../../core/constant/default-page-request";
 
 export interface FilterOption {
-  categoryFilter: string,
-  brandFilter: string,
-  priceFilter: string,
-  ratingFilter: number,
-  attributeFilter: string,
+  categoryFilter?: string,
+  brandFilter?: string,
+  priceFilter?: string,
+  ratingFilter?: number,
+  attributeFilter?: string,
 }
 
 export const initialFilterOption: FilterOption = {
@@ -44,7 +34,7 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
   constructor(
     protected override http: HttpClient,
     private errorNotificationService: ErrorNotificationService,
-    private productRepository: ProductRepository,
+    private productResultRepository: ProductResultRepository,
   ) {
     super(http, "/products", {
       readOne: false,
@@ -75,36 +65,38 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
   }
 
   searchSimilarProduct(searchText: string,
-                       pageOption: PageOption = initialPageOption): Observable<Page<Product>> {
+                       pageRequest: PageRequest = defaultPageRequest): Observable<Page<Product>> {
     const url = this.entityUrl + this.similarProductSearchUrl;
     let httpParams = new HttpParams();
     httpParams = httpParams.append("searchText", searchText);
-    httpParams = this.buildPaginationParams(pageOption, httpParams);
+    httpParams = this.buildPaginationParams(pageRequest, httpParams);
     return this.http
       .get<Page<Product>>(url, { ...this.httpOptions, params: httpParams })
       .pipe(catchError(errorResponse => this.handleError(errorResponse)));
   }
 
-  search(searchText: string,
-         pageOption: PageOption = initialPageOption,
-         filterOption?: FilterOption): Observable<FacetPage<Product>> {
+  search(searchText: string, pageRequest: PageRequest = defaultPageRequest, filterOption?: FilterOption) {
     const url = this.entityUrl + this.searchUrl;
     let httpParams = new HttpParams();
     httpParams = httpParams.append("searchText", searchText);
-    httpParams = this.buildPaginationParams(pageOption, httpParams);
+    httpParams = this.buildPaginationParams(pageRequest, httpParams);
     if (filterOption) {
       httpParams = this.buildFilterParams(filterOption, httpParams);
     }
-    return this.http
-      .get<FacetPage<Product>>(url, { ...this.httpOptions, params: httpParams })
-      .pipe(catchError(errorResponse => this.handleError(errorResponse)));
+    this.http.get<FacetPage<Product>>(url, { ...this.httpOptions, params: httpParams })
+      .pipe(
+        tap(resultPage => this.productResultRepository.setProductResultPage(resultPage)),
+        catchError(errorResponse => this.handleError(errorResponse)),
+      ).subscribe();
   }
 
-  protected buildPaginationParams(pageOption: PageOption, httpParams: HttpParams): HttpParams {
-    httpParams = httpParams.append("size", pageOption.size);
-    httpParams = httpParams.append("page", pageOption.page);
-    if (pageOption.sort) {
-      httpParams = httpParams.append("sort", pageOption.sort);
+  protected buildPaginationParams(pageRequest: PageRequest, httpParams: HttpParams): HttpParams {
+    httpParams = httpParams.append("size", pageRequest.size);
+    httpParams = httpParams.append("page", pageRequest.page);
+    if (pageRequest.sort) {
+      for (let sortValue of pageRequest.sort) {
+        httpParams = httpParams.append("sort", sortValue);
+      }
     }
 
     return httpParams;

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import {
+  ActivatedRoute,
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
@@ -29,6 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     private authenticationService: AuthenticationService,
     private authenticationRepository: AuthenticationRepository,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private errorNotificationService: ErrorNotificationService,
   ) {
   }
@@ -75,11 +77,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
       return true;
     }
 
-    this.authenticationService.redirectUrl = url.split("?")[0].split("(")[0];
-
     // Set navigation extras with current url for redirecting as query params
     const navigationExtras: NavigationExtras = {
-      queryParams: { redirect: this.authenticationService.redirectUrl },
+      queryParams: { redirect: url.split("?")[0].split("(")[0] },
     };
 
     // Redirect to the login page with extras

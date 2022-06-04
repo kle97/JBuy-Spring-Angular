@@ -29,8 +29,12 @@
 .sign-up-card {
   margin-top: 1.5rem;
   $field-width: 32rem;
-
   max-width: 34rem;
+
+  @media only screen and (max-width: 399.98px) {
+    max-width: 28rem;
+  }
+
   padding-bottom: 3rem;
   border-radius: 1rem;
   text-align: center;
@@ -39,6 +43,9 @@
     height: 8rem;
     line-height: 1.8rem;
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     border-radius: 0.5rem 0.5rem 0 0;
     color: black;
     margin: 0.8rem auto;
@@ -48,11 +55,17 @@
 
   .sign-up-form-field {
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     margin-bottom: 0.7rem;
   }
 
   .sign-up-button {
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     height: 5rem;
   }
 

@@ -2,7 +2,9 @@
   <mat-toolbar class="toolbar" color="primary">
     <span class="title"><a routerLink="/"><b>{{title}}</b></a></span>
     <app-category-menu></app-category-menu>
-
+    <div class="search-bar-container">
+      <app-search-bar></app-search-bar>
+    </div>
     <span class="fill-remaining-spacer"></span>
 
     <app-navigation-bar-cart></app-navigation-bar-cart>
@@ -14,6 +16,12 @@
     <ng-template #gtXSmall>
       <app-account-menu></app-account-menu>
     </ng-template>
+  </mat-toolbar>
+
+  <mat-toolbar class="toolbar2" color="primary">
+    <div class="search-bar-container2">
+      <app-search-bar></app-search-bar>
+    </div>
   </mat-toolbar>
 
   <mat-sidenav-container>

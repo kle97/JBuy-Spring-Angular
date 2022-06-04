@@ -24,6 +24,9 @@
   margin-top: 3rem;
   $field-width: 32rem;
   max-width: 34rem;
+  @media only screen and (max-width: 399.98px) {
+    max-width: 28rem;
+  }
   text-align: center;
   padding-bottom: 4.5rem;
   border-radius: 1rem;
@@ -32,6 +35,9 @@
     height: 10rem;
     line-height: 3rem;
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     border-radius: 0.5rem 0.5rem 0 0;
     color: black;
     margin: 1rem auto;
@@ -41,6 +47,9 @@
 
   .login-form-field {
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     margin-bottom: 1rem;
   }
 
@@ -50,6 +59,9 @@
 
   .login-button {
     width: $field-width;
+    @media only screen and (max-width: 399.98px) {
+      width: 26rem;
+    }
     height: 5rem;
   }
 

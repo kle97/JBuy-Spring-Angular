@@ -10,6 +10,19 @@
   background-color: #363636;
   max-width: 125rem;
   margin: auto;
+  @media only screen and (max-width: 698.98px) {
+    padding-top: 1rem;
+    height: 4rem;
+  }
+}
+
+.toolbar2 {
+  background-color: #363636;
+  max-width: 125rem;
+  margin: auto;
+  @media only screen and (min-width: 700px) {
+    display: none;
+  }
 }
 
 .title {
@@ -29,6 +42,34 @@
   }
 }
 
+.search-bar-container {
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  max-width: 60rem;
+  width: 60rem;
+  @media only screen and (max-width: 1149.98px) {
+    width: 50rem;
+  }
+  @media only screen and (max-width: 999.98px) {
+    width: 40rem;
+  }
+  @media only screen and (max-width: 699.98px) {
+    display: none;
+  }
+  @media only screen and (max-width: 959.98px) {
+    margin-left: 3rem;
+  }
+}
+
+.search-bar-container2 {
+  margin-bottom: 0.5rem;
+  max-width: 65rem;
+  width: 65rem;
+  @media only screen and (min-width: 700px) {
+    display: none;
+  }
+}
+
 .sidenav-menu {
   width: 100%;
 }
@@ -40,7 +81,7 @@
 
 ::ng-deep .mat-drawer-container.mat-drawer-container-has-open {
   background-color: white;
-  max-height: calc(100vh - 6.4rem);
+  max-height: calc(100vh - 12.6rem);
 }
 
 ::ng-deep .mat-drawer-container {

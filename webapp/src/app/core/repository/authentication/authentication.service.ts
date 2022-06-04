@@ -24,8 +24,6 @@ export class AuthenticationService {
   readonly homepage = environment.homepage;
   readonly loginPage = "/login";
 
-  redirectUrl: string | null = this.homepage;
-
   httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
     withCredentials: true,
@@ -56,7 +54,7 @@ export class AuthenticationService {
     return this.http.get(this.csrfUrl, this.httpOptions);
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string, redirectUrl: string = "") {
     this.errorMessage$.next("");
     const base64Str = btoa(email + ":" + password);
     const httpOptions = {
@@ -69,8 +67,8 @@ export class AuthenticationService {
         this.authenticationRepository.updateUser(authenticationUser);
         this.authenticationRepository.updateSyncCart(false);
         this.shoppingCartService.getCartItems().subscribe();
-        if (this.redirectUrl) {
-          this.router.navigateByUrl(this.redirectUrl);
+        if (redirectUrl) {
+          this.router.navigateByUrl(redirectUrl);
         } else {
           this.router.navigateByUrl(this.homepage);
         }

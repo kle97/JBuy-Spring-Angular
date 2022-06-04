@@ -9,11 +9,10 @@ import { CheckoutComponent } from "./checkout/checkout.component";
 import { AuthGuard } from "../core/guard/auth.guard";
 import { CheckoutCompleteComponent } from "./checkout/checkout-complete/checkout-complete.component";
 import { BuyNowComponent } from "./checkout/buy-now/buy-now.component";
-import { RecentlyVisitedComponent } from "./product/recently-visited/recently-visited.component";
-import { CategoryMenuComponent } from "./home/category-menu/category-menu.component";
+import { SearchResultComponent } from "./search/search-result/search-result.component";
 
 const routes: Routes = [
-  { path: "test", component: CategoryMenuComponent },
+  { path: "test", component: SearchResultComponent },
   {
     path: "",
     component: ShopComponent,

@@ -5,4 +5,8 @@
 .category-menu-button {
   background-color: #363636;
   color: white;
+
+  @media only screen and (max-width: 959.98px) {
+    display: none;
+  }
 }

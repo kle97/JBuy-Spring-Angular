@@ -1,0 +1,51 @@
+.search-container {
+  max-width: 125rem;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 3rem auto;
+
+  .title {
+    width: 100%;
+  }
+
+  .filter {
+    width: 20%;
+    margin-right: 2%;
+
+    .filter-card {
+      .attribute-type {
+        margin-top: 2.5rem;
+        margin-bottom: 0.8rem;
+        font-size: 120%;
+      }
+    }
+  }
+
+  .search-result {
+    width: 78%;
+    display: flex;
+    flex-flow: row wrap;
+
+    .search-result-title, .divider {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .product-card {
+      margin: 1rem 1rem 1rem 0;
+      max-width: 20rem;
+      ::ng-deep .mat-card-header-text {
+        margin-left: 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: #363636;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

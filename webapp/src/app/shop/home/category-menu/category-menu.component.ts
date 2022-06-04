@@ -12,7 +12,7 @@ import { Page } from "../../../core/model/page.model";
 })
 export class CategoryMenuComponent implements OnInit {
 
-  categoryPage$: Observable<Page<Category>> = this.categoryRepository.categoryPage$
+  categoryPage$: Observable<Page<Category>> = this.categoryRepository.categoryPage$;
 
   constructor(
     private categoryService: CategoryService,
@@ -21,7 +21,11 @@ export class CategoryMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryService.getCategoryPage();
+    this.categoryRepository.isCategoryFetched$.subscribe(isCategoryPageFetched => {
+      if (!isCategoryPageFetched) {
+        this.categoryService.getCategoryPage();
+      }
+    });
   }
 
 }

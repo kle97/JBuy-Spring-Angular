@@ -5,10 +5,7 @@ import { CookieService } from "ngx-cookie";
 import { AuthenticationService } from "../repository/authentication/authentication.service";
 import { ErrorNotificationService } from "../service/error-notification.service";
 import { NavigationExtras, Router } from "@angular/router";
-import {
-  AuthenticationRepository,
-  initialUser,
-} from "../repository/authentication/authentication.repository";
+import { AuthenticationRepository, initialUser } from "../repository/authentication/authentication.repository";
 import { ShoppingCartRepository } from "../../shop/shopping-cart/repository/shopping-cart.repository";
 
 
@@ -47,11 +44,9 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
     this.authenticationRepository.updateSyncCart(false);
     this.shoppingCartRepository.setCartItems([]);
 
-    this.authenticationService.redirectUrl = this.router.url.split("?")[0].split("(")[0];
-
     // Set navigation extras with current url for redirecting as query params
     const navigationExtras: NavigationExtras = {
-      queryParams: { redirect: this.authenticationService.redirectUrl },
+      queryParams: { redirect: this.router.url.split("?")[0].split("(")[0] },
     };
 
     // Redirect to the login page with extras

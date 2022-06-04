@@ -1,1 +1,71 @@
-<p>search-result works!</p>
+<div class="search-container" *appVar="productResultPage$ | async as productResultPage">
+  <ng-container>
+    <div class="title">
+      <h1>You searched for: {{this.searchText}}</h1>
+    </div>
+
+    <div class="filter">
+      <mat-card class="filter-card">
+        <mat-card-content>
+          <div class="attribute-type">
+            ASDASDASDASD
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">asdasdasd (1)</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">qweqwrweq (5)</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">fsdfsdfsd (3)</mat-checkbox>
+          </div>
+
+          <div class="attribute-type">
+            ASDASDASDASD
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">asdasdasd (1)</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">qweqwrweq (5)</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary" class="attribute">fsdfsdfsd (3)</mat-checkbox>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="search-result">
+      <h1 class="search-result-title">Search Results</h1>
+      <mat-divider class="divider"></mat-divider>
+
+      <mat-card class="product-card mat-elevation-z0">
+        <mat-card-content class="product-container">
+          <div class="product-image">
+            <a href="javascript:void(0)">
+              <img mat-card-image src="" alt="image"
+                   onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+            </a>
+          </div>
+          <div class="product-info">
+            <a href="javascript:void(0)">
+              <h4 class="product-name">
+                adasd dddd dddddd ddddd ddddd dddd ddddddd ddddd dasda sdasd 13 ewqe23 123 red
+              </h4>
+            </a>
+            <div class="rating">
+              <app-rating [averageRating]="3.6"></app-rating>
+              <sup class="rating-text">
+                15
+              </sup>
+            </div>
+            <h2>{{2599 | currency}}</h2>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </ng-container>
+</div>
+

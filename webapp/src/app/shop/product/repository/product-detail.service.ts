@@ -4,7 +4,7 @@ import { ProductDetail } from "../model/product-detail.model";
 import { ErrorNotificationService } from "../../../core/service/error-notification.service";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, Observable, tap, throwError } from "rxjs";
-import { ProductDetailRepository } from "./product-detail.repository";
+import { RecentlyVisitedProductsRepository } from "./recently-visited-products.repository";
 import { ProductAttribute } from "../model/product-attribute.model";
 
 @Injectable({
@@ -15,7 +15,7 @@ export class ProductDetailService extends AbstractGenericCrudService<ProductDeta
   constructor(
     protected override http: HttpClient,
     private errorNotificationService: ErrorNotificationService,
-    private productDetailRepository: ProductDetailRepository,
+    private recentlyVisitedProductsRepository: RecentlyVisitedProductsRepository,
   ) {
     super(http, "/products", {
       readAll: false,
@@ -35,7 +35,7 @@ export class ProductDetailService extends AbstractGenericCrudService<ProductDeta
 
   getProduct(id: string): Observable<ProductDetail> {
     return this.readOne(id).pipe(tap(product => {
-      this.productDetailRepository.addProduct(product);
+      this.recentlyVisitedProductsRepository.addProduct(product);
     }))
   }
 

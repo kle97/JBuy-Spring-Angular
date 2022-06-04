@@ -30,6 +30,8 @@
             <input matInput formControlName="email" required>
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
               <div *ngIf="email.errors?.['required']">Please enter your email</div>
+              <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
+              <div *ngIf="email.errors?.['maxlength']">Please limit to 120 characters.</div>
             </mat-error>
           </mat-form-field>
 

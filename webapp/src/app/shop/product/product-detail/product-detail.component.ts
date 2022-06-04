@@ -80,7 +80,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.scrollUpService.toTop("body");
     this.activatedRoute.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe(params => {
       this.selectedInfoTab = 0;
       this.selectedQuantity = 1;
@@ -97,10 +96,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           next: (product) => {
             this.product = product;
             this.similarProductSearchText = this.product.listOfCategory[0].name;
-
-            // setTimeout(() => {
-            //   this.productId = this.product.id;
-            // }, 5000)
             this.productId = this.product.id;
 
             const productName = this.product.name.split(";");
@@ -116,7 +111,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
             const slugTitle = this.productDetailService.slugify(this.name);
 
             if (!urlTitle || urlTitle !== slugTitle) {
-              this.location.replaceState(`/product/${id}/${slugTitle}`);
+              this.location.replaceState(`/product/${id}/${slugTitle}`, "", {});
+              // this.router.navigate([`/product/${id}/${slugTitle}`], {skipLocationChange: true});
             }
 
             this.imageUrls = this.product.images.split("|");
