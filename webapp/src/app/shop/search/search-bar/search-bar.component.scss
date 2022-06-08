@@ -44,10 +44,12 @@
     border-radius: 0.3rem 0 0 0.3rem;
     border-top-color: #363636;
     top: 0.26rem;
-    height: 2.8rem;
-    padding: 1.2rem 1rem 0 1rem;
+    height: 4rem;
+    //padding: 1.2rem 1rem 0 1rem;
+    //pointer-events: none;
     .category-select {
       font-size: 75%;
+      padding: 1.3rem 1rem 0.1rem 1rem;
     }
   }
 

@@ -4,11 +4,12 @@ import { CategoryRepository } from "../../home/repository/category.repository";
 import { Observable } from "rxjs";
 import { Page } from "../../../core/model/page.model";
 import { Category } from "../../product/model/category.model";
+import { FormBuilder } from "@angular/forms";
 
 @Component({
-  selector: 'app-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss']
+  selector: "app-search-bar",
+  templateUrl: "./search-bar.component.html",
+  styleUrls: ["./search-bar.component.scss"],
 })
 export class SearchBarComponent implements OnInit {
 
@@ -18,7 +19,13 @@ export class SearchBarComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private categoryRepository: CategoryRepository,
-  ) { }
+    private formBuilder: FormBuilder,
+  ) {
+  }
+
+  searchForm = this.formBuilder.group({
+    searchText: [""],
+  });
 
   ngOnInit(): void {
     this.categoryRepository.isCategoryFetched$.subscribe(isCategoryPageFetched => {

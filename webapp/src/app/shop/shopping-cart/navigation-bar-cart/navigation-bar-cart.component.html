@@ -42,7 +42,8 @@
                   <div class="cart-item-container">
                     <div class="cart-item-left">
                       <a routerLink="/product/{{cartItem.productId}}" (click)="mouseLeave(menuTrigger)">
-                        <img height="100" width="100" src="{{cartItem.images.split('|')[0]}}" alt="image">
+                        <img height="100" width="100" src="{{cartItem.images.split('|')[0]}}" alt="image"
+                             onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
                       </a>
                     </div>
                     <div class="cart-item-right">

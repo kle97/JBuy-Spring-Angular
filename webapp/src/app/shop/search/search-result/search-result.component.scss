@@ -4,36 +4,169 @@
   flex-flow: row wrap;
   margin: 3rem auto;
 
-  .title {
+  .no-content {
+    h1 {
+      margin: 3rem 1rem 2rem 1rem;
+      font-size: 190%;
+    }
+    h3 {
+      font-size: 150%;
+      margin: 1rem 1rem 14rem 1rem;
+    }
     width: 100%;
   }
 
-  .filter {
-    width: 20%;
-    margin-right: 2%;
+  .title {
+    margin-left: 1%;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
 
+  .page-option {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    max-height: 6rem;
+    @media only screen and (max-width: 519.98px) {
+      justify-content: flex-end;
+      max-height: 20rem;
+    }
+
+    .sort-field {
+      ::ng-deep .mat-form-field-infix {
+        @media only screen and (max-width: 519.98px) {
+          width: 12rem;
+        }
+      }
+    }
+
+  }
+
+  .progress-overlay {
+    cursor: progress;
+  }
+
+  .disabled-overlay {
+    pointer-events: none;
+  }
+
+  .filter {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+
+    width: 20%;
+    margin-right: 1%;
+    margin-left: 1%;
     .filter-card {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: calc(100vh - 3.4rem);
+
+      @media only screen and (max-width: 959.98px) {
+        //display: none;
+      }
+
+      ::ng-deep .mat-card-header-text {
+        margin-left: 0;
+      }
+
       .attribute-type {
-        margin-top: 2.5rem;
-        margin-bottom: 0.8rem;
-        font-size: 120%;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+        font-size: 140%;
+      }
+
+      .attribute-value {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+
+      ::ng-deep .mat-checkbox-layout {
+        white-space: pre-wrap !important;
       }
     }
   }
 
   .search-result {
-    width: 78%;
+    width: 77%;
+    margin-right: 1%;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column nowrap;
+    @media only screen and (max-width: 959.98px) {
+      width: 100%;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+    @media only screen and (max-width: 699.98px) {
+      width: 100%;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
 
     .search-result-title, .divider {
       width: 100%;
       margin-bottom: 1rem;
     }
 
+    .filter-bar {
+      @media only screen and (max-width: 959.98px) {
+        flex-flow: row nowrap;
+        max-width: 100%;
+        z-index: 1050;
+        max-height: 5rem;
+        background-color: white;
+        position: -webkit-sticky; /* for Safari */
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        padding-top: 0.5rem;
+        padding-bottom: 0;
+        overflow-y: hidden;
+
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+        ::-webkit-scrollbar {
+          display: none;  /* Safari and Chrome */
+        }
+
+        ::ng-deep .mat-chip-list-wrapper {
+          display: flex;
+          flex-wrap: nowrap !important;
+          margin: 0;
+          max-height: 4rem;
+          width: calc(100vw - 15rem);
+          overflow-x: auto;
+
+          ::ng-deep .mat-chip{
+            flex: 0 0 auto;
+          }
+        }
+      }
+
+      padding-top: 0.5rem;
+      padding-bottom: 1rem;
+      display: flex;
+      flex-flow: row wrap;
+
+      .filter-button {
+        min-width: 10rem;
+        margin-right: 2rem;
+        margin-bottom: 1rem;
+        @media only screen and (min-width: 959.98px) {
+          display: none;
+        }
+      }
+    }
+
+    .clear-all-button {
+      min-width: 10rem;
+    }
+
     .product-card {
-      margin: 1rem 1rem 1rem 0;
-      max-width: 20rem;
+      margin: 1rem 0 1rem 0;
+
       ::ng-deep .mat-card-header-text {
         margin-left: 0;
       }
@@ -44,8 +177,157 @@
       }
 
       a:hover {
-        text-decoration: underline;
+        color: #2962ff;
+      }
+
+      .product-content {
+        display: flex;
+        flex-flow: row nowrap;
+        @media only screen and (max-width: 699.98px) {
+          flex-flow: row wrap;
+        }
+
+        .product-name {
+          font-size: 120%;
+          @media only screen and (max-width: 699.98px) {
+            flex: 1 1 100%;
+            margin-top: 1.2rem;
+            font-size: 140%;
+          }
+        }
+
+        .product-image {
+          flex: 0 0 20rem;
+          margin-right: 1rem;
+
+          img {
+            margin: 0;
+          }
+
+          @media only screen and (max-width: 699.98px) {
+            flex: 0 0 55%;
+            margin-right: 0;
+            text-align: center;
+          }
+          @media only screen and (max-width: 499.98px) {
+            flex: 0 0 100%;
+            margin-right: 0;
+            text-align: center;
+          }
+        }
+
+        .product-info {
+          flex: 1 1 auto;
+          margin-right: 1%;
+          @media only screen and (max-width: 699.98px) {
+            flex: 1 1 45%;
+            margin-right: 0;
+          }
+
+          @media only screen and (max-width: 499.98px) {
+            flex: 1 1 100%;
+            margin-right: 0;
+          }
+
+          .rating {
+            margin-bottom: 1rem;
+
+            .rating-text {
+              font-size: 110%;
+            }
+          }
+
+          .in-stock, .last-one {
+            font-weight: 570;
+            font-size: 140%;
+            color: green;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          }
+
+          .out-stock {
+            font-weight: 570;
+            font-size: 140%;
+            color: #666;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+          }
+        }
+
+        .product-action {
+          flex: 0 0 auto;
+        }
+
+        .regular-price {
+          font-size: 95%;
+          margin-bottom: 2rem;
+
+          .strike {
+            margin-left: 1rem;
+            color: #666;
+          }
+
+          .save {
+            background-color: #cc0000;
+            color: white;
+            padding: 0.5rem;
+          }
+        }
+
+        .discount-price {
+          font-size: 170%;
+          margin-bottom: 1.5rem;
+        }
+
+        .action-button {
+          width: 25rem;
+          height: 4.5rem;
+          margin-bottom: 2rem;
+          @media only screen and (max-width: 759.98px) {
+            width: 20rem;
+          }
+          @media only screen and (max-width: 699.98px) {
+            width: 100%;
+          }
+        }
       }
     }
+  }
+}
+
+.dialog-progress-overlay {
+  cursor: progress;
+}
+
+.dialog-disabled-overlay {
+  pointer-events: none;
+}
+
+.filter-dialog-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  .filter-dialog-attribute {
+    width: 18rem;
+    max-width: 18rem;
+    margin-right: 2rem;
+  }
+
+  .attribute-dialog-type {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-size: 140%;
+  }
+
+  .attribute-dialog-value {
+    width: 16rem;
+    overflow: hidden;
+    white-space: pre-line;
+    display: block;
+  }
+
+  .checkbox {
+    display: inline-flex;
+    margin-bottom: 1rem;
   }
 }

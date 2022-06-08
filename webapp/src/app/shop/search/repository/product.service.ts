@@ -9,21 +9,24 @@ import { FacetPage } from "../model/facet-page.model";
 import { Page } from "../../../core/model/page.model";
 import { PageRequest } from "../../../core/model/page-request.model";
 import { defaultPageRequest } from "../../../core/constant/default-page-request";
+import { CustomHttpParamsEncoderService } from "../../../core/service/custom-http-params-encoder.service";
 
 export interface FilterOption {
+  dealFilter?: boolean,
   categoryFilter?: string,
-  brandFilter?: string,
-  priceFilter?: string,
+  brandFilter?: Array<string>,
+  priceFilter?: Array<string>,
   ratingFilter?: number,
-  attributeFilter?: string,
+  attributeFilter?: Array<string>,
 }
 
-export const initialFilterOption: FilterOption = {
+export const defaultFilterOption: FilterOption = {
+  dealFilter: false,
   categoryFilter: "",
-  brandFilter: "",
-  priceFilter: "",
-  ratingFilter: 1,
-  attributeFilter: "",
+  brandFilter: [],
+  priceFilter: [],
+  ratingFilter: 0,
+  attributeFilter: [],
 };
 
 @Injectable({
@@ -35,6 +38,7 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
     protected override http: HttpClient,
     private errorNotificationService: ErrorNotificationService,
     private productResultRepository: ProductResultRepository,
+    private customHttpParamsEncoderService: CustomHttpParamsEncoderService,
   ) {
     super(http, "/products", {
       readOne: false,
@@ -75,19 +79,21 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
       .pipe(catchError(errorResponse => this.handleError(errorResponse)));
   }
 
-  search(searchText: string, pageRequest: PageRequest = defaultPageRequest, filterOption?: FilterOption) {
+  search(searchText: string,
+         pageRequest: PageRequest = defaultPageRequest,
+         filterOption?: FilterOption): Observable<FacetPage<Product>> {
     const url = this.entityUrl + this.searchUrl;
-    let httpParams = new HttpParams();
+    let httpParams = new HttpParams({ encoder: this.customHttpParamsEncoderService });
     httpParams = httpParams.append("searchText", searchText);
     httpParams = this.buildPaginationParams(pageRequest, httpParams);
     if (filterOption) {
       httpParams = this.buildFilterParams(filterOption, httpParams);
     }
-    this.http.get<FacetPage<Product>>(url, { ...this.httpOptions, params: httpParams })
+    return this.http.get<FacetPage<Product>>(url, { ...this.httpOptions, params: httpParams })
       .pipe(
         tap(resultPage => this.productResultRepository.setProductResultPage(resultPage)),
         catchError(errorResponse => this.handleError(errorResponse)),
-      ).subscribe();
+      );
   }
 
   protected buildPaginationParams(pageRequest: PageRequest, httpParams: HttpParams): HttpParams {
@@ -103,20 +109,29 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
   }
 
   protected buildFilterParams(filterOption: FilterOption, httpParams: HttpParams): HttpParams {
+    if (filterOption.dealFilter) {
+      httpParams = httpParams.append("dealFilter", filterOption.dealFilter);
+    }
     if (filterOption.categoryFilter) {
       httpParams = httpParams.append("categoryFilter", filterOption.categoryFilter);
     }
-    if (filterOption.brandFilter) {
-      httpParams = httpParams.append("brandFilter", filterOption.brandFilter);
+    if (filterOption.brandFilter && filterOption.brandFilter.length > 0) {
+      for (let brand of filterOption.brandFilter) {
+        httpParams = httpParams.append("brandFilter", brand);
+      }
     }
-    if (filterOption.priceFilter) {
-      httpParams = httpParams.append("priceFilter", filterOption.priceFilter);
+    if (filterOption.priceFilter && filterOption.priceFilter.length > 0) {
+      for (let price of filterOption.priceFilter) {
+        httpParams = httpParams.append("priceFilter", price);
+      }
     }
-    if (filterOption.ratingFilter) {
+    if (filterOption.ratingFilter && filterOption.ratingFilter > 0) {
       httpParams = httpParams.append("ratingFilter", filterOption.ratingFilter);
     }
-    if (filterOption.attributeFilter) {
-      httpParams = httpParams.append("attributeFilter", filterOption.attributeFilter);
+    if (filterOption.attributeFilter && filterOption.attributeFilter.length > 0) {
+      for (let attribute of filterOption.attributeFilter) {
+        httpParams = httpParams.append("attributeFilter", attribute);
+      }
     }
 
     return httpParams;

@@ -31,8 +31,8 @@ public class ProductController {
 
     @GetMapping("/auto-complete")
     @Operation(summary = "Auto complete search text", tags = "product")
-    public ResponseEntity<Set<String>> searchAutoComplete(@RequestParam(value = "searchText") String searchText) {
-        return ResponseEntity.ok().body(productService.searchAutoComplete(searchText));
+    public ResponseEntity<Set<String>> searchTextAutoComplete(@RequestParam(value = "searchText") String searchText) {
+        return ResponseEntity.ok().body(productService.searchTextAutoComplete(searchText));
     }
 
     @GetMapping("/similar-products")
@@ -49,14 +49,16 @@ public class ProductController {
     public ResponseEntity<PageFacet<ProductResponse>> searchProduct(
             @ParameterObject Pageable pageable,
             @RequestParam(value = "searchText") String searchText,
+            @RequestParam(value = "dealFilter", required = false) Boolean dealFilter,
             @RequestParam(value = "categoryFilter", required = false) String categoryFilter,
-            @RequestParam(value = "brandFilter", required = false) String brandFilter,
+            @RequestParam(value = "brandFilter", required = false) List<String> brandFilter,
             @RequestParam(value = "priceFilter", required = false) List<String> priceFilter,
             @RequestParam(value = "ratingFilter", required = false) Integer ratingFilter,
             @RequestParam(value = "attributeFilter", required = false) List<String> attributeFilter) {
 
         return ResponseEntity.ok().body(productService.searchProduct(pageable,
                                                                      searchText,
+                                                                     dealFilter,
                                                                      categoryFilter,
                                                                      brandFilter,
                                                                      priceFilter,

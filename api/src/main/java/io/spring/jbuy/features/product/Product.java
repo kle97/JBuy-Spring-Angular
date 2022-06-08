@@ -93,7 +93,7 @@ public class Product extends DateAuditWithID {
     private String brand;
 
     // custom analyzer "english" defined in common/search/CustomLuceneAnalysisConfigurer
-    @NotNull
+    @Column(nullable = false) @NotNull
     @FullTextField(analyzer = "english", projectable = Projectable.YES)
     private String name;
 
@@ -102,9 +102,11 @@ public class Product extends DateAuditWithID {
     private String description;
 
     @GenericField(projectable = Projectable.YES)
+    @Column(nullable = false) @NotNull @Min(0)
     private Double regularPrice;
 
     @GenericField(projectable = Projectable.YES, sortable = Sortable.YES, aggregable = Aggregable.YES)
+    @Column(nullable = false) @NotNull @Min(0)
     private Double discountPrice;
 
     @GenericField(projectable = Projectable.YES)
@@ -124,13 +126,17 @@ public class Product extends DateAuditWithID {
     @GenericField(projectable = Projectable.YES, sortable = Sortable.YES)
     private Integer ratingCount;
 
+    @GenericField(projectable = Projectable.YES, aggregable = Aggregable.YES)
+    private Boolean discounted;
+
     public static class ProductBuilder {
         public String toString() {
             return "Product.ProductBuilder(brand=" + this.brand
                     + ", name=" + this.name + ", description=" + this.description
                     + ", regularPrice=" + this.regularPrice + ", discountPrice=" + this.discountPrice
                     + ", stock=" + this.stock + ", images=" + this.images
-                    + ", thumbnails=" + this.thumbnails + ")";
+                    + ", thumbnails=" + this.thumbnails + ", averageRating=" + this.averageRating
+                    + ", ratingCount=" + this.ratingCount + ", discounted=" + this.discounted + ")";
         }
     }
 

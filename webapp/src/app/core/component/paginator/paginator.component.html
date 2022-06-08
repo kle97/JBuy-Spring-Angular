@@ -1,5 +1,5 @@
 <div class="paginator-container">
-  <div class="paginator-info" [style.justify-content]="align">
+  <div class="paginator-info" *ngIf="showPageOption || showPageInfo || showGotoPage" [style.justify-content]="align">
     <div *ngIf="showPageOption" class="page-option">
       <span>{{pageOptionLabel}} per page: </span>
       <mat-form-field>
@@ -11,18 +11,19 @@
       </mat-form-field>
     </div>
     <div *ngIf="showPageInfo" class="page-info">
-      {{pageIndex * pageSize + 1}} - {{math.min((pageIndex + 1) * pageSize, length)}} of {{length}} {{pageInfoLabel}}
+      {{pageIndex * pageSize + (length > 0 ? 1 : 0)}} -
+      {{math.min((pageIndex + 1) * pageSize, length)}} of {{length}} {{pageInfoLabel}}
     </div>
     <div *ngIf="showGotoPage" class="goto-page">
       <span>Page </span>
       <mat-form-field>
         <input min="1" [max]="maxPageNumber"
-               type="number" matInput
+               type="number" matInput autocomplete="OFF"
                [formControl]="pageNumber" (change)="goToPage(pageNumber.value - 1)">
       </mat-form-field>
     </div>
   </div>
-  <div class="paginator" [style.justify-content]="align">
+  <div class="paginator" *ngIf="showPaginator" [style.justify-content]="align">
     <button [color]="color" mat-stroked-button class="previous-button"
             [disabled]="pageIndex === 0"
             (click)="goToPage(pageIndex - 1)">
@@ -39,19 +40,19 @@
           </ng-container>
           <ng-container *ngIf="pageIndex + 1 !== number">
             <button [color]="color" mat-stroked-button (click)="goToPage(number - 1)"
-                    [disabled]="isEclipseButton(number)"
+                    [disabled]="isEllipsisButton(number)"
                     [ngClass]="'number-button ' + (isHiddenButton(number) ? 'hidden-button' : '')">
-              {{isEclipseButton(number) ? '...' : number}}
+              {{isEllipsisButton(number) ? '...' : number}}
             </button>
           </ng-container>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="!color">
         <button mat-stroked-button *ngFor="let number of buttonNumbers()" (click)="goToPage(number - 1)"
-                [disabled]="isEclipseButton(number)"
+                [disabled]="isEllipsisButton(number)"
                 [ngClass]="'number-button ' + (pageIndex + 1 === number ? 'active-button ' : '')
               + (isHiddenButton(number) ? 'hidden-button' : '')">
-          {{isEclipseButton(number) ? '...' : number}}
+          {{isEllipsisButton(number) ? '...' : number}}
         </button>
       </ng-container>
     </div>

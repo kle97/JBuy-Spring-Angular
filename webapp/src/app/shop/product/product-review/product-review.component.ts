@@ -21,7 +21,7 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
   @Input() ratingCount: number = 0;
   @Input() averageRating: number = 0;
   sortOptions: Array<string> = ["reviewDate,desc", "reviewDate", "rating,desc", "rating"];
-  sortOptionLabels: Array<string> = ["Most Recent", "Oldest", "Highest rating", "Lowest rating"];
+  sortOptionLabels: Array<string> = ["Most Recent", "Oldest", "Highest Rating", "Lowest Rating"];
   selectedSort: string = "reviewDate,desc";
 
   constructor(
@@ -46,13 +46,12 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
   }
 
   sortChange(reviewPage: Page<Review>) {
-    const pageRequest: PageRequest = {
-      page: reviewPage.number,
-      size: reviewPage.size,
-      sort: [this.selectedSort],
-    };
-
     if (this.productId) {
+      const pageRequest: PageRequest = {
+        page: reviewPage.number,
+        size: reviewPage.size,
+        sort: [this.selectedSort],
+      };
       this.reviewService.getReviewPageForProduct(this.productId, pageRequest);
       this.scrollUpService.toTop("product-review-tab");
     }

@@ -89,7 +89,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.productAttributes = new Map();
       // this.scrollUpService.toTop("body");
 
-      const id = params.get("id");
+      let id = params.get("id");
       const urlTitle = params.get("title");
       if (id) {
         this.productDetailService.getProduct(id).subscribe({
@@ -107,14 +107,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
               this.name = this.product.name;
             }
 
-            this.titleService.setTitle(this.name);
             const slugTitle = this.productDetailService.slugify(this.name);
+            if (id && this.router.url.split("%23")[1]) {
+              id = id.split("#")[0];
+              setTimeout(() => this.clickRating(), 500);
+            }
 
             if (!urlTitle || urlTitle !== slugTitle) {
               this.location.replaceState(`/product/${id}/${slugTitle}`, "", {});
               // this.router.navigate([`/product/${id}/${slugTitle}`], {skipLocationChange: true});
             }
 
+            this.titleService.setTitle("JBuy: " + this.name);
             this.imageUrls = this.product.images.split("|");
             this.thumbnailUrls = this.product.thumbnails.split("|");
 

@@ -1,71 +1,390 @@
-<div class="search-container" *appVar="productResultPage$ | async as productResultPage">
-  <ng-container>
-    <div class="title">
-      <h1>You searched for: {{this.searchText}}</h1>
+<div class="search-container" *appVar="{ltMedium2: '(max-width: 699.98px)' | matchMedia | async,
+                                        ltMedium1: 'ltMd' | matchMedia | async,
+                                        isLoading: true | isLoading | async} as media">
+  <ng-template #noContentTemplate>
+    <div class="no-content">
+      <h1>
+        We are sorry, we didn't find anything for "{{searchTextParam}}".
+      </h1>
+      <h3>
+        Please try a different search term.
+      </h3>
+      <app-recently-visited></app-recently-visited>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="!noContent; else noContentTemplate">
+    <div id="search-title" class="title">
+      <h1>{{productResultPage.number * productResultPage.size + (productResultPage.totalElements > 0 ? 1 : 0)}} -
+        {{math.min((productResultPage.number + 1) * productResultPage.size, productResultPage.totalElements)}}
+        of {{productResultPage.totalElements}} results for "{{this.searchTextParam}}"</h1>
     </div>
 
-    <div class="filter">
-      <mat-card class="filter-card">
-        <mat-card-content>
-          <div class="attribute-type">
-            ASDASDASDASD
-          </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">asdasdasd (1)</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">qweqwrweq (5)</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">fsdfsdfsd (3)</mat-checkbox>
-          </div>
+    <ng-container *ngIf="!media.ltMedium2; else ltMedium2">
+      <ng-container *ngIf="!media.ltMedium1">
+        <div class="filter" [class.progress-overlay]="media.isLoading">
+          <mat-card class="filter-card" [class.disabled-overlay]="media.isLoading">
+            <mat-card-header>
+              <mat-card-title>Filters</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <ng-container *ngIf="facetMap.size > 0; else filterLoading">
+                <ng-container *ngFor="let attributeType of facetMap | keyvalue:onCompare; trackBy: trackFacetKeyValue">
+                  <div class="attribute-type">
+                    {{attributeType.key}}
+                  </div>
+                  <div *ngFor="let attribute of attributeType.value; trackBy: trackAttribute">
+                    <div class="attribute-value" *ngIf="+attribute.amount > 0">
+                      <mat-checkbox color="primary" disableRipple
+                                    [checked]="attribute.checked"
+                                    (change)="onCheckBoxChange(attributeType.key, attribute.value, !attribute.checked);
+                                    attribute.checked = !attribute.checked">
+                        {{attribute.value.includes("_") ? attribute.value.split("_")[1].split("(")[0]
+                        : attribute.value.split("(")[0]}}
+                        ({{attribute.amount}})
+                      </mat-checkbox>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </ng-container>
 
-          <div class="attribute-type">
-            ASDASDASDASD
+      <div id="search-result" class="search-result">
+        <h1 class="search-result-title">Search Results</h1>
+        <div class="filter-bar">
+          <button class="filter-button" mat-raised-button color="accent" (click)="openFilterModal(filterDialog)">
+            <mat-icon>check_box_outline_blank</mat-icon>
+            Filters
+          </button>
+          <ng-container *ngTemplateOutlet="chipList"></ng-container>
+        </div>
+        <div class="page-option">
+          <app-paginator color="primary"
+                         [length]="productResultPage.totalElements"
+                         [pageSize]="productResultPage.size"
+                         [pageIndex]="productResultPage.number"
+                         [showPaginator]="false"
+                         [showPageInfo]="false"
+                         [align]="'start'"
+                         (page)="onPageEvent($event)">
+          </app-paginator>
+          <div class="sort">
+            <mat-form-field appearance="outline" class="sort-field">
+              <mat-label>Sort by</mat-label>
+              <mat-select [(value)]="selectedSort" (valueChange)="sortChange()">
+                <mat-option *ngFor="let sortOption of sortOptions; let i = index" [value]="sortOption">
+                  {{sortOptionLabels[i]}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">asdasdasd (1)</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">qweqwrweq (5)</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" class="attribute">fsdfsdfsd (3)</mat-checkbox>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
+        </div>
+        <!--        <div>-->
+        <!--          <app-paginator *ngIf="productResultPage.totalElements > pageRequest.size"-->
+        <!--                         color="primary"-->
+        <!--                         [length]="productResultPage.totalElements"-->
+        <!--                         [pageSize]="productResultPage.size"-->
+        <!--                         [pageIndex]="productResultPage.number"-->
+        <!--                         [showGotoPage]="false"-->
+        <!--                         [showPageInfo]="false"-->
+        <!--                         [showPageOption]="false"-->
+        <!--                         [align]="'end'"-->
+        <!--                         (page)="onPageEvent($event)">-->
+        <!--          </app-paginator>-->
+        <!--        </div>-->
+        <mat-divider class="divider"></mat-divider>
+        <ng-container *ngIf="!media.isLoading && productResultPage.content.length > 0; else productLoading">
+          <mat-card class="product-card mat-elevation-z3" *ngFor="let product of productResultPage.content">
+            <mat-card-content class="product-content">
+              <div class="product-image">
+                <a routerLink="/product/{{product.id}}">
+                  <img height="200" width="200" src="{{product.images.split('|')[0]}}" alt="image"
+                       onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+                </a>
+              </div>
+              <div class="product-info">
+                <a routerLink="/product/{{product.id}}">
+                  <h4 class="product-name">
+                    {{product.name}}
+                  </h4>
+                </a>
+                <a class="rating" routerLink="/product/{{product.id}}#product-info">
+                  <app-rating [averageRating]="product.averageRating"></app-rating>
+                  <sup class="rating-text">
+                    {{product.ratingCount}}
+                  </sup>
+                </a>
+                <h1 class="in-stock" *ngIf="product.stock > 1">
+                  In Stock
+                </h1>
+                <h1 class="last-one" *ngIf="product.stock === 1">
+                  Last One In Stock
+                </h1>
+                <h1 class="out-stock" *ngIf="product.stock === 0">
+                  Out of Stock
+                </h1>
+              </div>
 
-    <div class="search-result">
-      <h1 class="search-result-title">Search Results</h1>
-      <mat-divider class="divider"></mat-divider>
+              <div class="product-action">
+                <h1 class="discount-price"><b>{{product.discountPrice | currency}}</b></h1>
+                <div class="regular-price"
+                     *ngIf="product.regularPrice > 0 && product.discountPrice > 0 && product.regularPrice > product.discountPrice">
+                  <span class="save">SAVE {{product.regularPrice - product.discountPrice | currency}}</span>
+                  <span class="strike">Was {{product.regularPrice | currency}}</span>
+                </div>
+                <button class="action-button" mat-raised-button color="primary"
+                        *ngIf="product.stock >= 1" (click)="addToCart(product)">
+                  Add to Cart
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+        <div>
+          <app-paginator *ngIf="productResultPage.totalElements > pageRequest.size"
+                         color="primary"
+                         [length]="productResultPage.totalElements"
+                         [pageSize]="productResultPage.size"
+                         [pageIndex]="productResultPage.number"
+                         [pageInfoLabel]="'products'"
+                         [pageOptionLabel]="'Products'"
+                         (page)="onPageEvent($event)">
+          </app-paginator>
+        </div>
+      </div>
+    </ng-container>
 
-      <mat-card class="product-card mat-elevation-z0">
-        <mat-card-content class="product-container">
-          <div class="product-image">
-            <a href="javascript:void(0)">
-              <img mat-card-image src="" alt="image"
-                   onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
-            </a>
+    <ng-template #ltMedium2>
+      <div id="search-result-sm" class="search-result">
+        <h1 class="search-result-title">Search Results</h1>
+        <div class="filter-bar">
+          <button class="filter-button action-button" mat-raised-button color="accent" (click)="openFilterModal(filterDialog)">
+            <mat-icon>check_box_outline_blank</mat-icon>
+            Filters
+          </button>
+          <ng-container *ngTemplateOutlet="chipList"></ng-container>
+        </div>
+        <div class="page-option">
+          <app-paginator color="primary"
+                         [length]="productResultPage.totalElements"
+                         [pageSize]="productResultPage.size"
+                         [pageIndex]="productResultPage.number"
+                         [showPaginator]="false"
+                         [showPageInfo]="false"
+                         [align]="'start'"
+                         (page)="onPageEvent($event)">
+          </app-paginator>
+          <div class="sort">
+            <mat-form-field appearance="outline" class="sort-field">
+              <mat-label>Sort by</mat-label>
+              <mat-select [(value)]="selectedSort" (valueChange)="sortChange()">
+                <mat-option *ngFor="let sortOption of sortOptions; let i = index" [value]="sortOption">
+                  {{sortOptionLabels[i]}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-          <div class="product-info">
-            <a href="javascript:void(0)">
-              <h4 class="product-name">
-                adasd dddd dddddd ddddd ddddd dddd ddddddd ddddd dasda sdasd 13 ewqe23 123 red
-              </h4>
-            </a>
-            <div class="rating">
-              <app-rating [averageRating]="3.6"></app-rating>
-              <sup class="rating-text">
-                15
-              </sup>
-            </div>
-            <h2>{{2599 | currency}}</h2>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-    </div>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+        <ng-container *ngIf="!media.isLoading && productResultPage.content.length > 0; else productLoading">
+          <mat-card class="product-card mat-elevation-z3" *ngFor="let product of productResultPage.content">
+            <mat-card-content class="product-content">
+              <a routerLink="/product/{{product.id}}">
+                <h4 class="product-name">
+                  {{product.name}}
+                </h4>
+              </a>
+              <div class="product-image">
+                <a routerLink="/product/{{product.id}}">
+                  <img height="200" width="200" src="{{product.images.split('|')[0]}}" alt="image"
+                       onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
+                </a>
+              </div>
+              <div class="product-info">
+                <a class="rating" routerLink="/product/{{product.id}}#product-info">
+                  <app-rating [averageRating]="product.averageRating"></app-rating>
+                  <sup class="rating-text">
+                    {{product.ratingCount}}
+                  </sup>
+                </a>
+                <h1 class="in-stock" *ngIf="product.stock > 1">
+                  In Stock
+                </h1>
+                <h1 class="last-one" *ngIf="product.stock === 1">
+                  Last One In Stock
+                </h1>
+                <h1 class="out-stock" *ngIf="product.stock === 0">
+                  Out of Stock
+                </h1>
+                <h1 class="discount-price"><b>{{product.discountPrice | currency}}</b></h1>
+                <div class="regular-price"
+                     *ngIf="product.regularPrice > 0 && product.discountPrice > 0 && product.regularPrice > product.discountPrice">
+                  <span class="save">SAVE {{product.regularPrice - product.discountPrice | currency}}</span>
+                  <span class="strike">Was {{product.regularPrice | currency}}</span>
+                </div>
+                <button class="action-button" mat-raised-button color="primary"
+                        (click)="addToCart(product)"
+                        *ngIf="product.stock >= 1">
+                  Add to Cart
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </ng-container>
+        <div>
+          <app-paginator *ngIf="productResultPage.totalElements > pageRequest.size"
+                         color="primary"
+                         [length]="productResultPage.totalElements"
+                         [pageSize]="productResultPage.size"
+                         [pageIndex]="productResultPage.number"
+                         [pageInfoLabel]="'products'"
+                         [pageOptionLabel]="'Products'"
+                         (page)="onPageEvent($event)">
+          </app-paginator>
+        </div>
+      </div>
+    </ng-template>
   </ng-container>
+
+  <ng-template #filterDialog>
+    <h2 mat-dialog-title>Filters</h2>
+    <mat-dialog-content [class.dialog-disabled-overlay]="media.isLoading">
+      <div class="filter-dialog-container" >
+        <div class="filter-dialog-attribute"
+             *ngFor="let attributeType of facetMap | keyvalue:onCompare; trackBy: trackFacetKeyValue">
+          <div class="attribute-dialog-type">
+            {{attributeType.key}}
+          </div>
+          <ng-container *ngFor="let attribute of attributeType.value; trackBy: trackAttribute">
+            <div class="checkbox" *ngIf="+attribute.amount > 0">
+              <input type="checkbox"
+                     [id]="attributeType.key + '_' + attribute.value"
+                     (change)="onCheckBoxChange(attributeType.key, attribute.value, !attribute.checked);
+                            attribute.checked = !attribute.checked"
+                     [checked]="attribute.checked">
+              <label [for]="attributeType.key + '_' + attribute.value" class="attribute-dialog-value">
+                {{attribute.value.includes("_") ? attribute.value.split("_")[1].split("(")[0]
+                : attribute.value.split("(")[0]}}
+                ({{attribute.amount}})
+              </label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-raised-button color="primary" mat-dialog-close>View {{productResultPage.totalElements}} results</button>
+    </mat-dialog-actions>
+  </ng-template>
 </div>
+
+<ng-template #productLoading>
+  <div>
+    <ngx-skeleton-loader count="10" appearance="line"
+                         [theme]="{ height: '23.7rem', 'max-width': '96.25rem',
+                         'margin-top': '1rem', 'margin-bottom': '1rem'}">
+    </ngx-skeleton-loader>
+  </div>
+</ng-template>
+
+<ng-template #filterLoading>
+  <div>
+    <ngx-skeleton-loader count="1" appearance="line"
+                         [theme]="{ height: '2rem', 'max-width': '21.8rem',
+                         'margin-top': '4rem', 'margin-bottom': '2rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div>
+    <ngx-skeleton-loader count="5" appearance="line"
+                         [theme]="{ height: '2.4rem', 'max-width': '21.8rem', 'margin-bottom': '1rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div>
+    <ngx-skeleton-loader count="1" appearance="line"
+                         [theme]="{ height: '2rem', 'max-width': '21.8rem',
+                         'margin-top': '4rem', 'margin-bottom': '2rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div>
+    <ngx-skeleton-loader count="5" appearance="line"
+                         [theme]="{ height: '2.4rem', 'max-width': '21.8rem', 'margin-bottom': '1rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div>
+    <ngx-skeleton-loader count="1" appearance="line"
+                         [theme]="{ height: '2rem', 'max-width': '21.8rem',
+                         'margin-top': '4rem', 'margin-bottom': '2rem'}">
+    </ngx-skeleton-loader>
+  </div>
+  <div>
+    <ngx-skeleton-loader count="5" appearance="line"
+                         [theme]="{ height: '2.4rem', 'max-width': '21.8rem', 'margin-bottom': '1rem'}">
+    </ngx-skeleton-loader>
+  </div>
+</ng-template>
+
+<ng-template #chipList>
+  <mat-chip-list>
+    <ng-container *ngIf="filterOption.dealFilter">
+      <mat-chip [selected]="true" (removed)="removeChip('Deals', '')">
+        Deal Only
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="filterOption.categoryFilter">
+      <mat-chip [selected]="true" (removed)="removeChip('Category', filterOption.categoryFilter)">
+        {{filterOption.categoryFilter}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="filterOption.brandFilter && filterOption.brandFilter.length > 0">
+      <mat-chip [selected]="true" *ngFor="let brand of filterOption.brandFilter"
+                (removed)="removeChip('Brand', brand)">
+        {{brand}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="filterOption.priceFilter && filterOption.priceFilter.length > 0">
+      <mat-chip [selected]="true" *ngFor="let price of filterOption.priceFilter"
+                (removed)="removeChip('Price', price)">
+        {{price.split("-")[0] | currency}} - {{price.split("-")[1] | currency}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="filterOption.ratingFilter && filterOption.ratingFilter > 0">
+      <mat-chip [selected]="true"
+                (removed)="removeChip('Rating', filterOption.ratingFilter.toString(10))">
+        {{filterOption.ratingFilter}} Star{{filterOption.ratingFilter > 1 ? "" : "s"}} and Up
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="filterOption.attributeFilter && filterOption.attributeFilter.length > 0">
+      <mat-chip [selected]="true" *ngFor="let attribute of filterOption.attributeFilter"
+                (removed)="removeChip('', attribute)">
+        {{attribute.includes("_") ? attribute.replace("_", ": ") : attribute.split("(")[0]}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+    </ng-container>
+    <ng-container *ngIf="isFilterOn()">
+      <button mat-flat-button class="clear-all-button" (click)="clearAllFilter()">
+        Clear all
+      </button>
+    </ng-container>
+  </mat-chip-list>
+</ng-template>
 

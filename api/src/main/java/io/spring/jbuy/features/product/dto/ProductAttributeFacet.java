@@ -11,4 +11,7 @@ public class ProductAttributeFacet {
 
     @Schema(example = "5")
     Long amount;
+
+    @Schema(example = "false")
+    Boolean checked;
 }

@@ -114,7 +114,7 @@ public class HazelcastConfiguration {
         config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.authority.Authority"));
         config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.authority.Authority.listOfUser"));
         config.addMapConfig(new MapConfig(mediumMapConfig).setName("io.spring.jbuy.features.address.Address"));
-        config.addMapConfig(new MapConfig(mediumMapConfig)
+        config.addMapConfig(new MapConfig(largeMapConfig)
                                     .setName("io.spring.jbuy.features.attribute.Attribute.listOfProductAttribute"));
         config.addMapConfig(new MapConfig(smallMapConfig).setName("io.spring.jbuy.features.attribute_type.AttributeType"));
         config.addMapConfig(new MapConfig(mediumMapConfig)

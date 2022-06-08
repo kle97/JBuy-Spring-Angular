@@ -12,7 +12,7 @@ import { ScrollUpService } from "../../service/scroll-up.service";
 export class PaginatorComponent implements OnInit {
 
   _pageSize: number = 20;
-  _length: number = 61;
+  _length: number = 1161;
   _pageIndex: number = 0;
 
   get pageSize() {
@@ -50,6 +50,7 @@ export class PaginatorComponent implements OnInit {
   @Input() showGotoPage: boolean = true;
   @Input() previousLabel: string = "Prev";
   @Input() nextLabel: string = "Next";
+  @Input() showPaginator: boolean = true;
   @Input() align: "center" | "start" | "end" = "center"
   @Input() color: ThemePalette;
   @Input() pageSizeOptions: number[] = [5, 10, 20, 25, 50, 100];
@@ -108,7 +109,7 @@ export class PaginatorComponent implements OnInit {
     }
   }
 
-  isEclipseButton(number: number) {
+  isEllipsisButton(number: number) {
     const current = this.pageIndex + 1;
     if (current <= 4 && number <= 5) {
       return false;

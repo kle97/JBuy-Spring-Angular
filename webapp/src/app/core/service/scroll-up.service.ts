@@ -35,13 +35,13 @@ export class ScrollUpService {
     }
   }
 
-  scrollIntoView(elementId: string) {
+  scrollIntoView(elementId: string, behavior: "auto" | "smooth" = "auto") {
     let content: HTMLElement | null = this.document.getElementById(elementId);
     if (!content) {
       content = this.document.querySelector(elementId);
     }
     if (content) {
-      content.scrollIntoView()
+      content.scrollIntoView({behavior: behavior});
     }
   }
 }

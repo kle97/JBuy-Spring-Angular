@@ -14,7 +14,7 @@ export class LoadingPipe implements PipeTransform {
 
   transform(value: boolean): Observable<boolean> {
     return this.loadingRepository.isLoading$.pipe(
-      debounceTime(0),
+      // debounceTime(0),
       map(isLoading => value === isLoading),
     );
   }

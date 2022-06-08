@@ -1,24 +1,22 @@
 .paginator-container {
-  margin: 2rem auto;
+  margin: 1rem auto;
   max-width: 125rem;
   display: flex;
   flex-flow: row wrap;
-  //justify-content: space-between;
 
   .paginator-info {
     display: flex;
+    max-height: 3.8rem;
     flex-flow: row nowrap;
     flex: 100%;
     margin: 1rem auto;
-    //justify-content: center;
 
     .page-info {
-      //margin-right: 2.5rem;
       text-align: center;
       margin-left: 1.5rem;
       margin-right: 1.5rem;
       min-width: 13rem;
-      @media only screen and (max-width: 469.98px) {
+      @media only screen and (max-width: 479.98px) {
         display: none;
       }
     }
@@ -76,10 +74,15 @@
 
     ::ng-deep .mat-button, .mat-raised-button, .mat-stroked-button, .mat-flat-button {
       min-width: 5rem;
-      @media only screen and (max-width: 469.98px) {
+      @media only screen and (max-width: 479.98px) {
         min-width: 3.2rem;
         padding-left: 0.7rem;
         padding-right: 0.7rem;
+      }
+      @media only screen and (max-width: 329.98px) {
+        min-width: 2.5rem;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
       }
     }
 
@@ -109,16 +112,17 @@
 
     .previous-button, .next-button {
       height: $button-height;
+      //@media only screen and (min-width: 600px) {
+      //  width: 10rem;
+      //}
     }
 
     .previous-button {
       border-radius: 3rem 0 0 3rem;
-      border-right: 0;
     }
 
     .next-button {
       border-radius: 0 3rem 3rem 0;
-      border-left: 0;
     }
   }
 }

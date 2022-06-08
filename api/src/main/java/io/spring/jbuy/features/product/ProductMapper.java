@@ -24,6 +24,7 @@ public interface ProductMapper {
     @Mapping(target = "listOfReview", ignore = true)
     @Mapping(target = "averageRating", ignore = true)
     @Mapping(target = "ratingCount", ignore = true)
+    @Mapping(target = "discounted", ignore = true)
     Product toProduct(ProductRequest productRequest);
 
     @Mapping(target = "listOfCartItem", ignore = true)
@@ -31,5 +32,6 @@ public interface ProductMapper {
     @Mapping(target = "listOfReview", ignore = true)
     @Mapping(target = "averageRating", ignore = true)
     @Mapping(target = "ratingCount", ignore = true)
+    @Mapping(target = "discounted", ignore = true)
     Product toExistingProduct(ProductRequest productRequest, @MappingTarget Product product);
 }

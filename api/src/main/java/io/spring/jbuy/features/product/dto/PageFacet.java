@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface PageFacet<T> extends Page<T> {
 
-    Map<String, Map<String, List<ProductAttributeFacet>>> getFacetMap();
+    Map<String, List<ProductAttributeFacet>> getFacetMap();
 }

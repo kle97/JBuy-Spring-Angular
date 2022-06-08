@@ -17,6 +17,7 @@ import { PaginatorComponent } from "./component/paginator/paginator.component";
 import { RatingBarComponent } from "./component/rating-bar/rating-bar.component";
 import { FooterComponent } from "./component/footer/footer.component";
 import { LoadingSvgComponent } from "./component/loading-svg/loading-svg.component";
+import { ScrollUpButtonComponent } from "./component/scroll-up-button/scroll-up-button.component";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { LoadingSvgComponent } from "./component/loading-svg/loading-svg.compone
     RatingBarComponent,
     FooterComponent,
     LoadingSvgComponent,
+    ScrollUpButtonComponent,
   ],
   imports: [
     SharedModule,
@@ -54,6 +56,7 @@ import { LoadingSvgComponent } from "./component/loading-svg/loading-svg.compone
     PaginatorComponent,
     FooterComponent,
     LoadingSvgComponent,
+    ScrollUpButtonComponent
   ],
 })
 export class CoreModule {

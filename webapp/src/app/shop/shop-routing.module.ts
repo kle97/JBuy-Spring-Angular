@@ -10,9 +10,10 @@ import { AuthGuard } from "../core/guard/auth.guard";
 import { CheckoutCompleteComponent } from "./checkout/checkout-complete/checkout-complete.component";
 import { BuyNowComponent } from "./checkout/buy-now/buy-now.component";
 import { SearchResultComponent } from "./search/search-result/search-result.component";
+import { PaginatorComponent } from "../core/component/paginator/paginator.component";
 
 const routes: Routes = [
-  { path: "test", component: SearchResultComponent },
+  { path: "test", component: PaginatorComponent },
   {
     path: "",
     component: ShopComponent,
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: "cart", component: CartComponent, data: { title: "JBuy Cart" } },
       { path: "checkout", component: CheckoutComponent, data: { title: "JBuy Checkout" }, canActivate: [AuthGuard] },
       { path: "buy-now", component: BuyNowComponent, data: { title: "JBuy Checkout" }, canActivate: [AuthGuard] },
+      { path: "search", component: SearchResultComponent },
       {
         path: "checkout-complete/:id",
         component: CheckoutCompleteComponent,

@@ -7,6 +7,9 @@
   max-width: 40rem !important;
 }
 
+::ng-deep .mat-card-header-text {
+  margin-left: 0;
+}
 
 .cart-button {
   ::ng-deep .mat-button-focus-overlay {

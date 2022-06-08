@@ -50,7 +50,7 @@ export class NavigationBarCartComponent extends UnsubscribeComponent implements 
     }
     setTimeout(() => {
       trigger.openMenu();
-    }, 50);
+    });
   }
 
   mouseLeave(trigger: MatMenuTrigger) {

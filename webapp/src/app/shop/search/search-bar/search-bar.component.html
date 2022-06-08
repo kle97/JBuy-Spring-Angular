@@ -1,16 +1,18 @@
-<mat-form-field appearance="outline" class="search-bar-field">
+<form id="searchForm" [formGroup]="searchForm"></form>
+<mat-form-field appearance="outline" class="search-bar-field" (click)="$event.preventDefault()">
   <input #input matInput autocomplete="off" placeholder="Search for anything">
   <mat-select matPrefix class="category-select"
               disableOptionCentering
-              (focus)="input.focus()"
+              (click)="$event.stopPropagation()"
               *appVar="categoryPage$ | async as categoryPage"
               [(value)]="selectedCategory">
-    <mat-option (focus)="input.focus()" value="All">All</mat-option>
-    <mat-option (focus)="input.focus()" *ngFor="let category of categoryPage.content" [value]="category.name">
+    <mat-option (click)="input.focus()" value="All">All</mat-option>
+    <mat-option (click)="input.focus()" *ngFor="let category of categoryPage.content" [value]="category.name">
       {{category.name}}
     </mat-option>
   </mat-select>
-  <button mat-flat-button matSuffix>
+  <button mat-flat-button matSuffix (click)="$event.stopPropagation()">
+
     <mat-icon>search</mat-icon>
   </button>
 </mat-form-field>

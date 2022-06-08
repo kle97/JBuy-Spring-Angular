@@ -14,12 +14,12 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 public class PageFacetImpl<T> extends PageImpl<T> implements PageFacet<T> {
 
-    Map<String, Map<String, List<ProductAttributeFacet>>> facetMap;
+    Map<String, List<ProductAttributeFacet>> facetMap;
 
     public PageFacetImpl(List<T> content,
                          Pageable pageable,
                          long total,
-                         Map<String, Map<String, List<ProductAttributeFacet>>> facetMap) {
+                         Map<String, List<ProductAttributeFacet>> facetMap) {
         super(content, pageable, total);
         this.facetMap = facetMap;
     }

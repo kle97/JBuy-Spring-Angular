@@ -1,0 +1,13 @@
+.scroll-up-button {
+  position: fixed;
+  background-color: #f3f3f3;
+  bottom: 3%;
+  right: 1.2%;
+  z-index: 10;
+
+  @media only screen and (max-width: 959.98px) {
+    transform: scale(0.9);
+    bottom: 3%;
+    right: 1.2%;
+  }
+}

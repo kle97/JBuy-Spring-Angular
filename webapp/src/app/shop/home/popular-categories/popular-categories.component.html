@@ -2,6 +2,7 @@
 <div class="category-container">
 
   <mat-card [ngClass]="'category-card ' + (hover === 1 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'laptops'}"
             (mouseover)="hover = 1"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/laptop.png" alt="error"
@@ -12,6 +13,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 2 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'desktops'}"
             (mouseover)="hover = 2"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/desktop.png" alt="error"
@@ -22,6 +24,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 3 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'monitors'}"
             (mouseover)="hover = 3"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/monitor.png" alt="error"
@@ -32,6 +35,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 4 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'graphics cards'}"
             (mouseover)="hover = 4"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/graphic-card.png" alt="error"
@@ -42,6 +46,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 5 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'processors'}"
             (mouseover)="hover = 5"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/cpu.png" alt="error"
@@ -52,6 +57,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 6 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'motherboards'}"
             (mouseover)="hover = 6"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/motherboard.jpg" alt="error"
@@ -62,6 +68,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 7 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'computer cases'}"
             (mouseover)="hover = 7"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/pc-case.png" alt="error"
@@ -72,16 +79,18 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 8 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'ssds, hard drives'}"
             (mouseover)="hover = 8"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/hard-drive.png" alt="error"
          onerror="this.src='https://res.cloudinary.com/khoale97/image/upload/jbuy/missing-image.png';">
     <mat-card-content>
-      <b>HARD DRIVES</b>
+      <b>SSDs, HARD DRIVES</b>
     </mat-card-content>
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 9 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'memory'}"
             (mouseover)="hover = 9"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/memory.jpg" alt="error"
@@ -92,6 +101,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 10 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'power supplies'}"
             (mouseover)="hover = 10"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/psu.jpg" alt="error"
@@ -102,6 +112,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 11 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'air & water cooling'}"
             (mouseover)="hover = 11"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/air-cooling.jpg" alt="error"
@@ -112,6 +123,7 @@
   </mat-card>
 
   <mat-card [ngClass]="'category-card ' + (hover === 12 ? 'mat-elevation-z6': 'mat-elevation-z0')"
+            routerLink="/search" [queryParams]="{searchText: 'wireless networking'}"
             (mouseover)="hover = 12"
             (mouseout)="hover = 0">
     <img height="200" width="200" src="https://res.cloudinary.com/khoale97/image/upload/jbuy/wifi-router.jpg" alt="error"
