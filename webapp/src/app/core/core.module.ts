@@ -18,6 +18,7 @@ import { RatingBarComponent } from "./component/rating-bar/rating-bar.component"
 import { FooterComponent } from "./component/footer/footer.component";
 import { LoadingSvgComponent } from "./component/loading-svg/loading-svg.component";
 import { ScrollUpButtonComponent } from "./component/scroll-up-button/scroll-up-button.component";
+import { HighlightTextPipe } from './pipe/highlight-text.pipe';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ScrollUpButtonComponent } from "./component/scroll-up-button/scroll-up-
     FooterComponent,
     LoadingSvgComponent,
     ScrollUpButtonComponent,
+    HighlightTextPipe,
   ],
   imports: [
     SharedModule,
@@ -47,6 +49,7 @@ import { ScrollUpButtonComponent } from "./component/scroll-up-button/scroll-up-
     VarDirective,
     MatchMediaPipe,
     LoadingPipe,
+    HighlightTextPipe,
     LogoutComponent,
     LoadingComponent,
     PageNotFoundComponent,

@@ -59,7 +59,7 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
     return throwError(() => errorResponse);
   }
 
-  autoComplete(searchText: string): Observable<Array<string>> {
+  autocomplete(searchText: string): Observable<Array<string>> {
     const url = this.entityUrl + this.autoCompleteUrl;
     let httpParams = new HttpParams();
     httpParams = httpParams.append("searchText", searchText);
@@ -91,7 +91,6 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
     }
     return this.http.get<FacetPage<Product>>(url, { ...this.httpOptions, params: httpParams })
       .pipe(
-        tap(resultPage => this.productResultRepository.setProductResultPage(resultPage)),
         catchError(errorResponse => this.handleError(errorResponse)),
       );
   }

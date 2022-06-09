@@ -4,7 +4,8 @@
   <ng-template #noContentTemplate>
     <div class="no-content">
       <h1>
-        We are sorry, we didn't find anything for "{{searchTextParam}}".
+        We are sorry, we didn't find anything for "{{searchTextParam}}"
+        {{filterOption.categoryFilter ? " in \"" + filterOption.categoryFilter + "\" category." : "."}}
       </h1>
       <h3>
         Please try a different search term.

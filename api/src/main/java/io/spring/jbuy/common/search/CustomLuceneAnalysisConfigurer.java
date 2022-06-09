@@ -40,17 +40,18 @@ public class CustomLuceneAnalysisConfigurer implements LuceneAnalysisConfigurer 
                 .tokenFilter(SnowballPorterFilterFactory.class)
                 .param("language", "English");
 
-        context.analyzer( "autocomplete_indexing" ).custom()
-                .tokenizer( WhitespaceTokenizerFactory.class )
-                .tokenFilter( LowerCaseFilterFactory.class )
-                .tokenFilter( ASCIIFoldingFilterFactory.class )
-                .tokenFilter( EdgeNGramFilterFactory.class )
-                .param( "minGramSize", "1" )
-                .param( "maxGramSize", "10" );
+        context.analyzer("autocomplete_indexing").custom()
+                .tokenizer(WhitespaceTokenizerFactory.class)
+                .tokenFilter(LowerCaseFilterFactory.class)
+                .tokenFilter(ASCIIFoldingFilterFactory.class)
+                .tokenFilter(EdgeNGramFilterFactory.class)
+                .param("minGramSize", "1")
+                .param("maxGramSize", "10");
+
         // Same as "autocomplete-indexing", but without the edge-ngram filter
-        context.analyzer( "autocomplete_search" ).custom()
-                .tokenizer( WhitespaceTokenizerFactory.class )
-                .tokenFilter( LowerCaseFilterFactory.class )
-                .tokenFilter( ASCIIFoldingFilterFactory.class );
+        context.analyzer("autocomplete_search").custom()
+                .tokenizer(WhitespaceTokenizerFactory.class)
+                .tokenFilter(LowerCaseFilterFactory.class)
+                .tokenFilter(ASCIIFoldingFilterFactory.class);
     }
 }

@@ -1,18 +1,56 @@
-<form id="searchForm" [formGroup]="searchForm"></form>
-<mat-form-field appearance="outline" class="search-bar-field" (click)="$event.preventDefault()">
-  <input #input matInput autocomplete="off" placeholder="Search for anything">
-  <mat-select matPrefix class="category-select"
-              disableOptionCentering
-              (click)="$event.stopPropagation()"
-              *appVar="categoryPage$ | async as categoryPage"
-              [(value)]="selectedCategory">
-    <mat-option (click)="input.focus()" value="All">All</mat-option>
-    <mat-option (click)="input.focus()" *ngFor="let category of categoryPage.content" [value]="category.name">
-      {{category.name}}
-    </mat-option>
-  </mat-select>
-  <button mat-flat-button matSuffix (click)="$event.stopPropagation()">
+<form id="searchForm" [formGroup]="searchForm" (ngSubmit)="onSubmit(); input.blur(); trigger.closePanel()">
+  <mat-form-field appearance="outline" class="search-bar-field" (click)="$event.preventDefault()">
+    <input #input matInput
+           formControlName="searchText"
+           autocomplete="off"
+           placeholder="Search for anything"
+           #trigger="matAutocompleteTrigger"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" class="auto-complete-container">
+      <ng-container *ngIf="searchText.value.length === 0">
+        <mat-option *ngFor="let searchText of recentlySearchedTexts$ | async" [value]="searchText.text">
+            <div class="recently-search-field"
+                 (click)="onRecentlySearchClick(searchText.category, input)">
+              <div class="recently-search-text">
+                <mat-icon>history</mat-icon>
+                <span class="search-text">{{searchText.text}}</span>
+                <span class="category-text">
+                  in {{searchText.category === "All" ? "All Categories" : searchText.category}}
+                </span>
+              </div>
+              <div class="fill-remaining-spacer"></div>
+              <div class="recently-search-delete">
+                <button mat-icon-button disableRipple
+                        (click)="$event.stopPropagation(); removeSearchText(searchText.text, searchText.category)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </div>
+        </mat-option>
+      </ng-container>
 
-    <mat-icon>search</mat-icon>
-  </button>
-</mat-form-field>
+      <ng-container *ngIf="searchText.value.length > 0">
+        <mat-option *ngFor="let autocompleteText of autocompleteSearchTexts$ | async"
+                    (click)="onSubmit(); input.blur()"
+                    [value]="autocompleteText">
+          <div [innerHTML]="autocompleteText | highlightText: searchText.value"></div>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+
+    <mat-select matPrefix class="category-select"
+                disableOptionCentering
+                (click)="$event.stopPropagation()"
+                formControlName="category"
+                *appVar="categoryPage$ | async as categoryPage">
+      <mat-option (click)="input.focus()" value="All">All</mat-option>
+      <mat-option (click)="input.focus()" *ngFor="let category of categoryPage.content" [value]="category.name">
+        {{category.name}}
+      </mat-option>
+    </mat-select>
+    <button mat-flat-button matSuffix type="submit" (click)="$event.stopPropagation()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
+
