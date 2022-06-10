@@ -5,7 +5,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 --
 
 INSERT INTO public.address (id, version, created_at, last_modified_at, address_line1, address_line2, city,
-                            primary_address, postal_code, state, user_id)
+                            postal_code, primary_address, state, user_id)
 VALUES ('12cba8de-f95e-471a-af6c-e8b9323baab3', 0, '2022-06-09 16:58:17.247993', '2022-06-09 16:58:17.247993',
         '123 Main St', 'Apt #13', 'Los Angeles', '90120', true, 'CA', 'dc26c4d1-4d45-4bfd-bce2-4cdb45c64213'),
        ('20440d5a-8ff8-47fc-bd12-5c832a58a482', 0, '2022-06-09 16:58:17.255738', '2022-06-09 16:58:17.255738',
