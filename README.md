@@ -70,6 +70,3 @@ Todo
 
 ---
 ![screenshot1](https://i.imgur.com/xFqYUIj.png)
-
----
-![screenshot1](https://i.imgur.com/dFGiwT5.png)
