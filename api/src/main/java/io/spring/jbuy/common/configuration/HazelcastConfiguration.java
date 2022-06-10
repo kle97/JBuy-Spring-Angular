@@ -59,7 +59,9 @@ public class HazelcastConfiguration {
                     .setEnabled(true)
                     .setMembers(
                             List.of(systemProperties.getHazelcastHost() + ":" + systemProperties.getHazelcastPort()));
-            config.getManagementCenterConfig().setEnabled(true).setUrl(systemProperties.getHazelcastManUrl());
+            if (systemProperties.isHazelcastManEnabled()) {
+                config.getManagementCenterConfig().setEnabled(true).setUrl(systemProperties.getHazelcastManUrl());
+            }
         }
 
         initializeDomainMapConfig(config);

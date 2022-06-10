@@ -10,7 +10,7 @@
       <mat-card class="card-container">
         <ng-container *ngIf="cartItems && cartItems.length > 0; else cartEmpty">
           <mat-card-content>
-            <div class="cart-container" *ngFor="let cartItem of cartItems; let i = index">
+            <div class="cart-container" *ngFor="let cartItem of cartItems; let i = index; trackBy: trackCartItem">
               <div class="item-image">
                 <a routerLink="/product/{{cartItem.productId}}">
                   <img class="image-responsive"

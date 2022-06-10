@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { Observable } from "rxjs";
 import { Page } from "../../../core/model/page.model";
 import { ScrollUpService } from "../../../core/service/scroll-up.service";
@@ -48,5 +48,9 @@ export class ReviewComponent implements OnInit {
     this.reviewService.getReviewPageForUser(pageRequest);
     this.scrollUpService.toTop("body");
   }
+
+  trackReview: TrackByFunction<Review> = (index: number, review: Review): string => {
+    return review.userId + review.productId;
+  };
 
 }

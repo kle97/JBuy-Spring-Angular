@@ -1,4 +1,14 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TrackByFunction,
+  ViewChild,
+} from "@angular/core";
 import KeenSlider, { KeenSliderInstance } from "keen-slider";
 import { RecentlyVisitedProductsRepository } from "../repository/recently-visited-products.repository";
 import { Subject, takeUntil } from "rxjs";
@@ -112,5 +122,9 @@ export class RecentlyVisitedComponent implements OnInit, OnDestroy, OnChanges {
       this.slider.moveToIdx(0);
     }
   }
+
+  trackProduct: TrackByFunction<Product> = (index: number, product: Product): string => {
+    return product.id;
+  };
 
 }

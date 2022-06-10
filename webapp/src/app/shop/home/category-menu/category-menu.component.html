@@ -6,7 +6,7 @@
     </button>
     <mat-menu #menu="matMenu" class="category-menu" xPosition="before">
       <button routerLink="/search" [queryParams]="{searchText: category.name.toLowerCase()}"
-              mat-menu-item *ngFor="let category of data.categoryPage.content">
+              mat-menu-item *ngFor="let category of data.categoryPage.content; trackBy: trackCategory">
         {{category.name}}
       </button>
     </mat-menu>

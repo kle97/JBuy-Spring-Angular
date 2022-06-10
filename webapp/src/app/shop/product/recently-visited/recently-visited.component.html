@@ -1,7 +1,7 @@
 <div class="navigation-wrapper">
   <h1 *ngIf="products.length > 0">Your recently viewed items</h1>
   <div *ngIf="products.length > 0" class="keen-slider keen-slider--vertical" #sliderRef>
-    <ng-container *ngFor="let product of products; let i = index">
+    <ng-container *ngFor="let product of products; let i = index; trackBy: trackProduct">
       <mat-card class="mat-elevation-z0 keen-slider__slide number-slide{{i + 1}}" (click)="slider.moveToIdx(0)">
         <mat-card-content>
           <a [routerLink]="['/product', product.id, productSlugs[i]]">

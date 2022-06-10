@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, TrackByFunction, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ProductDetailService } from "../repository/product-detail.service";
 import { Title } from "@angular/platform-browser";
@@ -211,10 +211,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl("/buy-now");
   }
 
-  onCompare(_left: KeyValue<any, any>, _right: KeyValue<any, any>): number {
-    return 1;
-  }
-
   ngOnDestroy() {
     if (this.slider) {
       this.slider.destroy();
@@ -262,6 +258,19 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         });
       });
     };
+  };
+
+  onCompare(a: KeyValue<string, Attribute[]>, b: KeyValue<string, Attribute[]>): number {
+    return 1;
+  }
+
+  trackAttributeKeyValue: TrackByFunction<KeyValue<string, Attribute[]>> = (index: number,
+                                                                            keyValue: KeyValue<string, Attribute[]>): string => {
+    return keyValue.key;
+  };
+
+  trackAttribute: TrackByFunction<Attribute> = (index: number, attribute: Attribute): string => {
+    return attribute.name;
   };
 
 }

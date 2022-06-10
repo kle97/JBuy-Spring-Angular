@@ -28,5 +28,6 @@ public class SystemProperties {
     private String hazelcastHost;
     private Integer hazelcastPort;
     private String hazelcastManUrl;
+    private boolean hazelcastManEnabled;
     private Integer sessionTimeout;
 }

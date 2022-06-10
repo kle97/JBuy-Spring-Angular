@@ -3,8 +3,7 @@ import { AbstractGenericCrudService } from "../../../core/service/generic-crud.s
 import { Product } from "../model/product.model";
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { ErrorNotificationService } from "../../../core/service/error-notification.service";
-import { ProductResultRepository } from "./product-result.repository";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 import { FacetPage } from "../model/facet-page.model";
 import { Page } from "../../../core/model/page.model";
 import { PageRequest } from "../../../core/model/page-request.model";
@@ -37,7 +36,6 @@ export class ProductService extends AbstractGenericCrudService<Product, string> 
   constructor(
     protected override http: HttpClient,
     private errorNotificationService: ErrorNotificationService,
-    private productResultRepository: ProductResultRepository,
     private customHttpParamsEncoderService: CustomHttpParamsEncoderService,
   ) {
     super(http, "/products", {

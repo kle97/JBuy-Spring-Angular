@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { Observable, take, takeUntil } from "rxjs";
 import { CartItem } from "../../shopping-cart/model/cart-item.model";
 import { Address } from "../../account-setting/model/address.model";
@@ -8,7 +8,6 @@ import { ShoppingCartService } from "../../shopping-cart/repository/shopping-car
 import { OrderService } from "../../account-setting/repository/order/order.service";
 import { AddressRepository } from "../../account-setting/repository/address/address.repository";
 import { AddressService } from "../../account-setting/repository/address/address.service";
-import { Router } from "@angular/router";
 import { UnsubscribeComponent } from "../../../core/component/unsubscribe/unsubscribe.component";
 
 @Component({
@@ -31,7 +30,6 @@ export class BuyNowComponent extends UnsubscribeComponent implements OnInit {
     private orderService: OrderService,
     private addressRepository: AddressRepository,
     private addressService: AddressService,
-    private router: Router,
   ) {
     super();
   }
@@ -84,5 +82,13 @@ export class BuyNowComponent extends UnsubscribeComponent implements OnInit {
       return 0;
     }
   }
+
+  trackCartItem: TrackByFunction<CartItem> = (index: number, cartItem: CartItem): string => {
+    return cartItem.userId + cartItem.productId;
+  };
+
+  trackAddress: TrackByFunction<Address> = (index: number, address: Address): string => {
+    return address.id;
+  };
 
 }

@@ -170,11 +170,12 @@
     </mat-tab>
     <mat-tab label="Specs">
       <ng-container *ngIf="loadSpec">
-        <div class="specs-container" *ngFor="let productAttribute of productAttributes | keyvalue:onCompare">
+        <div class="specs-container"
+             *ngFor="let productAttribute of productAttributes | keyvalue:onCompare; trackBy: trackAttributeKeyValue">
           <div class="specs-left"><h2>{{productAttribute.key}}</h2></div>
           <div class="specs-right">
             <table>
-              <ng-container *ngFor="let attribute of productAttribute.value">
+              <ng-container *ngFor="let attribute of productAttribute.value; trackBy: trackAttribute">
                 <tr>
                   <td class="attribute-name">
                     {{attribute.name}}

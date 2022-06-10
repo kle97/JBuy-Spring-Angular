@@ -1,4 +1,14 @@
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TrackByFunction,
+  ViewChild,
+} from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import KeenSlider, { KeenSliderInstance } from "keen-slider";
 import { Product } from "../../search/model/product.model";
@@ -131,5 +141,9 @@ export class SimilarProductComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.loaded$.next(this.loaded);
   }
+
+  trackProduct: TrackByFunction<Product> = (index: number, product: Product): string => {
+    return product.id;
+  };
 
 }

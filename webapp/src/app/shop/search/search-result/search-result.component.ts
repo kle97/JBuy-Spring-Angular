@@ -6,7 +6,6 @@ import { FacetPage } from "../model/facet-page.model";
 import { Product } from "../model/product.model";
 import { PageRequest } from "../../../core/model/page-request.model";
 import { defaultPageRequest } from "../../../core/constant/default-page-request";
-import { ProductResultRepository } from "../repository/product-result.repository";
 import { KeyValue, Location } from "@angular/common";
 import { Facet } from "../model/facet.model";
 import { emptyPage } from "../../../core/constant/empty-page";
@@ -54,7 +53,6 @@ export class SearchResultComponent extends UnsubscribeComponent implements OnIni
     private productService: ProductService,
     private shoppingCartService: ShoppingCartService,
     private activatedRoute: ActivatedRoute,
-    private productResultRepository: ProductResultRepository,
     private dialog: MatDialog,
     private customHttpParamsEncoderService: CustomHttpParamsEncoderService,
     private notificationService: NotificationService,
@@ -218,6 +216,10 @@ export class SearchResultComponent extends UnsubscribeComponent implements OnIni
   trackFacetKeyValue: TrackByFunction<KeyValue<string, Facet[]>> = (index: number,
                                                                     keyValue: KeyValue<string, Facet[]>): string => {
     return keyValue.key;
+  };
+
+  trackProduct: TrackByFunction<Product> = (index: number, product: Product): string => {
+    return product.id;
   };
 
   openFilterModal(templateRef: TemplateRef<any>) {

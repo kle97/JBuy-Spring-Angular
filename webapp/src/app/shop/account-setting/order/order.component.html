@@ -6,7 +6,8 @@
     <ng-container *ngIf="!orderDetailVisibility; else orderDetail">
       <ng-container *appVar="orderPage$ | async as orderPage">
         <ng-container *ngIf="orderPage.content.length > 0; else orderEmpty">
-          <div class="order-tab mat-elevation-z3" *ngFor="let order of orderPage.content; let i = index">
+          <div class="order-tab mat-elevation-z3"
+               *ngFor="let order of orderPage.content; let i = index; trackBy: trackOrder">
             <div class="order-info">
               <div class="order-info-row">
                 <div class="order-info-left">

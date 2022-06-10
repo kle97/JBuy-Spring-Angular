@@ -98,7 +98,8 @@
         <!--        </div>-->
         <mat-divider class="divider"></mat-divider>
         <ng-container *ngIf="!media.isLoading && productResultPage.content.length > 0; else productLoading">
-          <mat-card class="product-card mat-elevation-z3" *ngFor="let product of productResultPage.content">
+          <mat-card class="product-card mat-elevation-z3"
+                    *ngFor="let product of productResultPage.content; trackBy: trackProduct">
             <mat-card-content class="product-content">
               <div class="product-image">
                 <a routerLink="/product/{{product.id}}">
@@ -191,7 +192,8 @@
         </div>
         <mat-divider class="divider"></mat-divider>
         <ng-container *ngIf="!media.isLoading && productResultPage.content.length > 0; else productLoading">
-          <mat-card class="product-card mat-elevation-z3" *ngFor="let product of productResultPage.content">
+          <mat-card class="product-card mat-elevation-z3"
+                    *ngFor="let product of productResultPage.content; trackBy: trackProduct">
             <mat-card-content class="product-content">
               <a routerLink="/product/{{product.id}}">
                 <h4 class="product-name">

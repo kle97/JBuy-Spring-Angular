@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { BehaviorSubject, Observable, takeUntil } from "rxjs";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { ShoppingCartRepository } from "../repository/shopping-cart.repository";
@@ -58,5 +58,9 @@ export class NavigationBarCartComponent extends UnsubscribeComponent implements 
       trigger.closeMenu();
     }, 50);
   }
+
+  trackCartItem: TrackByFunction<CartItem> = (index: number, cartItem: CartItem): string => {
+    return cartItem.userId + cartItem.productId;
+  };
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { Address } from "../model/address.model";
 import { AddressService } from "../repository/address/address.service";
 import { Observable } from "rxjs";
@@ -34,4 +34,8 @@ export class AddressComponent implements OnInit {
   removeAddress(address: Address) {
     this.addressService.removeAddress(address);
   }
+
+  trackAddress: TrackByFunction<Address> = (index: number, address: Address): string => {
+    return address.id;
+  };
 }

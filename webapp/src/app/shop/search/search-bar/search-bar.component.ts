@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { CategoryService } from "../../home/repository/category.service";
 import { CategoryRepository } from "../../home/repository/category.repository";
 import { debounceTime, distinctUntilChanged, filter, map, Observable, switchMap, takeUntil } from "rxjs";
@@ -102,4 +102,12 @@ export class SearchBarComponent extends UnsubscribeComponent implements OnInit {
       input.blur();
     });
   }
+
+  trackCategory: TrackByFunction<Category> = (index: number, category: Category): string => {
+    return category.id;
+  };
+
+  trackSearchText: TrackByFunction<SearchText> = (index: number, searchText: SearchText): string => {
+    return searchText.id;
+  };
 }

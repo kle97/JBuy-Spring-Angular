@@ -38,7 +38,7 @@
             </mat-card-header>
             <ng-container *ngIf="cartItemCount > 0">
               <ng-container *ngIf="cartItems$ | async as cartItems">
-                <mat-card-content *ngFor="let cartItem of cartItems">
+                <mat-card-content *ngFor="let cartItem of cartItems; trackBy: trackCartItem">
                   <div class="cart-item-container">
                     <div class="cart-item-left">
                       <a routerLink="/product/{{cartItem.productId}}" (click)="mouseLeave(menuTrigger)">

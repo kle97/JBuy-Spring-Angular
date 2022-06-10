@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TrackByFunction } from "@angular/core";
 import { CategoryService } from "../repository/category.service";
 import { CategoryRepository } from "../repository/category.repository";
 import { Observable } from "rxjs";
@@ -27,5 +27,9 @@ export class CategoryMenuComponent implements OnInit {
       }
     });
   }
+
+  trackCategory: TrackByFunction<Category> = (index: number, category: Category): string => {
+    return category.id;
+  };
 
 }

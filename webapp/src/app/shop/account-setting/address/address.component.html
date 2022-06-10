@@ -7,7 +7,7 @@
       <button class="create-button" mat-raised-button color="primary" (click)="createAddress()">
         Create New Address
       </button>
-      <div class="addresses-tab" *ngFor="let address of addresses; let i = index">
+      <div class="addresses-tab" *ngFor="let address of addresses; let i = index; trackBy: trackAddress">
         <div class="address-info mat-elevation-z3">
           <h2>Address {{i + 1}}
             <span *ngIf="address.primaryAddress">(Primary)</span>

@@ -3,6 +3,7 @@ package io.spring.jbuy.common.security;
 import io.spring.jbuy.common.configuration.SystemProperties;
 import io.spring.jbuy.features.authentication.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,6 +27,9 @@ import org.springframework.security.web.savedrequest.NullRequestCache;
 )
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Value("${spring.sql.init.platform}")
+    private String initPlatform;
 
     private final CustomUserDetailsService customUserDetailsService;
     private final Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint;
@@ -58,9 +62,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
         // Set Content Security Policy to allow only particular script source(s) and resource(s)
         // style-src 'unsafe-inline' for Angular to work properly
-        http.headers().contentSecurityPolicy("default-src 'self'; " +
-                                                     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-                                                     "font-src 'self' https://fonts.gstatic.com");
+        if (!initPlatform.equals("h2")) {
+            http.headers().contentSecurityPolicy("default-src 'self'; " +
+                                                         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+                                                         "font-src 'self' https://fonts.gstatic.com");
+        }
 
         // Enable CORS and enable CSRF token requirement for every request
         http.cors().and()
@@ -92,7 +98,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // Allow only same origin in a frame (default: deny, other option are allow-from and sameOrigin)
         // Used only for h2-console
-//        http.headers().frameOptions().sameOrigin();
+        if (initPlatform.equals("h2")) {
+            http.headers().frameOptions().sameOrigin();
+            http.csrf().disable();
+        }
 
         // Disable form login and http basic
 //        http.formLogin().disable();

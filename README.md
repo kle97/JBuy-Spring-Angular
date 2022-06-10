@@ -23,7 +23,6 @@ Todo
 - Hazelcast
 - Springdoc
 - Rapidoc
-- Docker
 
 - Angular
 - Angular Material

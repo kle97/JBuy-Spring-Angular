@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, TrackByFunction } from "@angular/core";
 import { Observable } from "rxjs";
 import { ShoppingCartService } from "../repository/shopping-cart.service";
 import { CartItem } from "../model/cart-item.model";
@@ -62,5 +62,9 @@ export class CartComponent implements OnInit, AfterViewInit {
       return 0;
     }
   }
+
+  trackCartItem: TrackByFunction<CartItem> = (index: number, cartItem: CartItem): string => {
+    return cartItem.userId + cartItem.productId;
+  };
 
 }

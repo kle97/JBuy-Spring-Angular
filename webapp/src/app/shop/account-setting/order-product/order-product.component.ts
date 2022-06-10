@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, TrackByFunction } from "@angular/core";
 import { OrderProductService } from "../repository/order-product/order-product.service";
 import { OrderProductRepository } from "../repository/order-product/order-product.repository";
 import { Observable } from "rxjs";
@@ -50,5 +50,9 @@ export class OrderProductComponent implements OnInit {
       this.scrollUpService.toTop("body");
     }
   }
+
+  trackOrderProduct: TrackByFunction<OrderProduct> = (index: number, orderProduct: OrderProduct): string => {
+    return orderProduct.orderId + orderProduct.productId;
+  };
 
 }

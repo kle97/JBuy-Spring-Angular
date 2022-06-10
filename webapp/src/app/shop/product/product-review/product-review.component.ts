@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit, TrackByFunction } from "@angular/core";
 import { Observable } from "rxjs";
 import { Page } from "../../../core/model/page.model";
 import { Review } from "../../account-setting/model/review.model";
@@ -69,5 +69,9 @@ export class ProductReviewComponent implements OnInit, AfterViewInit {
       this.scrollUpService.toTop("product-review-tab");
     }
   }
+
+  trackReview: TrackByFunction<Review> = (index: number, review: Review): string => {
+    return review.userId + review.productId;
+  };
 
 }

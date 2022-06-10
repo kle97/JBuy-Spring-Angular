@@ -18,7 +18,8 @@
       </div>
     </div>
     <div id="product-review-tab"
-         class="product-review-tab mat-elevation-z1" *ngFor="let review of reviewPage.content; let i = index">
+         class="product-review-tab mat-elevation-z1"
+         *ngFor="let review of reviewPage.content; let i = index; trackBy: trackReview">
       <div class="comment-section">
         <h1>
           <mat-icon>account_circle</mat-icon>

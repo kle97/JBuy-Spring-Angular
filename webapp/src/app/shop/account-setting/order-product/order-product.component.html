@@ -45,7 +45,8 @@
       </div>
     </div>
     <h1>Order Details</h1>
-    <div class="order-product-tab mat-elevation-z3" *ngFor="let orderProduct of orderProductPage.content; let i = index">
+    <div class="order-product-tab mat-elevation-z3"
+         *ngFor="let orderProduct of orderProductPage.content; let i = index; trackBy: trackOrderProduct">
       <div class="order-product-info">
         <div class="item-image">
           <a routerLink="/product/{{orderProduct.productId}}">

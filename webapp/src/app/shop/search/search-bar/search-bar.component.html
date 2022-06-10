@@ -8,7 +8,8 @@
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" class="auto-complete-container">
       <ng-container *ngIf="searchText.value.length === 0">
-        <mat-option *ngFor="let searchText of recentlySearchedTexts$ | async" [value]="searchText.text">
+        <mat-option *ngFor="let searchText of recentlySearchedTexts$ | async; trackBy: trackSearchText"
+                    [value]="searchText.text">
             <div class="recently-search-field"
                  (click)="onRecentlySearchClick(searchText.category, input)">
               <div class="recently-search-text">
@@ -44,7 +45,9 @@
                 formControlName="category"
                 *appVar="categoryPage$ | async as categoryPage">
       <mat-option (click)="input.focus()" value="All">All</mat-option>
-      <mat-option (click)="input.focus()" *ngFor="let category of categoryPage.content" [value]="category.name">
+      <mat-option (click)="input.focus()"
+                  [value]="category.name"
+                  *ngFor="let category of categoryPage.content; trackBy: trackCategory">
         {{category.name}}
       </mat-option>
     </mat-select>

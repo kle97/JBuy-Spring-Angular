@@ -5,7 +5,8 @@
   <mat-card-content>
     <ng-container *appVar="reviewPage$ | async as reviewPage">
       <ng-container *ngIf="reviewPage.content.length > 0; else reviewPageEmpty">
-        <div class="review-tab mat-elevation-z3" *ngFor="let review of reviewPage.content; let i = index">
+        <div class="review-tab mat-elevation-z3"
+             *ngFor="let review of reviewPage.content; let i = index; trackBy: trackReview">
           <div class="review-info">
             <div class="item-image">
               <a routerLink="/product/{{review.productId}}">
