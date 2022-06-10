@@ -28,5 +28,30 @@ Todo
 - Angular Material
 - Elf
 
+## Requirement:
+```
+    Java 11 or above
+    Node 16 or above
+    npm 8.5 or above
+    Angular/cli 13 or above
+```
+
+## Run dev mode
+- Spring
+```
+    ---From root folder
+    cd api
+    ./mvnw clean install
+    ./mvnw spring-boot:run
+```
+
+- Angular
+```
+    ---From root folder
+    cd webapp
+    npm install
+    ng serve -o
+```
+
 ## Screenshot
-![screenshot1](https://i.imgur.com/APaxnLA.png?1)
+![screenshot1](https://i.imgur.com/0vvbyK5.png)
