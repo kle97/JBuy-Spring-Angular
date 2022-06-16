@@ -26,6 +26,11 @@
 
     .keen-slider__slide {
       cursor: pointer;
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
     }
 
     a {
@@ -75,5 +80,3 @@
 .arrow--disabled {
   color: rgba(164, 164, 164, 0.9);
 }
-
-

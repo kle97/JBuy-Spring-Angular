@@ -12,6 +12,11 @@
     ::ng-deep .mat-card-content {
       text-align: center !important;
     }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   }
 }
 
