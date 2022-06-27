@@ -1,6 +1,5 @@
 # JBuy (Spring Boot + Angular)
 An e-commerce website using Spring Boot and Angular
-(in development)
 ## Demo
 https://jbuy-shop.herokuapp.com
 
