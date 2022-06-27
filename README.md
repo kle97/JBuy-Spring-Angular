@@ -2,7 +2,7 @@
 An e-commerce website using Spring Boot and Angular
 (in development)
 ## Demo
-Todo
+https://jbuy-shop.herokuapp.com
 
 ## Features
 - Rest API
