@@ -2,6 +2,7 @@
 An e-commerce website using Spring Boot and Angular
 ## Demo
 https://jbuy-shop.herokuapp.com
+###### Heroku may require some time to restart from sleep
 
 ## Features
 - Rest API
