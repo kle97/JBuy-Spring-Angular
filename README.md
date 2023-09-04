@@ -1,8 +1,7 @@
 # JBuy (Spring Boot + Angular)
 An e-commerce website using Spring Boot and Angular
 ## Demo
-https://jbuy-shop.herokuapp.com
-###### Heroku may require some time to restart from sleep
+https://jbuy.shop
 
 ## Features
 - Rest API
