@@ -179,6 +179,7 @@ export class SearchResultComponent extends UnsubscribeComponent implements OnIni
       this.productService.search(this.searchTextParam, this.pageRequest, this.filterOption).subscribe(productResultPage => {
         this.productResultPage = productResultPage;
         if (this.productResultPage.content.length > 0) {
+          this.facetMap.clear();
           for (let [key, value] of Object.entries(this.productResultPage.facetMap)) {
             this.facetMap.set(key, value);
           }
